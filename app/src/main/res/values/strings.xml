@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GameTreasureBox</string>
+    <string name="hanoi_hintContent">在此输入汉诺塔的层数</string>
+    <string name="confirm">确认</string>
+    <string name="entry">出&#160;&#160;&#160;&#160;口</string>
+
+    <string name="noticeFor_1024">马上就要合成2048了，加油</string>
+    <string name="noticeFor_2048">恭喜你合成一个2048</string>
+    <string name="noticeFor_4096">恭喜你合成一个4096</string>
+    <string name="noticeFor_512">继续努力哦</string>
+
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="image_moveView">
+        <attr name="android:layout_width"/>
+        <attr name="bit_num" format="integer"/>
+        <attr name="bitmapID" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="number_moveView">
+        <attr name="blockCount" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="myImageView">
+        <attr name="view_id" format="integer"/>
+        <attr name="check_pointID" format="integer"/>
+    </declare-styleable>
+</resources>
