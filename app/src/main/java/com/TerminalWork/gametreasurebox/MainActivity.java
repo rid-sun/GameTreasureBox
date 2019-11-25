@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        loadFragment(2);
+        loadFragment(1);
 
     }
 

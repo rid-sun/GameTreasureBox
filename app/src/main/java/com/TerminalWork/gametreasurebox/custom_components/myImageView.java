@@ -1,6 +1,7 @@
 package com.TerminalWork.gametreasurebox.custom_components;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -17,6 +18,8 @@ import com.TerminalWork.gametreasurebox.bean.flags;
 import com.TerminalWork.gametreasurebox.methods.myUtils;
 
 public class myImageView extends View {
+
+    private Intent intent;
 
     int view_id;
     int check_pointID;
@@ -61,6 +64,7 @@ public class myImageView extends View {
         ta.recycle();
         flags.myView[check_pointID][view_id] = new Rect(present_viewX, present_viewY, present_viewX + view_width, present_viewY + view_height);
         paint = new Paint();
+        intent = new Intent("hasMoved");
     }
 
     @Override
@@ -85,8 +89,9 @@ public class myImageView extends View {
                 present_viewX = this.getLeft();
                 present_viewY = this.getTop();
 //                System.out.println("dong x: "+present_viewX+" y: "+present_viewY);
-                flags.direction = myUtils.judgeDirection(previousX,previousY,presentX,presentY);
+//                flags.direction = myUtils.judgeDirection(previousX,previousY,presentX,presentY);
 //                System.out.println("dir: "+flags.direction);
+                flags.direction = myUtils.judgeDirection2(previousX,previousY,presentX,presentY,previous_viewX,previous_viewY,present_viewX,present_viewY);
                 switch (flags.direction){
                     case flags.direction_UP:
                     case flags.direction_DOWN:

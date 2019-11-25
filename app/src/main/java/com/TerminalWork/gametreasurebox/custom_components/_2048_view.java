@@ -1,8 +1,7 @@
 package com.TerminalWork.gametreasurebox.custom_components;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -10,8 +9,6 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.TerminalWork.gametreasurebox.R;
@@ -19,10 +16,7 @@ import com.TerminalWork.gametreasurebox.bean.flags;
 import com.TerminalWork.gametreasurebox.methods.myUtils;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class _2048_view extends GridLayout {
 
@@ -30,15 +24,19 @@ public class _2048_view extends GridLayout {
     private int presentX, presentY;
     private card[][] cd;
     private List<Point> numberIsZero;
-    private ObjectAnimator objectAnimator;
+    private int score;
+    private Context context;
+    private Intent intent;
 
     public _2048_view(Context context) {
         super(context);
+        this.context = context;
         initView();
     }
 
     public _2048_view(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         initView();
     }
 
@@ -52,15 +50,14 @@ public class _2048_view extends GridLayout {
 
     private void judgeNumber(int num){
         switch(num){
-            case 8:
-                Toast.makeText(getContext(),getResources().getString(R.string.noticeFor_512),Toast.LENGTH_SHORT);
             case 512:
-                Toast.makeText(getContext(),getResources().getString(R.string.noticeFor_512),Toast.LENGTH_SHORT);
+                Toast.makeText(context,getResources().getString(R.string.noticeFor_512),Toast.LENGTH_SHORT).show();
+                break;
             case 1024:
-                Toast.makeText(getContext(),getResources().getString(R.string.noticeFor_1024),Toast.LENGTH_SHORT);
+                Toast.makeText(context,getResources().getString(R.string.noticeFor_1024),Toast.LENGTH_SHORT).show();
                 break;
             case 4096:
-                Toast.makeText(getContext(),getResources().getString(R.string.noticeFor_4096),Toast.LENGTH_SHORT);
+                Toast.makeText(context,getResources().getString(R.string.noticeFor_4096),Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -68,6 +65,8 @@ public class _2048_view extends GridLayout {
     private void initView(){
         setBackgroundColor(ContextCompat.getColor(getContext(), R.color.backGround_color_panel));
         setColumnCount(4);
+        intent = new Intent("changeScore");
+        score = 0;
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -121,11 +120,6 @@ public class _2048_view extends GridLayout {
             }
         }
         addRandomCard(2);
-//        for (int i = 0; i < 4; i++){
-//            for (int j = 0; j < 4; j++){
-//                System.out.println(cd[i][j].getNumber());
-//            }
-//        }
     }
 
     private void addRandomCard(int count){
@@ -143,7 +137,6 @@ public class _2048_view extends GridLayout {
             Point p = numberIsZero.remove((int)(Math.random() * numberIsZero.size()));
             cd[p.x][p.y].setNumber(Math.random() > 0.1 ? 2 : 4);
             myUtils.cardScale(cd[p.x][p.y], flags.scaleScheme_production);
-//        MainActivity.getMainActivity().getAnimLayer().createScaleTo1(cardMap[p.x][p.y]);
         }
     }
 
@@ -157,8 +150,7 @@ public class _2048_view extends GridLayout {
                 int temp = cd[i][j].getNumber();
                 if(temp == 0)
                     continue;
-                if(previousNum == 0)
-                {
+                if(previousNum == 0) {
                     previousNum = temp;
                     tp.x = i;
                     tp.y = j;
@@ -169,16 +161,20 @@ public class _2048_view extends GridLayout {
                         cd[i][j].setNumber(0);
                         cd[tp.x][tp.y].setNumber(0);
                         cd[index][j].setNumber(temp * 2);
+                        myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, j, index);
+                        myUtils.cardMove(cd[i][j], j, i, j, index);
+                        myUtils.cardScale(cd[index][j], flags.scaleScheme_composite);
+                        intent.putExtra("score", score += temp * 2);
+                        context.sendBroadcast(intent);
                         judgeNumber(temp * 2);
                         canMove = true;
-                        myUtils.cardScale(cd[index][j], flags.scaleScheme_composite);
                         index++;
                     }
                     else{
                         cd[tp.x][tp.y].setNumber(0);
                         cd[index][j].setNumber(previousNum);
-                        if(index != tp.x)
-                        {
+                        if(index != tp.x) {
+                            myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, j, index);
                             canMove = true;
                         }
                         previousNum = temp;
@@ -193,6 +189,7 @@ public class _2048_view extends GridLayout {
                 cd[index][j].setNumber(previousNum);
                 if(index != tp.x)
                 {
+                    myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, j, index);
                     canMove = true;
                 }
             }
@@ -221,8 +218,7 @@ public class _2048_view extends GridLayout {
                 int temp = cd[i][j].getNumber();
                 if(temp == 0)
                     continue;
-                if(previousNum == 0)
-                {
+                if(previousNum == 0) {
                     previousNum = temp;
                     tp.x = i;
                     tp.y = j;
@@ -232,24 +228,27 @@ public class _2048_view extends GridLayout {
                         previousNum = 0;
                         cd[i][j].setNumber(0);
                         cd[tp.x][tp.y].setNumber(0);
-                        judgeNumber(temp * 2);
+                        cd[i][index].setNumber(temp * 2);
+                        myUtils.cardMove(cd[i][j], j, i, index, i);
+                        myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, index, i);
                         myUtils.cardScale(cd[i][index], flags.scaleScheme_composite);
-                        cd[i][index++].setNumber(temp * 2);
+                        intent.putExtra("score", score += temp * 2);
+                        context.sendBroadcast(intent);
+                        judgeNumber(temp * 2);
                         canMove = true;
-                        //动画播放
-                        //动画播放
+                        index++;
                     }
                     else{
                         cd[tp.x][tp.y].setNumber(0);
-                        cd[i][index++].setNumber(previousNum);
-                        if(index - 1 != tp.y)
-                        {
+                        cd[i][index].setNumber(previousNum);
+                        if(index != tp.y) {
+                            myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, index, i);
                             canMove = true;
-                            //动画播放
                         }
                         previousNum = temp;
                         tp.y = j;
                         tp.x = i;
+                        index++;
                     }
                 }
             }
@@ -257,6 +256,7 @@ public class _2048_view extends GridLayout {
                 cd[tp.x][tp.y].setNumber(0);
                 cd[i][index].setNumber(previousNum);
                 if(index != tp.y){
+                    myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, index, i);
                     canMove = true;
                 }
 
@@ -281,8 +281,7 @@ public class _2048_view extends GridLayout {
                 int temp = cd[i][j].getNumber();
                 if(temp == 0)
                     continue;
-                if(previousNum == 0)
-                {
+                if(previousNum == 0) {
                     previousNum = temp;
                     tp.x = i;
                     tp.y = j;
@@ -292,24 +291,27 @@ public class _2048_view extends GridLayout {
                         previousNum = 0;
                         cd[i][j].setNumber(0);
                         cd[tp.x][tp.y].setNumber(0);
-                        judgeNumber(temp * 2);
+                        cd[index][j].setNumber(temp * 2);
+                        myUtils.cardMove(cd[i][j], j, i, j, index);
+                        myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, j, index);
                         myUtils.cardScale(cd[index][j], flags.scaleScheme_composite);
-                        cd[index--][j].setNumber(temp * 2);
+                        intent.putExtra("score", score += temp * 2);
+                        context.sendBroadcast(intent);
                         canMove = true;
-                        //动画播放
-                        //动画播放
+                        judgeNumber(temp * 2);
+                        index--;
                     }
                     else{
                         cd[tp.x][tp.y].setNumber(0);
-                        cd[index--][j].setNumber(previousNum);
-                        if(index + 1 != tp.x)
-                        {
+                        cd[index][j].setNumber(previousNum);
+                        if(index != tp.x) {
+                            myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, j, index);
                             canMove = true;
-                            //动画播放
                         }
                         previousNum = temp;
                         tp.y = j;
                         tp.x = i;
+                        index--;
                     }
                 }
             }
@@ -317,6 +319,7 @@ public class _2048_view extends GridLayout {
                 cd[tp.x][tp.y].setNumber(0);
                 cd[index][j].setNumber(previousNum);
                 if(index != tp.x){
+                    myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, j, index);
                     canMove = true;
                 }
             }
@@ -340,8 +343,7 @@ public class _2048_view extends GridLayout {
                 int temp = cd[i][j].getNumber();
                 if(temp == 0)
                     continue;
-                if(previousNum == 0)
-                {
+                if(previousNum == 0) {
                     previousNum = temp;
                     tp.x = i;
                     tp.y = j;
@@ -351,24 +353,27 @@ public class _2048_view extends GridLayout {
                         previousNum = 0;
                         cd[i][j].setNumber(0);
                         cd[tp.x][tp.y].setNumber(0);
-                        judgeNumber(temp * 2);
+                        cd[i][index].setNumber(temp * 2);
+                        myUtils.cardMove(cd[i][j], j, i, index, i);
+                        myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, index, i);
                         myUtils.cardScale(cd[i][index], flags.scaleScheme_composite);
-                        cd[i][index--].setNumber(temp * 2);
+                        intent.putExtra("score", score += temp * 2);
+                        context.sendBroadcast(intent);
+                        judgeNumber(temp * 2);
                         canMove = true;
-                        //动画播放
-                        //动画播放
+                        index--;
                     }
                     else{
                         cd[tp.x][tp.y].setNumber(0);
-                        cd[i][index--].setNumber(previousNum);
-                        if(index + 1 != tp.y)
-                        {
+                        cd[i][index].setNumber(previousNum);
+                        if(index != tp.y) {
+                            myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, index, i);
                             canMove = true;
-                            //动画播放
                         }
                         previousNum = temp;
                         tp.y = j;
                         tp.x = i;
+                        index--;
                     }
                 }
             }
@@ -376,6 +381,7 @@ public class _2048_view extends GridLayout {
                 cd[tp.x][tp.y].setNumber(0);
                 cd[i][index].setNumber(previousNum);
                 if(tp.y != index){
+                    myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, index, i);
                     canMove = true;
                 }
             }

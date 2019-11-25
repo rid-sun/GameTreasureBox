@@ -9,4 +9,13 @@
     <string name="noticeFor_4096">恭喜你合成一个4096</string>
     <string name="noticeFor_512">继续努力哦</string>
 
+    <string name="app_name_part1">Game</string>
+    <string name="app_name_part2">Treasure</string>
+    <string name="app_name_part3">Box</string>
+    <string name="copyright"> Copyright © 2019 - ? created by rid-sun</string>
+    <string name="motto">创意技术&#160;&#160;决定高度</string>
+
+    <string name="kingdoms_hrd_nameTitle">三国华容道</string>
+    <string name="kingdoms_hrd_nameSteps">步数</string>
+    <string name="kingdoms_hrd_nameTimes">用时</string>
 </resources>
