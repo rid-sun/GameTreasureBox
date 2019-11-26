@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="112dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="268dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/userNameText"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:background="@drawable/corner_shape"
+            android:gravity="center_vertical"
+            android:maxLength="15"
+            android:paddingStart="75dp"
+            android:paddingEnd="45dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:inputType="textPersonName"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_alignStart="@+id/userNameText"
+            android:layout_alignTop="@+id/userNameText"
+            android:layout_alignBottom="@+id/userNameText"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/pretty_girl" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_alignTop="@+id/userNameText"
+            android:layout_alignEnd="@+id/userNameText"
+            android:layout_alignBottom="@+id/userNameText"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/arrow_down_login" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="340dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/passwordText"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:background="@drawable/corner_shape"
+            android:gravity="center_vertical"
+            android:maxLength="15"
+            android:paddingStart="75dp"
+            android:paddingEnd="45dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:inputType="textPassword"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/login"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="420dp"
+        android:background="@drawable/oval_image_shape"
+        android:src="@drawable/right_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="608dp"
+        android:gravity="center"
+        android:text="@string/setup"
+        android:textColor="@color/backGround_color_4096"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/visitor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:gravity="center"
+        android:text="@string/visitor"
+        android:textColor="@color/backGround_color_4096"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/register"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/separator"
+        android:textColor="@color/text_black"
+        android:textSize="20sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

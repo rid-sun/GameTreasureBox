@@ -12,6 +12,7 @@ public class flags {
     public final static int scaleScheme_composite = 5;
     public final static int scaleScheme_production = 7;
 
+
     public static int card_width;
 
     public static Rect[][] myView = new Rect[6][10];

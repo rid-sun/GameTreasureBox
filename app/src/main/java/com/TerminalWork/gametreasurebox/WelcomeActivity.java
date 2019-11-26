@@ -48,7 +48,7 @@ public class WelcomeActivity extends Activity {
                 Game.setTextColor(getColor(R.color.foreGround_color_8_4096));
                 Treasure.setTextColor(getColor(R.color.foreGround_color_8_4096));
                 Box.setTextColor(getColor(R.color.foreGround_color_8_4096));
-                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
                 finish();
             }
 

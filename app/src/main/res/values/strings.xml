@@ -14,8 +14,13 @@
     <string name="app_name_part3">Box</string>
     <string name="copyright"> Copyright © 2019 - ? created by rid-sun</string>
     <string name="motto">创意技术&#160;&#160;决定高度</string>
+    <string name="logo_name">百宝箱</string>
 
     <string name="kingdoms_hrd_nameTitle">三国华容道</string>
     <string name="kingdoms_hrd_nameSteps">步数</string>
     <string name="kingdoms_hrd_nameTimes">用时</string>
+
+    <string name="setup">用户注册</string>
+    <string name="visitor">游客登录</string>
+    <string name="separator">&#160;&#160;|&#160;&#160;</string>
 </resources>
