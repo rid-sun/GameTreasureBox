@@ -10,7 +10,10 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -18,13 +21,20 @@ import androidx.annotation.Nullable;
 public class LoginActivity extends Activity {
     private GradientDrawable gradientDrawable;
     private ImageView circleImageView;
+    private RelativeLayout relativeLayoutAccount;
+    private RelativeLayout relativeLayoutPassword;
+    private TextView forgetPassword;
     private ValueAnimator colorChange;
     private TextView visitor;
     private TextView registry;
+    private Animation animation;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        relativeLayoutAccount = findViewById(R.id.accountLoginRelativeLayout);
+        relativeLayoutPassword = findViewById(R.id.passwrdLoginRelativeLayout);
+        forgetPassword = findViewById(R.id.forgetPasswrd);
         circleImageView = findViewById(R.id.login);
         gradientDrawable = (GradientDrawable)circleImageView.getBackground();
         colorChange = ObjectAnimator.ofInt(gradientDrawable,"color", Color.parseColor("#0983F0"), Color.parseColor("#2098F7"),
@@ -61,6 +71,7 @@ public class LoginActivity extends Activity {
                     case MotionEvent.ACTION_UP:
                         visitor.setTextColor(Color.parseColor("#FF3D3A33"));
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
                         break;
                 }
                 return true;
@@ -68,4 +79,13 @@ public class LoginActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        animation = AnimationUtils.loadAnimation(this, R.anim.slideup_app_login_animation);
+        relativeLayoutAccount.startAnimation(animation);
+        relativeLayoutPassword.startAnimation(animation);
+        circleImageView.startAnimation(animation);
+        forgetPassword.startAnimation(animation);
+    }
 }

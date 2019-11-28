@@ -24,4 +24,9 @@
         <!--弹窗背景是否变暗-->
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+    <!--注册用户输入框错误提示-->
+    <style name="ErrorStyle" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">#ff0000</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 </resources>

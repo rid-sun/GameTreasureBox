@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
+        android:id="@+id/accountLoginRelativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -32,12 +33,13 @@
             android:layout_height="60dp"
             android:background="@drawable/corner_shape"
             android:gravity="center_vertical"
+            android:hint="@string/hint_accountEditText"
+            android:inputType="textPersonName"
             android:maxLength="15"
             android:paddingStart="75dp"
-            android:paddingEnd="45dp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:inputType="textPersonName"/>
+            android:paddingEnd="45dp"
+            android:paddingBottom="10dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="40dp"
@@ -59,7 +61,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
+        android:id="@+id/passwrdLoginRelativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -72,13 +74,14 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:background="@drawable/corner_shape"
+            android:hint="@string/hint_passwordEditText"
             android:gravity="center_vertical"
+            android:inputType="textPassword"
             android:maxLength="15"
             android:paddingStart="75dp"
-            android:paddingEnd="45dp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:inputType="textPassword"/>
+            android:paddingEnd="45dp"
+            android:paddingBottom="10dp" />
     </RelativeLayout>
 
     <ImageView
@@ -100,6 +103,19 @@
         android:layout_marginTop="608dp"
         android:gravity="center"
         android:text="@string/setup"
+        android:textColor="@color/backGround_color_4096"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/forgetPasswrd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="408dp"
+        android:gravity="center"
+        android:text="@string/forgetPasswrd"
         android:textColor="@color/backGround_color_4096"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

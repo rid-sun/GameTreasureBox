@@ -1,10 +1,8 @@
 package com.TerminalWork.gametreasurebox;
 
-import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -29,11 +27,11 @@ public class WelcomeActivity extends Activity {
         shimmer1.start(Game);
         shimmer2.start(Treasure);
         shimmer3.start(Box);
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.name_treasure_animation);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.treasure_app_start_animation);
         Treasure.startAnimation(animation);
-        animation = AnimationUtils.loadAnimation(this, R.anim.name_box_animation);
+        animation = AnimationUtils.loadAnimation(this, R.anim.box_app_start_animation);
         Box.startAnimation(animation);
-        animation = AnimationUtils.loadAnimation(this, R.anim.curtain_animation);
+        animation = AnimationUtils.loadAnimation(this, R.anim.curtain_app_start_animation);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
