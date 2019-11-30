@@ -1,10 +1,13 @@
 package com.TerminalWork.gametreasurebox;
 
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -24,16 +27,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity {
     private showPhoto_Dialog dialog;
     private DrawerLayout drawerLayout;
-    private boolean isFirstCreate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        drawerLayout = findViewById(R.id.drawer_layout);
         View drawerView = navigationView.inflateHeaderView(R.layout.nav_header);
-        CircleImageView account = (CircleImageView) drawerView.findViewById(R.id.icon_image);
+        CircleImageView account = drawerView.findViewById(R.id.icon_image);
         dialog = new showPhoto_Dialog(MainActivity.this,R.style.dialog, R.drawable.pretty_girl);
         account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,11 +53,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        if(savedInstanceState != null){
-            loadFragment(savedInstanceState.getInt("loadFragment"));
-        }else{
-            loadFragment(3);
-        }
+        loadFragment(4);
         Log.i("onCreateMain","yes");
 
     }
@@ -66,71 +65,47 @@ public class MainActivity extends AppCompatActivity {
     public void loadFragment(int id){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment1 = fragmentManager.findFragmentByTag("Hanoi");
-        Fragment fragment2 = fragmentManager.findFragmentByTag("HuaRongDao");
-        Fragment fragment3 = fragmentManager.findFragmentByTag("_2048");
-        Fragment fragment4 = fragmentManager.findFragmentByTag("game_select");
-        Bundle bundle = null;
+        Fragment fragment;
         switch (id){
-            case 0:{
-                if(fragment1 == null){
-                    fragment1 = new Hanoi();
-                    fragmentTransaction.replace(R.id.fragment_view, fragment1,"Hanoi");
-                    Log.i("Hanoi", "1Start");
-                }
-                else
-                {
-                    fragmentTransaction.show(fragment1);
-                    Log.i("Hanoi", "2Start");
-                }
-                bundle = new Bundle();
-                bundle.putInt("loadFragment", 0);
+            case 1:
+                fragment = new Hanoi();
+                fragmentTransaction.replace(R.id.fragment_view, fragment);
+                Log.i("Hanoi", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 break;
-            }
-            case 1:{
-                if(fragment2 == null){
-                    fragment2 = new HuaRongDao();
-                    fragmentTransaction.replace(R.id.fragment_view, fragment2,"HuaRongdao");
-                    Log.i("hrd", "1Start");
-                }
-                else
-                {
-                    fragmentTransaction.show(fragment2);
-                    Log.i("Hrd", "2Start");
-                }
+            case 2:
+                fragment = new HuaRongDao();
+                fragmentTransaction.replace(R.id.fragment_view, fragment);
+                Log.i("hrd", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
-            }
-            case 2:{
-                if(fragment3 == null){
-                    fragment3 = new _2048();
-                    fragmentTransaction.replace(R.id.fragment_view, fragment3,"_2048");
-                    Log.i("_2048", "1Start");
-                }
-                else
-                {
-                    fragmentTransaction.show(fragment3);
-                    Log.i("_2048", "2Start");
-                }
+            case 3:
+                fragment = new _2048();
+                fragmentTransaction.replace(R.id.fragment_view, fragment);
+                Log.i("_2048", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
-            }
-            case 3: {
-                if (fragment4 == null) {
-                    fragment4 = new GameSelect();
-                    fragmentTransaction.replace(R.id.fragment_view, fragment4, "game_select");
-                } else
-                    fragmentTransaction.show(fragment4);
+            case 4:
+                fragment = new GameSelect();
+                fragmentTransaction.replace(R.id.fragment_view, fragment);
+                Log.i("GameSelect", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
-            }
         }
         fragmentTransaction.commit();
-        if( id == 0){//必须这样写来保存状态，不然在汉诺塔加载的时候变成横屏时会重新onCreate导致出错
-            onSaveInstanceState(bundle);
-        }
         Log.i("message", "事务已提交");
     }
 
+    private NavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            switch (menuItem.getItemId()){
+                case R.id.nav_call:
+                    loadFragment(4);
+                    drawerLayout.closeDrawers();
+                    break;
+            }
+            return false;
+        }
+    };
 }

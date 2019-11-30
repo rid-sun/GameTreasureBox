@@ -9,9 +9,7 @@
         android:layout_height="415dp"
         android:layout_marginTop="120dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </com.TerminalWork.gametreasurebox.custom_components._2048_view>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/scoreView"

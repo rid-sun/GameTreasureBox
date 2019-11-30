@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
@@ -43,7 +44,8 @@ public class _2048_view extends GridLayout {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        flags.card_width = (Math.min(w,h)-30)/4;
+        flags.card_width = (Math.min(w,h) - 30) / 4;
+        Log.i("car_width",flags.card_width + "");
         addCard(flags.card_width);
         startGame();
     }
@@ -120,6 +122,7 @@ public class _2048_view extends GridLayout {
             }
         }
         addRandomCard(2);
+        Log.i("random","生成随机数字");
     }
 
     private void addRandomCard(int count){
