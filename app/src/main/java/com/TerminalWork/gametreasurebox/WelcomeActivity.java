@@ -12,7 +12,10 @@ import androidx.annotation.Nullable;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
+import org.litepal.LitePal;
+
 public class WelcomeActivity extends Activity {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,5 +59,8 @@ public class WelcomeActivity extends Activity {
             }
         });
         curtain.startAnimation(animation);
+
+        //创建数据库
+        LitePal.getDatabase();
     }
 }

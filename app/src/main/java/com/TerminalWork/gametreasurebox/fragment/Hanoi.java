@@ -38,6 +38,9 @@ public class Hanoi extends Fragment {
     public Timer timer;
     public TimerTask task;
 
+    public Hanoi() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

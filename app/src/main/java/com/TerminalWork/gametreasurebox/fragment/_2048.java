@@ -23,6 +23,9 @@ public class _2048 extends Fragment {
     private scoreReceiver score;
     private TextView scoreView;
 
+    public _2048() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,6 +52,11 @@ public class _2048 extends Fragment {
             int score = bundle.getInt("score");
             scoreView.setText("Score: " + score);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override

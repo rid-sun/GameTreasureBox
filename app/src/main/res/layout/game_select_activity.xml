@@ -2,11 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
+    <!--设置clickable可以消费点击事件从而阻断事件穿透到覆盖的fragment-->
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/game_select_hrd"
         android:layout_width="190dp"

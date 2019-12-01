@@ -26,7 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     private showPhoto_Dialog dialog;
-    private DrawerLayout drawerLayout;
+    private DrawerLayout drawerLayout;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
+        loadFragment(3);
         loadFragment(4);
         Log.i("onCreateMain","yes");
 
@@ -65,29 +66,60 @@ public class MainActivity extends AppCompatActivity {
     public void loadFragment(int id){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment;
+        Fragment fragment_2048 = fragmentManager.findFragmentByTag("_2048");
+        Fragment fragment_hrd = fragmentManager.findFragmentByTag("hrd");
+        Fragment fragment_hanoi = fragmentManager.findFragmentByTag("hanoi");
+        Fragment fragment_gameSelect = fragmentManager.findFragmentByTag("gameSelect");
+        if(fragment_2048 != null){
+            fragmentTransaction.hide(fragment_2048);
+        }
+        if(fragment_gameSelect != null){
+            fragmentTransaction.hide(fragment_gameSelect);
+        }
+        if(fragment_hanoi != null){
+            fragmentTransaction.hide(fragment_hanoi);
+        }
+        if(fragment_hrd != null){
+            fragmentTransaction.hide(fragment_hrd);
+        }
         switch (id){
             case 1:
-                fragment = new Hanoi();
-                fragmentTransaction.replace(R.id.fragment_view, fragment);
+                if(fragment_hanoi == null){
+                    fragment_hanoi = new Hanoi();
+                    fragmentTransaction.add(R.id.fragment_view, fragment_hanoi,"hanoi");
+                }else{
+                    fragmentTransaction.show(fragment_hanoi);
+                }
                 Log.i("Hanoi", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 break;
             case 2:
-                fragment = new HuaRongDao();
-                fragmentTransaction.replace(R.id.fragment_view, fragment);
+                if(fragment_hrd == null){
+                    fragment_hrd = new HuaRongDao();
+                    fragmentTransaction.add(R.id.fragment_view, fragment_hrd, "hrd");
+                }else{
+                    fragmentTransaction.show(fragment_hrd);
+                }
                 Log.i("hrd", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
             case 3:
-                fragment = new _2048();
-                fragmentTransaction.replace(R.id.fragment_view, fragment);
+                if(fragment_2048 == null){
+                    fragment_2048 = new _2048();
+                    fragmentTransaction.add(R.id.fragment_view, fragment_2048, "_2048");
+                }else{
+                    fragmentTransaction.show(fragment_2048);
+                }
                 Log.i("_2048", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
             case 4:
-                fragment = new GameSelect();
-                fragmentTransaction.replace(R.id.fragment_view, fragment);
+                if(fragment_gameSelect == null){
+                    fragment_gameSelect = new GameSelect();
+                    fragmentTransaction.add(R.id.fragment_view, fragment_gameSelect, "gameSelect");
+                }else{
+                    fragmentTransaction.show(fragment_gameSelect);
+                }
                 Log.i("GameSelect", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;

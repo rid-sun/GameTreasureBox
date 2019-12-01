@@ -5,7 +5,7 @@
     <version value="1" ></version>
 
     <list>
-        <!--这里是类映射-->
         <mapping class="com.TerminalWork.gametreasurebox.database.userMsg"></mapping>
+        <mapping class="com.TerminalWork.gametreasurebox.database.achievement"></mapping>
     </list>
 </litepal>

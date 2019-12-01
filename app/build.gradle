@@ -40,7 +40,7 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
 
     implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
-    implementation 'org.litepal.android:core:3.0.0'
+    implementation 'org.litepal.android:java:3.0.0'
 
     implementation 'com.romainpiel.shimmer:library:1.4.0@aar'
     implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'

@@ -22,6 +22,9 @@ public class GameSelect extends Fragment {
     private CircularImageView hanoi;
     private MainActivity mainActivity;
 
+    public GameSelect() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

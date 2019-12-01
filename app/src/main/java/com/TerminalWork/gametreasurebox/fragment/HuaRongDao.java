@@ -19,6 +19,9 @@ public class HuaRongDao extends Fragment {
     private  image_moveView imagemoveView;
     private number_moveView view;
 
+    public HuaRongDao() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
