@@ -1,132 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/sculpture"
-        android:layout_width="109dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="248dp"
-        android:text="@string/image"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textSize="27sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/setup_username"
-        android:layout_width="109dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="72dp"
-        android:gravity="center_vertical"
-        android:text="@string/username"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textColorHighlight="@android:color/holo_blue_light"
-        android:textColorLink="#00EC0909"
-        android:textSize="27sp"
-        app:layout_constraintEnd_toEndOf="@+id/userNameText"
-        app:layout_constraintHorizontal_bias="0.329"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/setup_password"
-        android:layout_width="109dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="160dp"
-        android:text="@string/password"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textSize="27sp"
-        app:layout_constraintEnd_toEndOf="@+id/passwordText"
-        app:layout_constraintHorizontal_bias="0.335"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tLayout1"
-        android:layout_width="250dp"
-        android:layout_height="81dp"
+        android:id="@+id/InputLayout_account"
+        android:layout_width="320dp"
+        android:layout_height="75dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
         app:errorEnabled="true"
         app:errorTextAppearance="@style/ErrorStyle"
-        app:hintAnimationEnabled="false"
+        app:hintAnimationEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ed1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:hint="@string/hint_accountEditText" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tLayout2"
-        android:layout_width="250dp"
-        android:layout_height="81dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="144dp"
-        android:layout_marginEnd="32dp"
+        android:id="@+id/InputLayout_email"
+        android:layout_width="320dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="152dp"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/ErrorStyle"
+        app:hintAnimationEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:passwordToggleEnabled="true">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ed2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_passwordEditText" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tempMsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="176dp"
-        android:text="@string/uploadImage"
-        android:textColor="@color/colorSelect"
-        android:textSize="27sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/sculpture"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/InputLayout_password"
+        android:layout_width="320dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="240dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="15"
+            android:hint="@string/hint_passwordEditText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/InputLayout_confirmPassword"
+        android:layout_width="320dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="328dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="15"
+            android:hint="@string/hint_passwordEditText" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/registry_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="356dp"
+        android:id="@+id/registry_confirm"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="452dp"
         android:onClick="onclick"
-        android:text="@string/cancel"
+        android:text="@string/confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/registry_confirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="88dp"
+        android:id="@+id/registry_cancel"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:onClick="onclick"
-        android:text="@string/confirm"
-        app:layout_constraintBaseline_toBaselineOf="@+id/registry_cancel"
+        android:text="@string/cancel"
+        app:layout_constraintBaseline_toBaselineOf="@+id/registry_confirm"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.182"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.TerminalWork.gametreasurebox.custom_components.number_moveView
+    <com.TerminalWork.gametreasurebox.customComponents.number_moveView
         android:id="@+id/number_moveView"
         android:layout_width="410dp"
         android:layout_height="match_parent"

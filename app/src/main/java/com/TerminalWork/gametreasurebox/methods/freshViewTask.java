@@ -1,12 +1,11 @@
 package com.TerminalWork.gametreasurebox.methods;
 
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
 import androidx.annotation.NonNull;
 
-import com.TerminalWork.gametreasurebox.custom_components.image_moveView;
+import com.TerminalWork.gametreasurebox.customComponents.image_moveView;
 
 public class freshViewTask extends Thread {
     private image_moveView imagemoveView;

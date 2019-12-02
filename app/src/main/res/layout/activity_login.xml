@@ -42,13 +42,14 @@
             android:paddingBottom="10dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/accountImage"
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_alignStart="@+id/userNameText"
             android:layout_alignTop="@+id/userNameText"
             android:layout_alignBottom="@+id/userNameText"
             android:layout_marginStart="10dp"
-            android:src="@drawable/pretty_girl" />
+            android:src="@drawable/logo" />
 
         <ImageView
             android:layout_width="30dp"

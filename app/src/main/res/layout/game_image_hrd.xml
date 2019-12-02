@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.TerminalWork.gametreasurebox.custom_components.image_moveView
+    <com.TerminalWork.gametreasurebox.customComponents.image_moveView
         android:id="@+id/DView"
         android:layout_width="410dp"
         android:layout_height="match_parent"

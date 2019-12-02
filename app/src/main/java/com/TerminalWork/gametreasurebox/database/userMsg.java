@@ -9,6 +9,15 @@ public class userMsg extends LitePalSupport {
     private String password;
     private String signature;
     private String game_record;
+    private String headSculptureLocalPath;
+
+    public String getHeadSculptureLocalPath() {
+        return headSculptureLocalPath;
+    }
+
+    public void setHeadSculptureLocalPath(String headSculptureLocalPath) {
+        this.headSculptureLocalPath = headSculptureLocalPath;
+    }
 
     public String getEmail() {
         return Email;

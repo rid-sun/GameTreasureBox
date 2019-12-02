@@ -1,7 +1,6 @@
 package com.TerminalWork.gametreasurebox;
 
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,7 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.TerminalWork.gametreasurebox.fragment.GameSelect;
 import com.TerminalWork.gametreasurebox.fragment.Hanoi;
 import com.TerminalWork.gametreasurebox.fragment.HuaRongDao;
-import com.TerminalWork.gametreasurebox.custom_components.showPhoto_Dialog;
+import com.TerminalWork.gametreasurebox.customComponents.showPhoto_Dialog;
 import com.TerminalWork.gametreasurebox.fragment._2048;
 import com.google.android.material.navigation.NavigationView;
 

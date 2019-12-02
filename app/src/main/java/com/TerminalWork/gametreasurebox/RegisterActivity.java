@@ -2,8 +2,11 @@ package com.TerminalWork.gametreasurebox;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 
@@ -13,6 +16,10 @@ public class RegisterActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry);
+        VideoView videoView = findViewById(R.id.videoView);
+        videoView.setVideoURI(Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.long_board_girl));
+        videoView.start();
+        videoView.setOnCompletionListener(completion);
     }
 
     public void onclick(View v){
@@ -27,5 +34,12 @@ public class RegisterActivity extends Activity {
                 break;
         }
     }
+
+    private MediaPlayer.OnCompletionListener completion = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            mp.start();
+        }
+    };
 
 }

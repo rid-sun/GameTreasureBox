@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:clickable="true">
 
-    <com.TerminalWork.gametreasurebox.custom_components._2048_view
+    <com.TerminalWork.gametreasurebox.customComponents._2048_view
         android:layout_width="match_parent"
         android:layout_height="415dp"
         android:layout_marginTop="120dp"

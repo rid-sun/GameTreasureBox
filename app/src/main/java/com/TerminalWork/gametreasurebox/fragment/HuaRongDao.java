@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.TerminalWork.gametreasurebox.R;
-import com.TerminalWork.gametreasurebox.custom_components.image_moveView;
-import com.TerminalWork.gametreasurebox.custom_components.number_moveView;
+import com.TerminalWork.gametreasurebox.customComponents.image_moveView;
+import com.TerminalWork.gametreasurebox.customComponents.number_moveView;
 import com.TerminalWork.gametreasurebox.methods.freshViewTask;
 
 public class HuaRongDao extends Fragment {

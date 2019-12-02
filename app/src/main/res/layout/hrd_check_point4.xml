@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.TerminalWork.gametreasurebox.custom_components.myImageView
+    <com.TerminalWork.gametreasurebox.customComponents.myImageView
         android:id="@+id/cao_cao"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:view_id="1" />
 
-    <com.TerminalWork.gametreasurebox.custom_components.myImageView
+    <com.TerminalWork.gametreasurebox.customComponents.myImageView
         android:id="@+id/guan_yu"
         android:layout_width="200dp"
         android:layout_height="100dp"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:view_id="2" />
 
-    <com.TerminalWork.gametreasurebox.custom_components.myImageView
+    <com.TerminalWork.gametreasurebox.customComponents.myImageView
         android:id="@+id/huang_zhong"
         android:layout_width="100dp"
         android:layout_height="200dp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:view_id="3" />
 
-    <com.TerminalWork.gametreasurebox.custom_components.myImageView
+    <com.TerminalWork.gametreasurebox.customComponents.myImageView
         android:id="@+id/ma_chao"
         android:layout_width="200dp"
         android:layout_height="100dp"
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:view_id="4" />
 
-    <com.TerminalWork.gametreasurebox.custom_components.myImageView
+    <com.TerminalWork.gametreasurebox.customComponents.myImageView
         android:id="@+id/zhao_yun"
         android:layout_width="200dp"
         android:layout_height="100dp"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:view_id="0" />
 
-    <com.TerminalWork.gametreasurebox.custom_components.myImageView
+    <com.TerminalWork.gametreasurebox.customComponents.myImageView
         android:id="@+id/zhang_fei"
         android:layout_width="100dp"
         android:layout_height="200dp"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:view_id="5" />
 
-    <com.TerminalWork.gametreasurebox.custom_components.myImageView
+    <com.TerminalWork.gametreasurebox.customComponents.myImageView
         android:id="@+id/zu_1"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -90,7 +90,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:view_id="6" />
 
-    <com.TerminalWork.gametreasurebox.custom_components.myImageView
+    <com.TerminalWork.gametreasurebox.customComponents.myImageView
         android:id="@+id/zu_2"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -102,7 +102,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:view_id="7" />
 
-    <com.TerminalWork.gametreasurebox.custom_components.myImageView
+    <com.TerminalWork.gametreasurebox.customComponents.myImageView
         android:id="@+id/zu_3"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -114,7 +114,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:view_id="8" />
 
-    <com.TerminalWork.gametreasurebox.custom_components.myImageView
+    <com.TerminalWork.gametreasurebox.customComponents.myImageView
         android:id="@+id/zu_4"
         android:layout_width="100dp"
         android:layout_height="100dp"

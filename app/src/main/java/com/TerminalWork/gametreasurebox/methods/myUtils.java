@@ -2,21 +2,14 @@ package com.TerminalWork.gametreasurebox.methods;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.graphics.Path;
 import android.graphics.Rect;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.FrameLayout;
-
-import android.widget.GridLayout;
 
 import com.TerminalWork.gametreasurebox.bean.flags;
-import com.TerminalWork.gametreasurebox.custom_components.card;
+import com.TerminalWork.gametreasurebox.customComponents.card;
 
 public class myUtils {
 
