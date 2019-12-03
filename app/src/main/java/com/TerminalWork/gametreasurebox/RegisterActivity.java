@@ -20,8 +20,8 @@ import org.litepal.LitePal;
 
 public class RegisterActivity extends Activity {
 
-    private TextInputLayout InputLayout_account, InputLayout_email;
-    private EditText editTextAccount, editTextEmail;
+    private TextInputLayout InputLayout_account;
+    private EditText editTextAccount;
     private TextInputLayout InputLayout_password, InputLayout_confirmPassword;
     private EditText editTextPassword, editTextConfirmPassword;
 
@@ -37,8 +37,6 @@ public class RegisterActivity extends Activity {
 
         InputLayout_account = findViewById(R.id.InputLayout_account);
         editTextAccount = InputLayout_account.getEditText();
-        InputLayout_email = findViewById(R.id.InputLayout_email);
-        editTextEmail = InputLayout_email.getEditText();
         InputLayout_password = findViewById(R.id.InputLayout_password);
         editTextPassword = InputLayout_password.getEditText();
         InputLayout_confirmPassword = findViewById(R.id.InputLayout_confirmPassword);
@@ -49,7 +47,6 @@ public class RegisterActivity extends Activity {
     protected void onStart() {
         super.onStart();
         editTextAccount.addTextChangedListener(accountWatcher);
-        editTextEmail.addTextChangedListener(emailWatcher);
         editTextConfirmPassword.addTextChangedListener(confirmPasswordWatcher);
         editTextPassword.addTextChangedListener(passwordWatcher);
     }
@@ -57,33 +54,29 @@ public class RegisterActivity extends Activity {
     public void onclick(View v){
         switch (v.getId()){
             case R.id.registry_confirm:
-                if(editTextAccount.getText().toString().isEmpty() && editTextEmail.getText().toString().isEmpty()){
-                    Toast.makeText(RegisterActivity.this, "账号和邮箱至少一个不为空", Toast.LENGTH_SHORT);
-                    return ;
-                }else{
-                    if(!LitePal.select("name").where("name = ?",editTextAccount.getText().toString())
-                            .find(userMsg.class).isEmpty()){
-                        Toast.makeText(RegisterActivity.this, "账号已存在请更换", Toast.LENGTH_SHORT);
-                        return ;
-                    }
-                    if(!LitePal.select("email").where("email = ?",editTextEmail.getText().toString())
-                            .find(userMsg.class).isEmpty()){
-                        Toast.makeText(RegisterActivity.this, "邮箱已被注册请更换", Toast.LENGTH_SHORT);
-                        return ;
-                    }
-                    if(editTextConfirmPassword.getText().toString().equals(editTextPassword.getText().toString())
-                            && !editTextPassword.getText().toString().isEmpty()){
-                        userMsg user = new userMsg();
-                        user.setEmail(editTextEmail.getText().toString());
-                        user.setName(editTextAccount.getText().toString());
-                        user.setPassword(editTextPassword.getText().toString());
-                        user.save();
-                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT);
-                    }else{
-                        Toast.makeText(RegisterActivity.this, "请重新确认密码", Toast.LENGTH_SHORT);
-                        return ;
-                    }
+                if(editTextAccount.getText().toString().isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "账号为空", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                if(!LitePal.select("name").where("name = ?",editTextAccount.getText().toString())
+                            .find(userMsg.class).isEmpty()){
+                    Toast.makeText(RegisterActivity.this, "账号已存在请更换", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                if(!editTextConfirmPassword.getText().toString().equals(editTextPassword.getText().toString())
+                        || editTextPassword.getText().toString().isEmpty()){
+                    Toast.makeText(RegisterActivity.this, "请重新确认密码", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                userMsg user = new userMsg();
+                user.setName(editTextAccount.getText().toString());
+                user.setPassword(editTextPassword.getText().toString());
+                user.save();
+                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                /*
+                * 待加入加载过程处理
+                *
+                * */
                 finish();
                 break;
             case R.id.registry_cancel:
@@ -108,39 +101,11 @@ public class RegisterActivity extends Activity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String account = s.toString();
-            if(editTextEmail.getText().toString().length() == 0 && account.length() == 0){
-                InputLayout_account.setError("账号不能为空");
-            }else {
+            if(!LitePal.select("name").where("name = ?",account)
+                    .find(userMsg.class).isEmpty()){
+                InputLayout_account.setError("账号已存在");
+            }else{
                 InputLayout_account.setError(null);
-                if(!LitePal.select("name").where("name = ?",account)
-                        .find(userMsg.class).isEmpty()){
-                    InputLayout_account.setError("账号已存在");
-                }
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
-
-    private TextWatcher emailWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(editTextAccount.getText().toString().length() == 0 && s.toString().length() == 0){
-                InputLayout_email.setError("邮箱不能为空");
-            }else {
-                InputLayout_email.setError(null);
-                if(!LitePal.select("email").where("email = ?",s.toString())
-                        .find(userMsg.class).isEmpty()){
-                    InputLayout_email.setError("邮箱已被注册过");
-                }
             }
         }
 

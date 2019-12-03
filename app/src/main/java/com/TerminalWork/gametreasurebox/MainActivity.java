@@ -1,10 +1,13 @@
 package com.TerminalWork.gametreasurebox;
 
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.TerminalWork.gametreasurebox.database.userMsg;
 import com.TerminalWork.gametreasurebox.fragment.GameSelect;
 import com.TerminalWork.gametreasurebox.fragment.Hanoi;
 import com.TerminalWork.gametreasurebox.fragment.HuaRongDao;
@@ -21,32 +25,39 @@ import com.TerminalWork.gametreasurebox.customComponents.showPhoto_Dialog;
 import com.TerminalWork.gametreasurebox.fragment._2048;
 import com.google.android.material.navigation.NavigationView;
 
+import org.litepal.LitePal;
+
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     private showPhoto_Dialog dialog;
-    private DrawerLayout drawerLayout;;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private View drawerView;
+    private CircleImageView account;
+    private TextView signature;
+    private TextView username;
+    private String nowUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        View drawerView = navigationView.inflateHeaderView(R.layout.nav_header);
-        CircleImageView account = drawerView.findViewById(R.id.icon_image);
-        dialog = new showPhoto_Dialog(MainActivity.this,R.style.dialog, R.drawable.pretty_girl);
-        account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                bottomPopupOption = new BottomPopupOption(TabHostActivity.this);
-//                bottomPopupOption.setItemText("拍照","选择相册");
-//                bottomPopupOption.showPopupWindow();
-                dialog.show();
 
-            }
-        });
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerView = navigationView.inflateHeaderView(R.layout.nav_header);//动态加入头部
+        account = drawerView.findViewById(R.id.icon_image);
+        signature = drawerView.findViewById(R.id.signature);
+        username = drawerView.findViewById(R.id.username);
+
+        dialog = new showPhoto_Dialog(MainActivity.this,R.style.dialog, R.drawable.pretty_girl);
+        account.setOnClickListener(accountOnclick);
+
         //隐藏上方的actionbar
         if(getSupportActionBar() != null){
             getSupportActionBar().hide();
@@ -55,6 +66,36 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(3);
         loadFragment(4);
         Log.i("onCreateMain","yes");
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        SharedPreferences spf = getSharedPreferences("loginState", MODE_PRIVATE);
+        nowUser = spf.getString("nowUser",null);
+        Log.i("nowUser", nowUser);
+        List<userMsg> user = LitePal.select("headSculptureLocalPath", "name", "signature").
+                where("name = ?", nowUser).find(userMsg.class);
+        if(user.isEmpty()){
+            account.setImageDrawable(getDrawable(R.drawable.logo));
+            username.setText(getString(R.string.defaultUsername));
+            signature.setText(getString(R.string.defaultSignature));
+        }else{
+            if(user.get(0).getHeadSculptureLocalPath() == null){
+                account.setImageDrawable(getDrawable(R.drawable.logo));
+            }else{
+                account.setImageDrawable(Drawable.createFromPath(user.get(0).getHeadSculptureLocalPath()));
+            }
+            username.setText(user.get(0).getName());
+            if(user.get(0).getSignature() == null){
+                signature.setText(getString(R.string.defaultSignature));
+            }else{
+                signature.setText(user.get(0).getSignature());
+            }
+
+        }
 
     }
 
@@ -137,6 +178,16 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             return false;
+        }
+    };
+
+    private View.OnClickListener accountOnclick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+//                bottomPopupOption = new BottomPopupOption(TabHostActivity.this);
+//                bottomPopupOption.setItemText("拍照","选择相册");
+//                bottomPopupOption.showPopupWindow();
+            dialog.show();
         }
     };
 }

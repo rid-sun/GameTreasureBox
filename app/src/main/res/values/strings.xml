@@ -24,7 +24,7 @@
     <string name="visitor">游客登录</string>
     <string name="forgetPasswrd">忘记密码</string>
     <string name="separator">&#160;&#160;|&#160;&#160;</string>
-    <string name="hint_accountEditText">账号/邮箱号</string>
+    <string name="hint_accountEditText">账号</string>
     <string name="hint_passwordEditText">密码</string>
 
     <string name="cancel">取消</string>
@@ -32,5 +32,8 @@
     <string name="password">密&#160;&#160;&#160;&#160;码</string>
     <string name="username">用户名</string>
     <string name="image">头&#160;&#160;&#160;&#160;像</string>
+
+    <string name="defaultUsername">游客</string>
+    <string name="defaultSignature">技术永无止境，永攀高峰方显年轻本色</string>
 
 </resources>

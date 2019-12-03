@@ -5,7 +5,6 @@ import org.litepal.crud.LitePalSupport;
 public class userMsg extends LitePalSupport {
     private long ID;
     private String name;
-    private String Email;
     private String password;
     private String signature;
     private String game_record;
@@ -17,14 +16,6 @@ public class userMsg extends LitePalSupport {
 
     public void setHeadSculptureLocalPath(String headSculptureLocalPath) {
         this.headSculptureLocalPath = headSculptureLocalPath;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
     }
 
     public void setID(long ID) {
