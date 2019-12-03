@@ -58,8 +58,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="15"
-            android:hint="@string/hint_passwordEditText" />
+            android:hint="@string/hint_passwordEditText"
+            android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -75,8 +75,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="15"
-            android:hint="@string/hint_passwordEditText" />
+            android:hint="@string/hint_passwordEditText"
+            android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -84,6 +84,8 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_marginTop="452dp"
+        android:background="@drawable/registry_corner_shape"
+        android:textColor="@color/white"
         android:onClick="onclick"
         android:text="@string/confirm"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +98,8 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:onClick="onclick"
+        android:background="@drawable/registry_corner_shape"
+        android:textColor="@color/white"
         android:text="@string/cancel"
         app:layout_constraintBaseline_toBaselineOf="@+id/registry_confirm"
         app:layout_constraintEnd_toEndOf="parent"
