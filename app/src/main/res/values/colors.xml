@@ -57,4 +57,7 @@
     <!-- A really bright Holo shade of gray -->
     <color name="holo_gray_bright">#33CCCCCC</color>
     <color name="colorSelect">#00FFFF</color>
+
+    <color name="all_login_portion_color">#F2F3F7</color>
+
 </resources>

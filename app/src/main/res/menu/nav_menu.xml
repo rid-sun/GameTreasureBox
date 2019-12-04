@@ -10,5 +10,8 @@
     <item
         android:id="@+id/nav_homeSelect"
         android:title="homeSelect"/>
+    <item
+        android:id="@+id/logout"
+        android:title="zhuxaio"/>
 </group>
 </menu>

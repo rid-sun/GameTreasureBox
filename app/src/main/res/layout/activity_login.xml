@@ -50,6 +50,7 @@
             android:src="@drawable/logo" />
 
         <ImageView
+            android:id="@+id/arrow_down_login"
             android:layout_width="30dp"
             android:layout_height="20dp"
             android:layout_alignTop="@+id/userNameText"

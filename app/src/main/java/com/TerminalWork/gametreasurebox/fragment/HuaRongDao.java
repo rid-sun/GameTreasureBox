@@ -15,10 +15,6 @@ import com.TerminalWork.gametreasurebox.methods.freshViewTask;
 
 public class HuaRongDao extends Fragment {
 
-    private freshViewTask fresh_ViewTask;
-    private  image_moveView imagemoveView;
-    private number_moveView view;
-
     public HuaRongDao() {
     }
 
@@ -31,25 +27,6 @@ public class HuaRongDao extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        imagemoveView = (image_moveView)getActivity().findViewById(R.id.DView);
-//        Button button = getActivity().findViewById(R.id.button);
-//        fresh_ViewTask = new freshViewTask(imagemoveView);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                imagemoveView.init_Pos();
-//                imagemoveView.invalidate();
-//            }
-//        });
-//        view = getActivity().findViewById(R.id.number_moveView);
-//        Button button = getActivity().findViewById(R.id.button2);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                view.init_Pos();
-//                view.invalidate();
-//            }
-//        });
 
     }
 

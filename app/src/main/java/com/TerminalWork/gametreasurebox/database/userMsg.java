@@ -1,14 +1,26 @@
 package com.TerminalWork.gametreasurebox.database;
 
+import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
+import java.sql.Timestamp;
+
 public class userMsg extends LitePalSupport {
+
+    @Column(unique = true, defaultValue = "0")
     private long ID;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String password;
     private String signature;
     private String game_record;
     private String headSculptureLocalPath;
+
+    @Column(defaultValue = "0")
+    private long lastLoginTime;
 
     public String getHeadSculptureLocalPath() {
         return headSculptureLocalPath;
@@ -58,4 +70,11 @@ public class userMsg extends LitePalSupport {
         return signature;
     }
 
+    public long getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(long lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 }

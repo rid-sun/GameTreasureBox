@@ -1,5 +1,6 @@
 package com.TerminalWork.gametreasurebox;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences spf = getSharedPreferences("loginState", MODE_PRIVATE);
         nowUser = spf.getString("nowUser",null);
-        Log.i("nowUser", nowUser);
+        //Log.i("nowUser", nowUser);
         List<userMsg> user = LitePal.select("headSculptureLocalPath", "name", "signature").
                 where("name = ?", nowUser).find(userMsg.class);
         if(user.isEmpty()){
@@ -175,6 +176,14 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_call:
                     loadFragment(4);
                     drawerLayout.closeDrawers();
+                    break;
+                case R.id.logout:
+                    SharedPreferences sharedPreferences = getSharedPreferences("loginState", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("nowUser", null);
+                    editor.apply();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
                     break;
             }
             return false;
