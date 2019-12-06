@@ -6,12 +6,12 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/imageInitPosBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="304dp"
         android:layout_marginTop="40dp"
-        android:text="确定"
+        android:text="@string/resetOrder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,6 +22,51 @@
         android:layout_marginTop="100dp"
         app:bit_num="16"
         app:bitmapID="pretty_girl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/image_hrd_steps"
+        android:layout_width="67dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="56dp"
+        android:gravity="center"
+        android:text="@string/default_number"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/image_hrd_times"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/image_hrd_times"
+        android:layout_width="67dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="160dp"
+        android:gravity="center"
+        android:text="@string/default_number"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/image_hrd_timesTitle"
+        android:layout_width="67dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="160dp"
+        android:gravity="center"
+        android:text="@string/hrd_Times"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/image_hrd_stepsTitle"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/image_hrd_stepsTitle"
+        android:layout_width="67dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:text="@string/hrd_Steps"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

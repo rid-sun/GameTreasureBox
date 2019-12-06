@@ -17,8 +17,13 @@
     <string name="logo_name">百宝箱</string>
 
     <string name="kingdoms_hrd_nameTitle">三国华容道</string>
-    <string name="kingdoms_hrd_nameSteps">步数</string>
-    <string name="kingdoms_hrd_nameTimes">用时</string>
+    <string name="hrd_Steps">步数</string>
+    <string name="hrd_Times">用时</string>
+    <string name="kingdoms_hrd_checkPoints">关卡</string>
+    <string name="default_number">0</string>
+    <string name="next_checkPoint">下一关</string>
+    <string name="last_checkPoint">上一关</string>
+    <string name="resetOrder">重置游戏</string>
 
     <string name="setup">用户注册</string>
     <string name="visitor">游客登录</string>
@@ -35,5 +40,9 @@
 
     <string name="defaultUsername">游客</string>
     <string name="defaultSignature">技术永无止境，永攀高峰方显年轻本色</string>
+
+    <string name="sort_three_hrd_btn">三国华容道</string>
+    <string name="sort_image_hrd_btn">图片华容道</string>
+    <string name="sort_number_hrd_btn">数字华容道</string>
 
 </resources>

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +19,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.TerminalWork.gametreasurebox.bean.flags;
 import com.TerminalWork.gametreasurebox.database.userMsg;
 import com.TerminalWork.gametreasurebox.fragment.GameSelect;
 import com.TerminalWork.gametreasurebox.fragment.Hanoi;
 import com.TerminalWork.gametreasurebox.fragment.HuaRongDao;
 import com.TerminalWork.gametreasurebox.customComponents.showPhoto_Dialog;
 import com.TerminalWork.gametreasurebox.fragment._2048;
+import com.TerminalWork.gametreasurebox.fragment.select_hrd_sort;
 import com.google.android.material.navigation.NavigationView;
 
 import org.litepal.LitePal;
@@ -35,18 +38,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity {
     private showPhoto_Dialog dialog;
     private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private View drawerView;
     private CircleImageView account;
     private TextView signature;
     private TextView username;
-    private String nowUser;
+    private int closeFlag;
+    private long lastClickTime;
+    private long currentClickTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        closeFlag = 0;
+        lastClickTime = 0;
+        currentClickTime = 0;
 
+        NavigationView navigationView;
+        View drawerView;
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -64,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        loadFragment(3);
-        loadFragment(4);
+        loadFragment(flags._2048Fragment);
+        loadFragment(flags.gameSelectFragment);
         Log.i("onCreateMain","yes");
 
     }
@@ -74,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        String nowUser;
         SharedPreferences spf = getSharedPreferences("loginState", MODE_PRIVATE);
         nowUser = spf.getString("nowUser",null);
         //Log.i("nowUser", nowUser);
@@ -104,13 +113,14 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
-    public void loadFragment(int id){
+    public void loadFragment(int fragmentID){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment_2048 = fragmentManager.findFragmentByTag("_2048");
         Fragment fragment_hrd = fragmentManager.findFragmentByTag("hrd");
         Fragment fragment_hanoi = fragmentManager.findFragmentByTag("hanoi");
         Fragment fragment_gameSelect = fragmentManager.findFragmentByTag("gameSelect");
+        Fragment fragment_select_hrd = fragmentManager.findFragmentByTag("select_hrd");
         if(fragment_2048 != null){
             fragmentTransaction.hide(fragment_2048);
         }
@@ -123,8 +133,11 @@ public class MainActivity extends AppCompatActivity {
         if(fragment_hrd != null){
             fragmentTransaction.hide(fragment_hrd);
         }
-        switch (id){
-            case 1:
+        if(fragment_select_hrd != null){
+            fragmentTransaction.hide(fragment_select_hrd);
+        }
+        switch (fragmentID){
+            case flags.hanoiFragment:
                 if(fragment_hanoi == null){
                     fragment_hanoi = new Hanoi();
                     fragmentTransaction.add(R.id.fragment_view, fragment_hanoi,"hanoi");
@@ -134,9 +147,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("Hanoi", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 break;
-            case 2:
-                if(fragment_hrd == null){
-                    fragment_hrd = new HuaRongDao();
+            case flags.hrdFragment:
+                if(fragment_hrd == null || flags.current_sort_hrd != flags.last_sort_hrd){
+                    fragment_hrd = new HuaRongDao(flags.current_sort_hrd);
                     fragmentTransaction.add(R.id.fragment_view, fragment_hrd, "hrd");
                 }else{
                     fragmentTransaction.show(fragment_hrd);
@@ -144,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("hrd", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
-            case 3:
+            case flags._2048Fragment:
                 if(fragment_2048 == null){
                     fragment_2048 = new _2048();
                     fragmentTransaction.add(R.id.fragment_view, fragment_2048, "_2048");
@@ -154,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("_2048", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
-            case 4:
+            case flags.gameSelectFragment:
                 if(fragment_gameSelect == null){
                     fragment_gameSelect = new GameSelect();
                     fragmentTransaction.add(R.id.fragment_view, fragment_gameSelect, "gameSelect");
@@ -164,6 +177,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("GameSelect", "Start");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
+            case flags.selectHrdFragment:
+                if(fragment_select_hrd == null){
+                    fragment_select_hrd = new select_hrd_sort();
+                    fragmentTransaction.add(R.id.fragment_view, fragment_select_hrd, "select_hrd");
+                }else{
+                    fragmentTransaction.show(fragment_select_hrd);
+                }
+                Log.i("select_hrd", "Start");
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         fragmentTransaction.commit();
         Log.i("message", "事务已提交");
@@ -174,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.nav_call:
-                    loadFragment(4);
+                    loadFragment(flags.gameSelectFragment);
                     drawerLayout.closeDrawers();
                     break;
                 case R.id.logout:
@@ -199,4 +221,18 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        closeFlag++;
+        currentClickTime = System.currentTimeMillis();
+        if(closeFlag == 1){
+            lastClickTime = currentClickTime;
+            Toast.makeText(this, "再按一次退出游戏", Toast.LENGTH_SHORT).show();
+        }else if(currentClickTime - lastClickTime >= 2000){//使得中间点击间隔为2s
+            super.onBackPressed();
+        }else{
+            closeFlag = 0;
+        }
+    }
 }

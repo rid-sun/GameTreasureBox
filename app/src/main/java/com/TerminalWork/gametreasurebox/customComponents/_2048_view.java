@@ -206,7 +206,10 @@ public class _2048_view extends GridLayout {
 //            }
         }
         else{
-            //游戏失败
+            Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
+            intent.putExtra("score", 0);
+            context.sendBroadcast(intent);
+            startGame();
         }
     }
 
@@ -269,7 +272,10 @@ public class _2048_view extends GridLayout {
             addRandomCard(1);
 //            ckeckComplete();
         }else{
-            //游戏失败
+            Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
+            intent.putExtra("score", 0);
+            context.sendBroadcast(intent);
+            startGame();
         }
     }
 
@@ -331,7 +337,10 @@ public class _2048_view extends GridLayout {
             addRandomCard(1);
 //            ckeckComplete();
         }else{
-            //游戏失败
+            Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
+            intent.putExtra("score", 0);
+            context.sendBroadcast(intent);
+            startGame();
         }
     }
 
@@ -393,7 +402,10 @@ public class _2048_view extends GridLayout {
             addRandomCard(1);
 //            ckeckComplete();
         }else{
-            //游戏失败
+            Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
+            intent.putExtra("score", 0);
+            context.sendBroadcast(intent);
+            startGame();
         }
     }
 

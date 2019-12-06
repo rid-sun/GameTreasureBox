@@ -12,6 +12,18 @@ public class flags {
     public final static int scaleScheme_composite = 5;
     public final static int scaleScheme_production = 7;
 
+    public final static int number_hrd = 8;
+    public final static int image_hrd = 9;
+    public final static int threeKingdom_hrd = 10;
+    public static int current_sort_hrd = 0;
+    public static int last_sort_hrd = 0;
+
+    public final static int _2048Fragment = 11;
+    public final static int gameSelectFragment = 12;
+    public final static int hanoiFragment = 13;
+    public final static int hrdFragment = 14;
+    public final static int selectHrdFragment = 15;
+
 
     public static int card_width;
 

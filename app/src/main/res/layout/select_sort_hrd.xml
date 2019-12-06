@@ -4,26 +4,29 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bgp_select_hrd"
     android:paddingTop="250dp"
     android:paddingStart="100dp"
     android:paddingBottom="100dp"
-    android:paddingRight="100dp">
+    android:paddingEnd="100dp">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/threeKingdom_hrd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/sort_three_hrd_btn" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/number_hrd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_marginTop="30dp"
+        android:text="@string/sort_number_hrd_btn" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/image_hrd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_marginTop="30dp"
+        android:text="@string/sort_image_hrd_btn" />
 </LinearLayout>

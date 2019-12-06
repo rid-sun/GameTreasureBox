@@ -8,7 +8,7 @@
     <declare-styleable name="number_moveView">
         <attr name="blockCount" format="integer"/>
     </declare-styleable>
-    <declare-styleable name="myImageView">
+    <declare-styleable name="kingdom_hrdView">
         <attr name="view_id" format="integer"/>
         <attr name="check_pointID" format="integer"/>
     </declare-styleable>

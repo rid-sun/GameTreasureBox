@@ -25,7 +25,7 @@ public class Hanoi extends Fragment {
     private EditText input;
     private AlertDialog dialog;
 
-    public TextView tv[]=new TextView[10];
+    private TextView tv[]=new TextView[10];
     public int dx[]={0,26,36,46,56,66,76,86,96,106};
     public int dy[]={0,295,275,255,235,215,195,175,155,135};
     public int dc[][]=new int[10][2];

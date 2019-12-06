@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.TerminalWork.gametreasurebox.MainActivity;
 import com.TerminalWork.gametreasurebox.R;
+import com.TerminalWork.gametreasurebox.bean.flags;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 
@@ -28,7 +29,7 @@ public class GameSelect extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.game_select_activity, container, false);
+        return inflater.inflate(R.layout.game_select_fragment, container, false);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class GameSelect extends Fragment {
                     case MotionEvent.ACTION_UP:
                         hrd.setScaleX(1f);
                         hrd.setScaleY(1f);
-                        mainActivity.loadFragment(2);
+                        mainActivity.loadFragment(flags.selectHrdFragment);
                         break;
                 }
                 return true;
@@ -67,7 +68,7 @@ public class GameSelect extends Fragment {
                     case MotionEvent.ACTION_UP:
                         _2048.setScaleX(1f);
                         _2048.setScaleY(1f);
-                        mainActivity.loadFragment(3);
+                        mainActivity.loadFragment(flags._2048Fragment);
                         break;
                 }
                 return true;
@@ -84,7 +85,7 @@ public class GameSelect extends Fragment {
                     case MotionEvent.ACTION_UP:
                         hanoi.setScaleX(1f);
                         hanoi.setScaleY(1f);
-                        mainActivity.loadFragment(1);
+                        mainActivity.loadFragment(flags.hanoiFragment);
                         break;
                 }
                 return true;

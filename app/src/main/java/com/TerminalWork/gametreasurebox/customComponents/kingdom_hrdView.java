@@ -17,9 +17,11 @@ import com.TerminalWork.gametreasurebox.R;
 import com.TerminalWork.gametreasurebox.bean.flags;
 import com.TerminalWork.gametreasurebox.methods.myUtils;
 
-public class myImageView extends View {
+public class kingdom_hrdView extends View {
 
     private Intent intent;
+    private boolean isHasMoved;
+    private int kingdom_steps;
 
     int view_id;
     int check_pointID;
@@ -38,12 +40,15 @@ public class myImageView extends View {
     int previousX, presentX, previous_viewX, present_viewX;
     int previousY, presentY, previous_viewY, present_viewY;
 
-    public myImageView(Context context) {
+    private Context context;
+
+    public kingdom_hrdView(Context context) {
         super(context);
     }
 
-    public myImageView(Context context, @Nullable AttributeSet attrs) {
+    public kingdom_hrdView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         TypedArray ta = context.obtainStyledAttributes(attrs, new int[]{R.attr.check_pointID, android.R.attr.layout_width,
                 android.R.attr.layout_height, android.R.attr.layout_marginTop, android.R.attr.layout_marginStart, R.attr.view_id});
         check_pointID = ta.getInt(CHECK_POINT_ID,1);
@@ -65,6 +70,7 @@ public class myImageView extends View {
         flags.myView[check_pointID][view_id] = new Rect(present_viewX, present_viewY, present_viewX + view_width, present_viewY + view_height);
         paint = new Paint();
         intent = new Intent("hasMoved");
+        isHasMoved = false;
     }
 
     @Override
@@ -91,7 +97,8 @@ public class myImageView extends View {
 //                System.out.println("dong x: "+present_viewX+" y: "+present_viewY);
 //                flags.direction = myUtils.judgeDirection(previousX,previousY,presentX,presentY);
 //                System.out.println("dir: "+flags.direction);
-                flags.direction = myUtils.judgeDirection2(previousX,previousY,presentX,presentY,previous_viewX,previous_viewY,present_viewX,present_viewY);
+                flags.direction = myUtils.judgeDirection2(previousX,previousY,presentX,presentY
+                        ,previous_viewX,previous_viewY,present_viewX,present_viewY);
                 switch (flags.direction){
                     case flags.direction_UP:
                     case flags.direction_DOWN:
@@ -99,6 +106,7 @@ public class myImageView extends View {
                             present_viewX = previous_viewX;
                             present_viewY = previous_viewY + presentY - previousY;
                             this.offsetTopAndBottom(presentY - previousY);
+                            isHasMoved = true;
                         }
                         break;
                     case flags.direction_LEFT:
@@ -107,6 +115,7 @@ public class myImageView extends View {
                             present_viewX = previous_viewX + presentX - previousX;
                             present_viewY = previous_viewY;
                             this.offsetLeftAndRight(presentX - previousX);
+                            isHasMoved = true;
                         }
                         break;
                 }
@@ -141,6 +150,11 @@ public class myImageView extends View {
                 this.offsetLeftAndRight(present_viewX - previous_viewX);
                 this.offsetTopAndBottom(present_viewY - previous_viewY);
                 flags.myView[check_pointID][view_id].offset(present_viewX - previous_viewX, present_viewY - previous_viewY);
+                if(isHasMoved){
+                    intent.putExtra("kingdom_steps", 1);
+                    context.sendBroadcast(intent);
+                    isHasMoved = false;
+                }
                 if(view_id == 1 && flags.myView[check_pointID][view_id].left == 520 * 3.5){
                     Log.i("success: ","success");
                 }

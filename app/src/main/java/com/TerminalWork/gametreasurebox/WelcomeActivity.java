@@ -28,7 +28,7 @@ public class WelcomeActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_start);
+        setContentView(R.layout.activity_welcome);
 
         curtain = findViewById(R.id.curtain);
         Game = findViewById(R.id.app_name_part1);
