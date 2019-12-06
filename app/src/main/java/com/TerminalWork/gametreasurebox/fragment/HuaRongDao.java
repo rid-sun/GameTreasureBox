@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,6 +152,7 @@ public class HuaRongDao extends Fragment {
                     kingdomSteps.setText(String.valueOf(kingdom_steps));
                     break;
             }
+            Log.i("receiver", "收到");
         }
     }
 
@@ -209,8 +211,6 @@ public class HuaRongDao extends Fragment {
     }
 
     private void stopTimer(){
-        timer.cancel();
-        timerTask.cancel();
         timer = null;
         timerTask = null;
     }

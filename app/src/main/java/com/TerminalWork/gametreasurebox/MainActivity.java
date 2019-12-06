@@ -149,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case flags.hrdFragment:
                 if(fragment_hrd == null || flags.current_sort_hrd != flags.last_sort_hrd){
+                    if(fragment_hrd != null)
+                        fragmentTransaction.remove(fragment_hrd);
                     fragment_hrd = new HuaRongDao(flags.current_sort_hrd);
                     fragmentTransaction.add(R.id.fragment_view, fragment_hrd, "hrd");
                 }else{
