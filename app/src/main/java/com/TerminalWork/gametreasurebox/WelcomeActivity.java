@@ -23,14 +23,13 @@ public class WelcomeActivity extends Activity {
     private ShimmerTextView Game;
     private ShimmerTextView Treasure;
     private ShimmerTextView Box;
-    private TextView curtain;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        curtain = findViewById(R.id.curtain);
+        TextView curtain = findViewById(R.id.curtain);
         Game = findViewById(R.id.app_name_part1);
         Treasure = findViewById(R.id.app_name_part2);
         Box = findViewById(R.id.app_name_part3);

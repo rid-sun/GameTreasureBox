@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.TerminalWork.gametreasurebox.R;
 import com.TerminalWork.gametreasurebox.bean.accountMessage;
+import com.TerminalWork.gametreasurebox.database.userMsg;
 
 import java.util.List;
 
@@ -26,17 +26,13 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
     private CircleImageView headImage;
     private EditText accountText;
     private PopupWindow popupWindow;
-    private ImageView login;
-    private RelativeLayout passwordText;
 
     public accountHistoryAdapter(List<accountMessage> accountMessagesList, EditText accountText,
-                                 CircleImageView headImage, PopupWindow popupWindow, ImageView login, RelativeLayout passwordText) {
+                                 CircleImageView headImage, PopupWindow popupWindow) {
         this.accountMessagesList = accountMessagesList;
         this.accountText = accountText;
         this.headImage = headImage;
         this.popupWindow = popupWindow;
-        this.login = login;
-        this.passwordText = passwordText;
     }
 
     @NonNull
@@ -53,14 +49,16 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
                 accountText.setText(msg.getAccount());
                 headImage.setImageDrawable(Drawable.createFromPath(msg.getAccountImagePath()));
                 popupWindow.dismiss();
-                login.setVisibility(View.VISIBLE);
-                passwordText.setVisibility(View.VISIBLE);
             }
         });
         holder.deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
+                String name = accountMessagesList.get(position).getAccount();
+                userMsg msg = new userMsg();
+                msg.setLastLoginTime("0");
+                msg.updateAll("name = ?", name);
                 accountMessagesList.remove(position);
                 //应该弹出一个自定义的dialog来确认是否删除
                 accountHistoryAdapter.this.notifyDataSetChanged();
@@ -87,7 +85,7 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
         ImageView deleteImage;
         View itemSelf;
 
-        public ViewHolder(View view){
+        private ViewHolder(View view){
             super(view);
             itemSelf = view;
             accountImage = view.findViewById(R.id.accountImage_item);

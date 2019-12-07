@@ -186,6 +186,7 @@ public class number_moveView extends View {
         }
         puzzles[blockCount - 1].isBlank = true;
         isComplete = false;
+        invalidate();
         System.out.println("执行");
     }
 

@@ -1,11 +1,13 @@
 package com.TerminalWork.gametreasurebox;
 
+import android.Manifest;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -26,7 +28,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.TerminalWork.gametreasurebox.adapter.accountHistoryAdapter;
@@ -42,7 +47,6 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LoginActivity extends Activity {
-    private GradientDrawable gradientDrawable;
     private ImageView login;
     private RelativeLayout relativeLayoutAccount;
     private RelativeLayout relativeLayoutPassword;
@@ -62,9 +66,10 @@ public class LoginActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        verifyStoragePermissions(LoginActivity.this);
 
         login = findViewById(R.id.login);
-        gradientDrawable = (GradientDrawable)login.getBackground();
+        GradientDrawable gradientDrawable = (GradientDrawable)login.getBackground();
         colorChange = ObjectAnimator.ofInt(gradientDrawable,"color", Color.parseColor("#0983F0"), Color.parseColor("#2098F7"),
                 Color.parseColor("#1686F2"), Color.parseColor("#03c8Fc"), Color.parseColor("#00CAFC"));
         colorChange.setDuration(3000);
@@ -116,7 +121,7 @@ public class LoginActivity extends Activity {
                     editor.putString("nowUser", accountText.getText().toString());
                     editor.apply();
                     userMsg user = new userMsg();
-                    user.setLastLoginTime(System.currentTimeMillis());
+                    user.setLastLoginTime(String.valueOf(System.currentTimeMillis()));
                     user.updateAll("name = ?", accountText.getText().toString());
                     finish();
                 }else{
@@ -161,6 +166,10 @@ public class LoginActivity extends Activity {
                     break;
                 case MotionEvent.ACTION_UP:
                     visitor.setTextColor(Color.parseColor("#FF3D3A33"));
+                    SharedPreferences sharedPreferences = getSharedPreferences("loginState", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("nowUser", "visitor");
+                    editor.apply();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                     break;
@@ -190,9 +199,6 @@ public class LoginActivity extends Activity {
         public void onClick(View v) {
             loadHistoryRecord();
 
-            accountText.setText(null);
-            accountImage.setImageDrawable(null);
-
             View view = LayoutInflater.from(LoginActivity.this)
                     .inflate(R.layout.popup_window_recycler_view, null);
             popupWindow = new PopupWindow(LoginActivity.this);
@@ -202,7 +208,7 @@ public class LoginActivity extends Activity {
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(layoutManager);
             accountHistoryAdapter adapter = new accountHistoryAdapter(accountMessageList, accountText
-                    , accountImage, popupWindow, login, relativeLayoutPassword);
+                    , accountImage, popupWindow);
             recyclerView.setAdapter(adapter);
 
             login.setVisibility(View.GONE);
@@ -214,6 +220,13 @@ public class LoginActivity extends Activity {
             popupWindow.setBackgroundDrawable(getDrawable(R.drawable.corner_shape_select_account));//颜色全透明，这样布局就是圆角了
             popupWindow.setOutsideTouchable(true);//点击外部区域关闭弹窗
             popupWindow.setFocusable(true);
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    login.setVisibility(View.VISIBLE);
+                    relativeLayoutPassword.setVisibility(View.VISIBLE);//将消失的两个组件恢复
+                }
+            });
             popupWindow.showAsDropDown(accountText, 0, 30);
         }
     };
@@ -221,11 +234,39 @@ public class LoginActivity extends Activity {
     private void loadHistoryRecord(){
         List<userMsg> users = LitePal.select("name", "headSculptureLocalPath")
                 .where("lastLoginTime > 0").order("lastLoginTime desc").find(userMsg.class);
+        accountMessageList.clear();//避免列表重复加载
+        if(users.isEmpty())
+            return;
         for( userMsg i : users){
             accountMessage msg = new accountMessage(i.getHeadSculptureLocalPath(), i.getName());
             accountMessageList.add(msg);
             Log.i("add", "success");
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this, "拒绝权限会使得头像信息丢失", Toast.LENGTH_SHORT).show();
+        }else{
+            startService(new Intent(LoginActivity.this, MyIntentService.class));
+        }
+    }
+
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE);
+        }
+    }
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
 }

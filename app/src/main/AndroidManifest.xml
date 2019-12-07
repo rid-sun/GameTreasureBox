@@ -13,10 +13,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"/><!--这里极为重要，他可以规避掉横竖屏切换时导致的oncreate方法再次执行-->
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".RegisterActivity"/>
+        <service
+            android:name=".MyIntentService"
+            android:exported="false"></service>
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" /> <!-- 这里极为重要，他可以规避掉横竖屏切换时导致的oncreate方法再次执行 -->
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,4 +30,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

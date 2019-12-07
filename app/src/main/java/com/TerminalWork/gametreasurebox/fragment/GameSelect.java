@@ -91,6 +91,20 @@ public class GameSelect extends Fragment {
                 return true;
             }
         });
+
+        //这里的话得提前打开，因为onHiddenChanged方法只会在改变状态时调用，它刚创建的时候不会被调用
+        mainActivity.getMediaPlayer().start();
+
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            mainActivity.getMediaPlayer().pause();
+        }else{
+            mainActivity.getMediaPlayer().start();
+        }
     }
 
     @Override

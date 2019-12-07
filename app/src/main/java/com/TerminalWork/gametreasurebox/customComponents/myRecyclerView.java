@@ -18,7 +18,7 @@ public class myRecyclerView extends RecyclerView {
 
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
-        int height = MeasureSpec.makeMeasureSpec(300, MeasureSpec.AT_MOST);
+        int height = MeasureSpec.makeMeasureSpec(600, MeasureSpec.AT_MOST);
         super.onMeasure(widthSpec,height);
     }
 }

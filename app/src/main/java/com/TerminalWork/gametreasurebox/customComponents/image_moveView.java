@@ -199,6 +199,7 @@ public class image_moveView extends View {
             puzzles[flags.Order16[order % 8][i]].y = puzzles[i].orignY;
             map[i] = flags.Order16[order % 8][i];
         }
+        invalidate();
         isComplete = false;
         System.out.println("执行");
     }

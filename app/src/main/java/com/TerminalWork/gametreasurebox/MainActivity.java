@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,6 +33,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.litepal.LitePal;
 
+import java.io.IOException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private int closeFlag;
     private long lastClickTime;
     private long currentClickTime;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +76,13 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.i_want_my_tears_back);
+        mediaPlayer.setLooping(true);
+
         loadFragment(flags._2048Fragment);
         loadFragment(flags.gameSelectFragment);
         Log.i("onCreateMain","yes");
+
 
     }
 
@@ -236,5 +244,15 @@ public class MainActivity extends AppCompatActivity {
         }else{
             closeFlag = 0;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release();
+    }
+
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
     }
 }

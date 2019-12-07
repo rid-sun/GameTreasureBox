@@ -99,6 +99,7 @@ public class HuaRongDao extends Fragment {
                 @Override
                 public void onClick(View v) {
                     imageMove.init_Pos();
+                    restartTimer();
                 }
             });
         }
@@ -113,6 +114,7 @@ public class HuaRongDao extends Fragment {
                 @Override
                 public void onClick(View v) {
                     numberMove.init_Pos();
+                    restartTimer();
                 }
             });
         }

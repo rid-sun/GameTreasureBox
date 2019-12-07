@@ -17,10 +17,13 @@ public class userMsg extends LitePalSupport {
     private String password;
     private String signature;
     private String game_record;
+
+    @Column(defaultValue = "/storage/emulated/0/logo.PNG")
     private String headSculptureLocalPath;
 
+    //这里如果数据表用long型数据的话，在后面adapter更新数据时会失败，string就可以了
     @Column(defaultValue = "0")
-    private long lastLoginTime;
+    private String lastLoginTime;
 
     public String getHeadSculptureLocalPath() {
         return headSculptureLocalPath;
@@ -70,11 +73,11 @@ public class userMsg extends LitePalSupport {
         return signature;
     }
 
-    public long getLastLoginTime() {
+    public String getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(long lastLoginTime) {
+    public void setLastLoginTime(String lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 }
