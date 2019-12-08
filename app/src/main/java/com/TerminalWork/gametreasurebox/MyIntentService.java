@@ -30,15 +30,26 @@ public class MyIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        String logoPath = Environment.getExternalStorageDirectory() + "/" + "logo.PNG";
-        Log.i("logoPath", logoPath);
-        File imageLogo = new File("logo.PNG");
+        Bundle bundle = intent.getExtras();
+        String imagePath = (String) bundle.get("imagePath");
+        String targetPath = null;
+        if(imagePath == null){
+            targetPath = Environment.getExternalStorageDirectory() + "/" + "logo.png";
+            Log.i("logoPath", targetPath);
+        }else{
+            targetPath = Environment.getExternalStorageDirectory() + imagePath.substring(imagePath.lastIndexOf("/"));
+        }
+        File targetImage = new File(targetPath);
         FileOutputStream outputStream = null;
         InputStream inputStream = null;
-        if(!imageLogo.exists()){
+        if(!targetImage.exists()){
             try{
-                inputStream = getApplicationContext().getAssets().open("logo.PNG");
-                outputStream = new FileOutputStream(logoPath);
+                if(targetPath.substring(targetPath.lastIndexOf("/") + 1).equals("logo.png")){
+                    inputStream = getApplicationContext().getAssets().open("logo.png");
+                }else{
+                    inputStream = new FileInputStream(imagePath);
+                }
+                outputStream = new FileOutputStream(targetPath);
                 byte[] buffer = new byte[1024];
                 int length = 0;
                 while ((length = inputStream.read(buffer)) != -1) {

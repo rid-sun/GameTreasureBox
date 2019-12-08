@@ -2,16 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <group android:checkableBehavior="single">
     <item
-        android:id="@+id/nav_call"
-        android:title="call"/>
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home"
+        android:title="@string/nav_home"/>
     <item
         android:id="@+id/nav_rankList"
-        android:title="rankList"/>
+        android:icon="@drawable/rank_list"
+        android:title="@string/nav_rankList"/>
     <item
-        android:id="@+id/nav_homeSelect"
-        android:title="homeSelect"/>
+        android:id="@+id/nav_musicControl"
+        android:icon="@drawable/music_on"
+        android:title="@string/nav_musicControl"/>
     <item
-        android:id="@+id/logout"
-        android:title="zhuxaio"/>
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/out"
+        android:title="@string/nav_logout"/>
+    <item
+        android:id="@+id/nav_cancelAction"
+        android:icon="@drawable/cancellation"
+        android:title="@string/nav_cancelAction"/>
 </group>
 </menu>

@@ -1,19 +1,32 @@
 package com.TerminalWork.gametreasurebox;
 
+import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -48,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private long lastClickTime;
     private long currentClickTime;
     private MediaPlayer mediaPlayer = new MediaPlayer();
+    private PopupWindow bottomPop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         username = drawerView.findViewById(R.id.username);
 
         dialog = new showPhoto_Dialog(MainActivity.this,R.style.dialog, R.drawable.pretty_girl);
+        account.setOnLongClickListener(accountLongOnclick);
         account.setOnClickListener(accountOnclick);
 
         //隐藏上方的actionbar
@@ -205,11 +220,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
-                case R.id.nav_call:
+                case R.id.nav_home:
                     loadFragment(flags.gameSelectFragment);
                     drawerLayout.closeDrawers();
                     break;
-                case R.id.logout:
+                case R.id.nav_cancelAction:
                     SharedPreferences sharedPreferences = getSharedPreferences("loginState", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("nowUser", null);
@@ -217,20 +232,89 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                     break;
+                case R.id.nav_rankList:
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setIcon(getDrawable(R.drawable.sorry))
+                            .setTitle("Sorry")
+                            .setMessage("作者还没有开发此功能")
+                            .show();
+                    break;
+                case R.id.nav_musicControl:
+                    if(mediaPlayer.isPlaying()){
+                        mediaPlayer.pause();
+                        menuItem.setIcon(getDrawable(R.drawable.music_off));
+                    }else{
+                        mediaPlayer.start();
+                        menuItem.setIcon(getDrawable(R.drawable.music_on));
+                    }
+                    break;
+                case R.id.nav_logout:
+                    finish();
+                    break;
             }
             return false;
+        }
+    };
+
+    private View.OnLongClickListener accountLongOnclick = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            drawerLayout.closeDrawers();
+            View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.bottom_popup_window, null);
+            //让其宽度占满屏幕
+            bottomPop = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            View rootView = LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_main, null);
+            bottomPop.setOutsideTouchable(true);
+            bottomPop.setFocusable(true);
+            bottomPop.setAnimationStyle(R.style.PopupWindowAnimation);
+            bottomPop.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
+            TextView localUpload = contentView.findViewById(R.id.localUpload);
+            localUpload.setOnClickListener(uploadOnclick);
+            TextView cancelUpload = contentView.findViewById(R.id.cancelUpload);
+            cancelUpload.setOnClickListener(uploadOnclick);
+            TextView cameraUpload = contentView.findViewById(R.id.cameraUpload);
+            cameraUpload.setOnClickListener(uploadOnclick);
+            localUpload.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.popup_window_occur_animation));
+            cancelUpload.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.popup_window_occur_animation));
+            cameraUpload.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.popup_window_occur_animation));
+            return true;
         }
     };
 
     private View.OnClickListener accountOnclick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//                bottomPopupOption = new BottomPopupOption(TabHostActivity.this);
-//                bottomPopupOption.setItemText("拍照","选择相册");
-//                bottomPopupOption.showPopupWindow();
+            drawerLayout.closeDrawers();
             dialog.show();
         }
     };
+
+    private View.OnClickListener uploadOnclick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.cameraUpload:
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setIcon(getDrawable(R.drawable.sorry))
+                            .setTitle("Sorry")
+                            .setMessage("作者还没有开发此功能")
+                            .show();
+                    break;
+                case R.id.cancelUpload:
+                    bottomPop.dismiss();
+                    break;
+                case R.id.localUpload:
+                    openAlbum();
+                    break;
+            }
+        }
+    };
+
+    private void openAlbum(){
+        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+        intent.setType("image/*");
+        startActivityForResult(intent, flags.activityRequestCode_upLoadImage);
+    }
 
     @Override
     public void onBackPressed() {
@@ -239,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
         if(closeFlag == 1){
             lastClickTime = currentClickTime;
             Toast.makeText(this, "再按一次退出游戏", Toast.LENGTH_SHORT).show();
-        }else if(currentClickTime - lastClickTime >= 2000){//使得中间点击间隔为2s
+        }else if(currentClickTime - lastClickTime <= 2000){//使得中间点击间隔为2s
             super.onBackPressed();
         }else{
             closeFlag = 0;
@@ -252,7 +336,62 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer.release();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case flags.activityRequestCode_upLoadImage:
+                if(resultCode == RESULT_OK) {
+                    handleImage(data);
+                }
+                break;
+            case flags.activityRequestCode_cameraUpLoad:
+                break;
+        }
+    }
+
+    //from "Android第一行代码"
+    private  void handleImage(Intent data){
+        String imagePath = null;
+        Uri uri = data.getData();
+        if(DocumentsContract.isDocumentUri(this, uri)){
+            // 如果是document类型的uri，则通过document id处理
+            String docId = DocumentsContract.getDocumentId(uri);
+            if("com.android.providers.media.documents".equals(uri.getAuthority())){
+                String id = docId.split(":")[1];//解析出数字格式的id
+                String selection = MediaStore.Images.Media._ID + "=" + id;
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            }else if("com.android.providers.downloads.documents".equals(uri.getAuthority())){
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+                imagePath = getImagePath(contentUri, null);
+            }
+        }else if("content".equalsIgnoreCase(uri.getScheme())){
+            //如果是content类型的、uri，则用普通方式处理
+            imagePath = getImagePath(uri, null);
+        }else if("file".equalsIgnoreCase(uri.getScheme())){
+            //如果是file类型的Uri，则直接获取图片路径即可
+            imagePath = uri.getPath();
+        }
+        //弹框出来
+        Intent intent = new Intent(MainActivity.this, MyIntentService.class);
+        intent.putExtra("imagePath", imagePath);
+        startService(intent);
+    }
+
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
+
+    private String getImagePath(Uri uri, String selection){
+        String path = null;
+        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+        }
+        return path;
+    }
+
 }

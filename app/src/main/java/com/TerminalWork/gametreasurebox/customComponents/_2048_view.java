@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -28,16 +29,19 @@ public class _2048_view extends GridLayout {
     private int score;
     private Context context;
     private Intent intent;
+    private View toastView;
 
     public _2048_view(Context context) {
         super(context);
         this.context = context;
+        toastView = inflate(context, R.layout.toast, null);
         initView();
     }
 
     public _2048_view(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+        toastView = inflate(context, R.layout.toast, null);
         initView();
     }
 
@@ -51,15 +55,28 @@ public class _2048_view extends GridLayout {
     }
 
     private void judgeNumber(int num){
+        Toast toast = new Toast(context);
         switch(num){
-            case 512:
-                Toast.makeText(context,getResources().getString(R.string.noticeFor_512),Toast.LENGTH_SHORT).show();
+            case 32:
+                ((TextView)(toastView.findViewById(R.id.toast_text)))
+                        .setText(getResources().getString(R.string.noticeFor_32));
+                toast.setView(toastView);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.show();
                 break;
             case 1024:
-                Toast.makeText(context,getResources().getString(R.string.noticeFor_1024),Toast.LENGTH_SHORT).show();
+                ((TextView)(toastView.findViewById(R.id.toast_text)))
+                        .setText(getResources().getString(R.string.noticeFor_1024));
+                toast.setView(toastView);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.show();
                 break;
             case 4096:
-                Toast.makeText(context,getResources().getString(R.string.noticeFor_4096),Toast.LENGTH_SHORT).show();
+                ((TextView)(toastView.findViewById(R.id.toast_text)))
+                        .setText(getResources().getString(R.string.noticeFor_4096));
+                toast.setView(toastView);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.show();
                 break;
         }
     }

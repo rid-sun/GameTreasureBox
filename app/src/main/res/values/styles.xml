@@ -16,14 +16,8 @@
         <item name="android:windowIsFloating">true</item>
         <!--标题  -->
         <item name="android:windowNoTitle">true</item>
-        <!--阴影  -->
-        <item name="android:windowIsTranslucent">true</item>
-        <!--透明背景-->
-        <item name="android:background">@android:color/transparent</item>
-        <!--窗口背景透明-->
-        <item name="android:windowBackground">@android:color/transparent</item>
         <!--弹窗背景是否变暗-->
-        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <!--注册用户输入框错误提示-->
@@ -32,5 +26,8 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <!---->
+    <!--PopupWindow的动画效果-->
+    <style name="PopupWindowAnimation">
+        <item name="android:windowExitAnimation">@anim/popup_window_fade_animation</item>
+    </style>
 </resources>

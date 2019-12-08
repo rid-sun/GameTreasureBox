@@ -24,6 +24,9 @@ public class flags {
     public final static int hrdFragment = 14;
     public final static int selectHrdFragment = 15;
 
+    public final static int activityRequestCode_upLoadImage = 16;
+    public final static int activityRequestCode_cameraUpLoad = 17;
+
 
     public static int card_width;
 

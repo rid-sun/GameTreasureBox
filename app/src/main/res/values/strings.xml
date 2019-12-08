@@ -7,7 +7,7 @@
     <string name="noticeFor_1024">马上就要合成2048了，加油</string>
     <string name="noticeFor_2048">恭喜你合成一个2048</string>
     <string name="noticeFor_4096">恭喜你合成一个4096</string>
-    <string name="noticeFor_512">继续努力哦</string>
+    <string name="noticeFor_32">继续努力哦</string>
 
     <string name="app_name_part1">Game</string>
     <string name="app_name_part2">Treasure</string>
@@ -44,5 +44,15 @@
     <string name="sort_three_hrd_btn">三国华容道</string>
     <string name="sort_image_hrd_btn">图片华容道</string>
     <string name="sort_number_hrd_btn">数字华容道</string>
+
+    <!--头部菜单-->
+    <string name="nav_home">主界面</string>
+    <string name="nav_rankList">排行榜</string>
+    <string name="nav_musicControl">音乐</string>
+    <string name="nav_logout">退出</string>
+    <string name="nav_cancelAction">注销</string>
+    <string name="local_upload">本地上传</string>
+    <string name="camera_upload">相机上传</string>
+    <string name="cancel_upload">取消上传</string>
 
 </resources>
