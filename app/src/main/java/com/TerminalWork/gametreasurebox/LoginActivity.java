@@ -31,6 +31,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.TerminalWork.gametreasurebox.adapter.accountHistoryAdapter;
@@ -53,7 +54,6 @@ public class LoginActivity extends Activity {
     private EditText passwordText;
     private CircleImageView accountImage;
     private ImageView arrow_down;
-    private TextView forgetPassword;
     private ValueAnimator colorChange;
     private TextView visitor;
     private TextView registry;
@@ -65,7 +65,14 @@ public class LoginActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        verifyStoragePermissions(LoginActivity.this);
+
+        if(ContextCompat.checkSelfPermission(LoginActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(LoginActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }else{
+            startService(new Intent(LoginActivity.this, loadLogoToLocal.class));
+        }
 
         login = findViewById(R.id.login);
         GradientDrawable gradientDrawable = (GradientDrawable)login.getBackground();
@@ -88,12 +95,10 @@ public class LoginActivity extends Activity {
         super.onStart();
         relativeLayoutAccount = findViewById(R.id.accountLoginRelativeLayout);
         relativeLayoutPassword = findViewById(R.id.passwrdLoginRelativeLayout);
-        forgetPassword = findViewById(R.id.forgetPasswrd);
         animation = AnimationUtils.loadAnimation(this, R.anim.slideup_app_login_animation);
         relativeLayoutAccount.startAnimation(animation);
         relativeLayoutPassword.startAnimation(animation);
         login.startAnimation(animation);
-        forgetPassword.startAnimation(animation);
 
         accountText = findViewById(R.id.userNameText);
         passwordText = findViewById(R.id.passwordText);
@@ -251,21 +256,5 @@ public class LoginActivity extends Activity {
             startService(new Intent(LoginActivity.this, loadImageToLocal.class));
         }
     }
-
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE);
-        }
-    }
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
 
 }

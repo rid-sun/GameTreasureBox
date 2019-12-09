@@ -216,17 +216,14 @@ public class _2048_view extends GridLayout {
         }
         if(canMove){
             addRandomCard(1);
-//            ckeckComplete();
-//            for(int i = 0; i < 4; i++){
-//                for(int j = 0; j < 4; j++)
-//                    System.out.println(cd[i][j].getNumber());
-//            }
         }
         else{
-            Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
-            intent.putExtra("score", 0);
-            context.sendBroadcast(intent);
-            startGame();
+            if(checkComplete()){
+                Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
+                intent.putExtra("score", 0);
+                context.sendBroadcast(intent);
+                startGame();
+            }
         }
     }
 
@@ -287,12 +284,13 @@ public class _2048_view extends GridLayout {
         }
         if(canMove){
             addRandomCard(1);
-//            ckeckComplete();
         }else{
-            Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
-            intent.putExtra("score", 0);
-            context.sendBroadcast(intent);
-            startGame();
+            if(checkComplete()){
+                Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
+                intent.putExtra("score", 0);
+                context.sendBroadcast(intent);
+                startGame();
+            }
         }
     }
 
@@ -352,12 +350,13 @@ public class _2048_view extends GridLayout {
         }
         if(canMove){
             addRandomCard(1);
-//            ckeckComplete();
         }else{
-            Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
-            intent.putExtra("score", 0);
-            context.sendBroadcast(intent);
-            startGame();
+            if(checkComplete()){
+                Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
+                intent.putExtra("score", 0);
+                context.sendBroadcast(intent);
+                startGame();
+            }
         }
     }
 
@@ -417,13 +416,26 @@ public class _2048_view extends GridLayout {
         }
         if(canMove){
             addRandomCard(1);
-//            ckeckComplete();
         }else{
-            Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
-            intent.putExtra("score", 0);
-            context.sendBroadcast(intent);
-            startGame();
+            if(checkComplete()){
+                Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
+                intent.putExtra("score", 0);
+                context.sendBroadcast(intent);
+                startGame();
+            }
         }
+    }
+
+    private Boolean checkComplete(){
+        numberIsZero.clear();
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4;  j++){
+                if (cd[i][j].getNumber() == 0){
+                    numberIsZero.add(new Point(i,j));
+                }
+            }
+        }
+        return numberIsZero.isEmpty();
     }
 
 }

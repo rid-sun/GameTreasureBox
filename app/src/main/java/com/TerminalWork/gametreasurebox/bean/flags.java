@@ -12,9 +12,6 @@ public class flags {
     public final static int scaleScheme_composite = 5;
     public final static int scaleScheme_production = 7;
 
-    public final static int number_hrd = 8;
-    public final static int image_hrd = 9;
-    public final static int threeKingdom_hrd = 10;
     public static int current_sort_hrd = 0;
     public static int last_sort_hrd = 0;
 

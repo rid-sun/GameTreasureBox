@@ -62,19 +62,19 @@ public class select_hrd_sort extends Fragment {
                     v.setScaleX(1.0f);
                     switch (v.getId()){
                         case R.id.number_hrd:
-                            if(flags.current_sort_hrd != flags.number_hrd){
+                            if(flags.current_sort_hrd != R.layout.game_number_hrd){
                                 flags.last_sort_hrd = flags.current_sort_hrd;
                                 flags.current_sort_hrd = R.layout.game_number_hrd;
                             }
                             break;
                         case R.id.image_hrd:
-                            if(flags.current_sort_hrd != flags.image_hrd){
+                            if(flags.current_sort_hrd != R.layout.game_image_hrd){
                                 flags.last_sort_hrd = flags.current_sort_hrd;
                                 flags.current_sort_hrd = R.layout.game_image_hrd;
                             }
                             break;
                         case R.id.threeKingdom_hrd:
-                            if(flags.current_sort_hrd != flags.threeKingdom_hrd){
+                            if(flags.current_sort_hrd != R.layout.game_three_kingdoms_hrd){
                                 flags.last_sort_hrd = flags.current_sort_hrd;
                                 flags.current_sort_hrd = R.layout.game_three_kingdoms_hrd;
                             }
