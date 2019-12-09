@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -22,34 +23,36 @@ import java.io.InputStream;
  * a service on a separate handler thread.
  *
  */
-public class MyIntentService extends IntentService {
+public class loadImageToLocal extends IntentService {
 
-    public MyIntentService() {
-        super("MyIntentService");
+    public loadImageToLocal() {
+        super("loadImageToLocal");
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        Bundle bundle = intent.getExtras();
-        String imagePath = (String) bundle.get("imagePath");
-        String targetPath = null;
-        if(imagePath == null){
-            targetPath = Environment.getExternalStorageDirectory() + "/" + "logo.png";
-            Log.i("logoPath", targetPath);
+        String oldImagePath = null;
+        String targetImagePath;
+        if(intent != null){
+            Bundle bundle = new Bundle();
+            bundle = intent.getExtras();
+            oldImagePath = bundle.getString("imagePath");
+            targetImagePath = Environment.getExternalStorageDirectory() + "/" + "treasureBox" + oldImagePath.substring(oldImagePath.lastIndexOf("/"));
         }else{
-            targetPath = Environment.getExternalStorageDirectory() + imagePath.substring(imagePath.lastIndexOf("/"));
+            targetImagePath = Environment.getExternalStorageDirectory() + "/" + "treasureBox" + "/" + "logo.PNG";
         }
-        File targetImage = new File(targetPath);
+        File targetImage = new File(targetImagePath);
         FileOutputStream outputStream = null;
         InputStream inputStream = null;
         if(!targetImage.exists()){
+            targetImage.mkdirs();//创建父级目录
             try{
-                if(targetPath.substring(targetPath.lastIndexOf("/") + 1).equals("logo.png")){
-                    inputStream = getApplicationContext().getAssets().open("logo.png");
+                if(intent != null){
+                    inputStream = getApplicationContext().getAssets().open("logo.PNG");
                 }else{
-                    inputStream = new FileInputStream(imagePath);
+                    inputStream = new FileInputStream(oldImagePath);
                 }
-                outputStream = new FileOutputStream(targetPath);
+                outputStream = new FileOutputStream(targetImagePath);
                 byte[] buffer = new byte[1024];
                 int length = 0;
                 while ((length = inputStream.read(buffer)) != -1) {

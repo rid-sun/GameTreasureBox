@@ -18,7 +18,7 @@ public class userMsg extends LitePalSupport {
     private String signature;
     private String game_record;
 
-    @Column(defaultValue = "/storage/emulated/0/logo.PNG")
+    @Column(defaultValue = "/storage/emulated/0/logo.png")
     private String headSculptureLocalPath;
 
     //这里如果数据表用long型数据的话，在后面adapter更新数据时会失败，string就可以了

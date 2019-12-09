@@ -31,7 +31,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.TerminalWork.gametreasurebox.adapter.accountHistoryAdapter;
@@ -249,7 +248,7 @@ public class LoginActivity extends Activity {
         if(grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
             Toast.makeText(this, "拒绝权限会使得头像信息丢失", Toast.LENGTH_SHORT).show();
         }else{
-            startService(new Intent(LoginActivity.this, MyIntentService.class));
+            startService(new Intent(LoginActivity.this, loadImageToLocal.class));
         }
     }
 

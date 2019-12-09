@@ -1,12 +1,13 @@
 package com.TerminalWork.gametreasurebox;
 
+import android.Manifest;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +28,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -46,7 +48,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.litepal.LitePal;
 
-import java.io.IOException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private long currentClickTime;
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private PopupWindow bottomPop;
+    private String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -294,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.cameraUpload:
+                    bottomPop.dismiss();
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setIcon(getDrawable(R.drawable.sorry))
                             .setTitle("Sorry")
@@ -304,6 +307,7 @@ public class MainActivity extends AppCompatActivity {
                     bottomPop.dismiss();
                     break;
                 case R.id.localUpload:
+                    bottomPop.dismiss();
                     openAlbum();
                     break;
             }
@@ -350,9 +354,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == 1){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Intent intent = new Intent(MainActivity.this, loadImageToLocal.class);
+                intent.putExtra("imagePath", imagePath);
+                startService(intent);
+            }else{
+                Toast.makeText(this, "拒绝权限，上传失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     //from "Android第一行代码"
-    private  void handleImage(Intent data){
-        String imagePath = null;
+    private void handleImage(Intent data){
         Uri uri = data.getData();
         if(DocumentsContract.isDocumentUri(this, uri)){
             // 如果是document类型的uri，则通过document id处理
@@ -360,22 +376,29 @@ public class MainActivity extends AppCompatActivity {
             if("com.android.providers.media.documents".equals(uri.getAuthority())){
                 String id = docId.split(":")[1];//解析出数字格式的id
                 String selection = MediaStore.Images.Media._ID + "=" + id;
-                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+                this.imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
             }else if("com.android.providers.downloads.documents".equals(uri.getAuthority())){
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
-                imagePath = getImagePath(contentUri, null);
+                this.imagePath = getImagePath(contentUri, null);
             }
         }else if("content".equalsIgnoreCase(uri.getScheme())){
             //如果是content类型的、uri，则用普通方式处理
-            imagePath = getImagePath(uri, null);
+            this.imagePath = getImagePath(uri, null);
         }else if("file".equalsIgnoreCase(uri.getScheme())){
             //如果是file类型的Uri，则直接获取图片路径即可
-            imagePath = uri.getPath();
+            this.imagePath = uri.getPath();
         }
+
+        //System.out.println("imagePathFore"+ imagePath);
         //弹框出来
-        Intent intent = new Intent(MainActivity.this, MyIntentService.class);
-        intent.putExtra("imagePath", imagePath);
-        startService(intent);
+        if(ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }else{
+            Intent intent = new Intent(MainActivity.this, loadImageToLocal.class);
+            intent.putExtra("imagePath", imagePath);
+            startService(intent);
+        }
     }
 
     public MediaPlayer getMediaPlayer() {

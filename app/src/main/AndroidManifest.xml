@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".MyIntentService"
+            android:name=".loadImageToLocal"
             android:exported="false" />
 
         <activity
