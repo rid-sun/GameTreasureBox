@@ -1,6 +1,7 @@
 package com.TerminalWork.gametreasurebox.customComponents;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.TerminalWork.gametreasurebox.R;
 import com.TerminalWork.gametreasurebox.bean.flags;
@@ -29,10 +31,14 @@ public class number_moveView extends View {
     Paint paint;
     int index;
     public boolean isComplete;
+    private Context context;
+    private Intent intent;
+    private int steps;
 
     public number_moveView(Context context) {
         super(context);
         this.setWillNotDraw(false);
+        this.context = context;
         init();
     }
 
@@ -46,6 +52,7 @@ public class number_moveView extends View {
         blockCount = ta.getInt(0,0);
         ta.recycle();
         System.out.println("宽为："+view_height+"   个数："+blockCount);
+        this.context = context;
         init();
     }
 
@@ -82,6 +89,9 @@ public class number_moveView extends View {
 
         isComplete = false;
         index = -1;
+
+        intent = new Intent(flags.action_changStepsNumberHrd);
+        steps = 0;
     }
 
     @Override
@@ -117,6 +127,9 @@ public class number_moveView extends View {
                 if(switch_pos(num_x,num_y)) {
                     invalidate();
                     judgeComplete();
+                    steps++;
+                    intent.putExtra("number_steps", steps);
+                    context.sendBroadcast(intent);
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -197,6 +210,8 @@ public class number_moveView extends View {
             }
         }
         isComplete = true;
+        Toast.makeText(context, "成功", Toast.LENGTH_SHORT).show();
+        steps = 0;
     }
 
 }

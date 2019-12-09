@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.TerminalWork.gametreasurebox.MainActivity;
 import com.TerminalWork.gametreasurebox.R;
+import com.TerminalWork.gametreasurebox.bean.flags;
 import com.TerminalWork.gametreasurebox.customComponents.image_moveView;
 import com.TerminalWork.gametreasurebox.customComponents.number_moveView;
 
@@ -128,7 +129,9 @@ public class HuaRongDao extends Fragment {
         image_steps = 0;
         number_steps = 0;
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("hasMoved");
+        intentFilter.addAction(flags.action_changStepsKingdomHrd);
+        intentFilter.addAction(flags.action_changStepsImageHrd);
+        intentFilter.addAction(flags.action_changStepsNumberHrd);
         steps = new stepsReceiver();
         mainActivity.registerReceiver(steps, intentFilter);
 
@@ -141,16 +144,16 @@ public class HuaRongDao extends Fragment {
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
             kingdom_steps += bundle.getInt("kingdom_steps", 0);
-            image_steps += bundle.getInt("image_steps", 0);
-            number_steps += bundle.getInt("number_steps", 0);
-            switch (layout_id){
-                case R.layout.game_image_hrd:
+            image_steps = bundle.getInt("image_steps", 0);
+            number_steps = bundle.getInt("number_steps", 0);
+            switch (intent.getAction()){
+                case flags.action_changStepsImageHrd:
                     imageHrdSteps.setText(String.valueOf(image_steps));
                     break;
-                case R.layout.game_number_hrd:
+                case flags.action_changStepsNumberHrd:
                     numberHrdSteps.setText(String.valueOf(number_steps));
                     break;
-                case R.layout.game_three_kingdoms_hrd:
+                case flags.action_changStepsKingdomHrd:
                     kingdomSteps.setText(String.valueOf(kingdom_steps));
                     break;
             }

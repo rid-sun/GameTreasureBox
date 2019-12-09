@@ -2,10 +2,15 @@ package com.TerminalWork.gametreasurebox;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import com.TerminalWork.gametreasurebox.bean.flags;
+import com.TerminalWork.gametreasurebox.database.userMsg;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,5 +61,13 @@ public class loadImageToLocal extends IntentService {
                 }
             }
         }
+        SharedPreferences sharedPreferences = getSharedPreferences("loginState", MODE_PRIVATE);
+        String user = sharedPreferences.getString("nowUser", null);
+        userMsg msg = new userMsg();
+        msg.setHeadSculptureLocalPath(targetPath);
+        msg.updateAll("name = ?", user);
+        Intent myIntent = new Intent(flags.action_updateAccountImage);
+        myIntent.putExtra("targetPath", targetPath);
+        sendBroadcast(myIntent);
     }
 }

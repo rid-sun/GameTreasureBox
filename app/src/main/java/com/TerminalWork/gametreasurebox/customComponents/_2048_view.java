@@ -84,7 +84,7 @@ public class _2048_view extends GridLayout {
     private void initView(){
         setBackgroundColor(ContextCompat.getColor(getContext(), R.color.backGround_color_panel));
         setColumnCount(4);
-        intent = new Intent("changeScore");
+        intent = new Intent(flags.action_changeScore2048);
         score = 0;
         setOnTouchListener(new OnTouchListener() {
             @Override

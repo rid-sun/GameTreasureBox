@@ -1,11 +1,15 @@
 package com.TerminalWork.gametreasurebox.fragment;
 
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.VideoView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -29,13 +33,18 @@ public class GameSelect extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.game_select_fragment, container, false);
+        mainActivity = (MainActivity)getActivity();
+        View view = inflater.inflate(R.layout.game_select_fragment, container,false);
+        VideoView videoView = view.findViewById(R.id.select_videoView);
+        videoView.setVideoURI(Uri.parse("android.resource://"+ mainActivity.getPackageName() + "/" + R.raw.forest));
+        videoView.start();
+        videoView.setOnCompletionListener(completion);
+        return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mainActivity = (MainActivity)getActivity();
         hrd = getActivity().findViewById(R.id.game_select_hrd);
         _2048 = getActivity().findViewById(R.id.game_select_2048);
         hanoi = getActivity().findViewById(R.id.game_select_hanoi);
@@ -96,6 +105,13 @@ public class GameSelect extends Fragment {
         mainActivity.getMediaPlayer().start();
 
     }
+
+    private MediaPlayer.OnCompletionListener completion = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            mp.start();
+        }
+    };
 
     @Override
     public void onHiddenChanged(boolean hidden) {

@@ -251,7 +251,7 @@ public class LoginActivity extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(this, "拒绝权限会使得头像信息丢失", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "拒绝权限会使得默认头像信息丢失", Toast.LENGTH_SHORT).show();
         }else{
             startService(new Intent(LoginActivity.this, loadImageToLocal.class));
         }

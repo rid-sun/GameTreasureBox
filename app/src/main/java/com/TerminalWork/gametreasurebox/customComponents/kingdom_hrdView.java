@@ -21,7 +21,6 @@ public class kingdom_hrdView extends View {
 
     private Intent intent;
     private boolean isHasMoved;
-    private int kingdom_steps;
 
     int view_id;
     int check_pointID;
@@ -69,7 +68,7 @@ public class kingdom_hrdView extends View {
         ta.recycle();
         flags.myView[check_pointID][view_id] = new Rect(present_viewX, present_viewY, present_viewX + view_width, present_viewY + view_height);
         paint = new Paint();
-        intent = new Intent("hasMoved");
+        intent = new Intent(flags.action_changStepsKingdomHrd);
         isHasMoved = false;
     }
 

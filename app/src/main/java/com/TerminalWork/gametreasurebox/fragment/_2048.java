@@ -19,12 +19,7 @@ import com.TerminalWork.gametreasurebox.R;
 
 public class _2048 extends Fragment {
 
-    private IntentFilter intentFilter;
-    private scoreReceiver score;
-    private TextView scoreView;
-
-    public _2048() {
-    }
+    public _2048() {  }
 
     @Nullable
     @Override
@@ -35,34 +30,14 @@ public class _2048 extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        scoreView = getActivity().findViewById(R.id.scoreView);
+        TextView scoreView = getActivity().findViewById(R.id.scoreView);
         scoreView.setText("Score: 0");
         scoreView.setTextColor(getContext().getColor(R.color.holo_orange_dark));
-        intentFilter = new IntentFilter();
-        intentFilter.addAction("changeScore");
-        score = new scoreReceiver();
-        getActivity().registerReceiver(score, intentFilter);
-    }
-
-    class scoreReceiver extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            int score = bundle.getInt("score");
-            scoreView.setText("Score: " + score);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(score);
         Log.i("_2048","销毁");
     }
 }

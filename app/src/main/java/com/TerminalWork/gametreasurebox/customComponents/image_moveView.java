@@ -1,6 +1,7 @@
 package com.TerminalWork.gametreasurebox.customComponents;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.TerminalWork.gametreasurebox.R;
 import com.TerminalWork.gametreasurebox.bean.flags;
@@ -35,11 +37,15 @@ public class image_moveView extends View {
     int offset_y = 100;
 
     private Paint paint;
+    private Intent intent;
+    private int steps;
+    private Context context;
 
     public image_moveView(Context context) {
         super(context);
         this.setWillNotDraw(false);
         paint = new Paint();
+        this.context = context;
         init();
     }
 
@@ -61,6 +67,7 @@ public class image_moveView extends View {
 
         this.setWillNotDraw(false);
         paint = new Paint();
+        this.context = context;
         init();
     }
 
@@ -96,6 +103,8 @@ public class image_moveView extends View {
         }
         isComplete = false;
         paint.setStrokeWidth((float) 5.0);
+        intent = new Intent(flags.action_changStepsImageHrd);
+        steps = 0;
     }
 
     @Override
@@ -133,6 +142,9 @@ public class image_moveView extends View {
                 if(switch_pos(num_x,num_y)) {
                     invalidate();
                     judgeComplete();
+                    steps++;
+                    intent.putExtra("image_steps", steps);
+                    context.sendBroadcast(intent);
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -211,6 +223,8 @@ public class image_moveView extends View {
             }
         }
         isComplete = true;
+        Toast.makeText(context, "成功", Toast.LENGTH_SHORT).show();
+        steps = 0;
     }
 
 }

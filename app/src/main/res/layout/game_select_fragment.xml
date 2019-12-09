@@ -7,6 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--设置clickable可以消费点击事件从而阻断事件穿透到覆盖的fragment-->
+    <VideoView
+        android:id="@+id/select_videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/game_select_hrd"
         android:layout_width="190dp"
@@ -18,7 +23,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:siBorderColor="@color/white"
+        app:siBorderColor="@color/holo_gray_light"
         app:siBorderWidth="15dp"
         app:siRadius="10dp" />
 
@@ -45,7 +50,7 @@
         android:layout_width="233dp"
         android:layout_height="357dp"
         android:layout_marginStart="88dp"
-        android:layout_marginTop="268dp"
+        android:layout_marginTop="260dp"
         android:src="@drawable/game_select_hanoi"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

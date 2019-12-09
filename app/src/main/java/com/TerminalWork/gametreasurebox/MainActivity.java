@@ -1,12 +1,18 @@
 package com.TerminalWork.gametreasurebox;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -23,14 +29,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -64,15 +71,12 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private PopupWindow bottomPop;
     private String imagePath;
+    private myReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        closeFlag = 0;
-        lastClickTime = 0;
-        currentClickTime = 0;
 
         NavigationView navigationView;
         View drawerView;
@@ -133,10 +137,10 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }
+        closeFlag = 0;
+        lastClickTime = 0;
+        currentClickTime = 0;
 
-    public void callDrawer(View view){
-        drawerLayout.openDrawer(GravityCompat.START);
     }
 
     public void loadFragment(int fragmentID){
@@ -322,6 +326,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        receiver = new myReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(flags.action_changeScore2048);
+        intentFilter.addAction(flags.action_updateAccountImage);
+        registerReceiver(receiver, intentFilter);
+    }
+
+    @Override
     public void onBackPressed() {
         closeFlag++;
         currentClickTime = System.currentTimeMillis();
@@ -339,6 +353,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mediaPlayer.release();
+        unregisterReceiver(receiver);
     }
 
     @Override
@@ -416,6 +431,38 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
         }
         return path;
+    }
+
+    class myReceiver extends BroadcastReceiver{
+
+        Bundle bundle = new Bundle();
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()){
+                case flags.action_changeScore2048:
+                    bundle = intent.getExtras();
+                    int score = bundle.getInt("score");
+                    TextView scoreView = findViewById(R.id.scoreView);
+                    scoreView.setText("Score: " + score);
+                    break;
+                case flags.action_updateAccountImage:
+                    bundle = intent.getExtras();
+                    String path = bundle.getString("targetPath");
+                    account.setImageDrawable(Drawable.createFromPath(path));
+                    NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                    Notification notification = new NotificationCompat.Builder(MainActivity.this, "GameTreasureBox")
+                            .setContentTitle("GameTreasureBox")
+                            .setContentText("头像设置成功")
+                            .setWhen(System.currentTimeMillis())
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo))
+                            .setAutoCancel(true)
+                            .build();
+                    manager.notify(1, notification);
+                    break;
+            }
+        }
     }
 
 }

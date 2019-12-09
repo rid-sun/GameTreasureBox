@@ -24,8 +24,13 @@ public class flags {
     public final static int activityRequestCode_upLoadImage = 16;
     public final static int activityRequestCode_cameraUpLoad = 17;
 
-
     public static int card_width;
+
+    public final static String action_changeScore2048 = "com.TerminalWork.gametreasurebox.action.changeScore2048";
+    public final static String action_changStepsKingdomHrd = "com.TerminalWork.gametreasurebox.action.changeStepsKingdomHrd";
+    public final static String action_changStepsImageHrd = "com.TerminalWork.gametreasurebox.action.changeStepsImageHrd";
+    public final static String action_changStepsNumberHrd = "com.TerminalWork.gametreasurebox.action.changeStepsNumberHrd";
+    public final static String action_updateAccountImage = "com.TerminalWork.gametreasurebox.action.updateAccountImage";
 
     public static Rect[][] myView = new Rect[6][10];
 
