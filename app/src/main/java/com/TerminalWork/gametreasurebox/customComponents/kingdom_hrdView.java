@@ -2,23 +2,19 @@ package com.TerminalWork.gametreasurebox.customComponents;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.TerminalWork.gametreasurebox.R;
 import com.TerminalWork.gametreasurebox.bean.flags;
 import com.TerminalWork.gametreasurebox.methods.myUtils;
-
-import me.jessyan.autosize.AutoSizeCompat;
 
 public class kingdom_hrdView extends View {
 
@@ -30,6 +26,8 @@ public class kingdom_hrdView extends View {
 
     int view_width;
     int view_height;
+    int old_viewX;
+    int old_viewY;
 
     final int CHECK_POINT_ID = 0;
     final int LAYOUT_WIDTH = 1;
@@ -56,8 +54,8 @@ public class kingdom_hrdView extends View {
         check_pointID = ta.getInt(CHECK_POINT_ID,1);
         view_width = ta.getDimensionPixelSize(LAYOUT_WIDTH,0);
         view_height = ta.getDimensionPixelSize(LAYOUT_HEIGHT,0);
-        present_viewX = ta.getDimensionPixelSize(LAYOUT_MARGIN_START,0);
-        present_viewY = ta.getDimensionPixelSize(LAYOUT_MARGIN_TOP,0);
+        old_viewX = present_viewX = ta.getDimensionPixelSize(LAYOUT_MARGIN_START,0);
+        old_viewY = present_viewY = ta.getDimensionPixelSize(LAYOUT_MARGIN_TOP,0);
         view_id = ta.getInt(VIEW_ID,0);
 //        System.out.println("id: "+ view_id +"x: "+present_viewX+"y: "+present_viewY+"width: "+view_width+"height: "+view_height);
 
@@ -80,9 +78,21 @@ public class kingdom_hrdView extends View {
             flags.unitHeight = view_height;//初始化高度，用于屏幕适配
         }
         flags.myView[check_pointID][view_id] = new Rect(present_viewX, present_viewY, present_viewX + view_width, present_viewY + view_height);
-        System.out.println("chid: "+ check_pointID+"id: " + view_id+"l:"+present_viewX+"t:"+present_viewY+"r:"+(present_viewX + view_width)+"b:"+(present_viewY + view_height));
         intent = new Intent(flags.action_changStepsKingdomHrd);
         isHasMoved = false;
+    }
+
+    //恢复之前的状态
+    @Override
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        switch (visibility){
+            case VISIBLE:
+                flags.myView[check_pointID][view_id] = new Rect(old_viewX, old_viewY, old_viewX + view_width, old_viewY + view_height);
+                break;
+            case GONE:
+                break;
+        }
     }
 
     @Override
@@ -93,7 +103,6 @@ public class kingdom_hrdView extends View {
                 previousY = (int)event.getY();
                 previous_viewX = this.getLeft();
                 previous_viewY = this.getTop();
-//                System.out.println("xia x: "+previous_viewX+" y: "+previous_viewY);
                 break;
             case MotionEvent.ACTION_MOVE:
                 presentX = (int)event.getX();
@@ -112,7 +121,6 @@ public class kingdom_hrdView extends View {
                             present_viewX = previous_viewX;
                             present_viewY = previous_viewY + presentY - previousY;
                             this.offsetTopAndBottom(presentY - previousY);
-                            System.out.println("dada");
                             isHasMoved = true;
                         }
                         break;
@@ -172,11 +180,5 @@ public class kingdom_hrdView extends View {
 //            System.out.println(i+"  "+flags.myView[i].left + "   "+flags.myView[i].top);
 //        }
         return true;
-    }
-
-    @Override
-    public Resources getResources() {
-        AutoSizeCompat.autoConvertDensity((super.getResources()), 560, false);//如果有自定义需求就用这个方法
-        return super.getResources();
     }
 }
