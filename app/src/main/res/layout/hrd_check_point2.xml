@@ -6,125 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
-        android:id="@+id/cao_cao"
-        app:check_pointID="2"
-        app:view_id="1"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="106dp"
-        android:layout_marginTop="120dp"
-        android:background="@drawable/cao_cao"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
-        android:id="@+id/guan_yu"
-        app:check_pointID="2"
-        app:view_id="2"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="106dp"
-        android:layout_marginTop="320dp"
-        android:background="@drawable/guan_yu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
-        android:id="@+id/huang_zhong"
-        app:check_pointID="2"
-        app:view_id="3"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="320dp"
-        android:background="@drawable/huang_zhong"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
-        android:id="@+id/ma_chao"
-        app:check_pointID="2"
-        app:view_id="4"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="306dp"
-        android:layout_marginTop="120dp"
-        android:background="@drawable/ma_chao"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
-        android:id="@+id/zhao_yun"
-        app:check_pointID="2"
-        app:view_id="0"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="306dp"
-        android:layout_marginTop="320dp"
-        android:background="@drawable/zhao_yun"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
-        android:id="@+id/zhang_fei"
-        app:check_pointID="2"
-        app:view_id="5"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="120dp"
-        android:background="@drawable/zhang_fei"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
-        android:id="@+id/zu_1"
-        app:check_pointID="2"
-        app:view_id="6"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="106dp"
-        android:layout_marginTop="420dp"
-        android:background="@drawable/zu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
-        android:id="@+id/zu_2"
-        app:check_pointID="2"
-        app:view_id="7"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="206dp"
-        android:layout_marginTop="420dp"
-        android:background="@drawable/zu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
-        android:id="@+id/zu_3"
-        app:check_pointID="2"
-        app:view_id="8"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="520dp"
-        android:background="@drawable/zu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
-        android:id="@+id/zu_4"
-        app:check_pointID="2"
-        app:view_id="9"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="306dp"
-        android:layout_marginTop="520dp"
-        android:background="@drawable/zu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:layout_width="200dp"
         android:layout_height="50dp"
@@ -135,16 +16,24 @@
         android:textAlignment="center"
         android:textColor="@color/holo_purple"
         android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
     <TextView
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginStart="306dp"
         android:layout_marginTop="620dp"
         android:background="@drawable/stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
 
     <TextView
         android:layout_width="100dp"
@@ -152,8 +41,172 @@
         android:layout_marginStart="6dp"
         android:layout_marginTop="620dp"
         android:background="@drawable/stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
+        android:id="@+id/cao_cao"
+        app:check_pointID="2"
+        app:view_id="1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/cao_cao"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
+        android:id="@+id/guan_yu"
+        app:check_pointID="2"
+        app:view_id="2"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="320dp"
+        android:background="@drawable/guan_yu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
+        android:id="@+id/huang_zhong"
+        app:check_pointID="2"
+        app:view_id="3"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="320dp"
+        android:background="@drawable/huang_zhong"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
+        android:id="@+id/ma_chao"
+        app:check_pointID="2"
+        app:view_id="4"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="306dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/ma_chao"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
+        android:id="@+id/zhao_yun"
+        app:check_pointID="2"
+        app:view_id="0"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="306dp"
+        android:layout_marginTop="320dp"
+        android:background="@drawable/zhao_yun"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
+        android:id="@+id/zhang_fei"
+        app:check_pointID="2"
+        app:view_id="5"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/zhang_fei"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
+        android:id="@+id/zu_1"
+        app:check_pointID="2"
+        app:view_id="6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="420dp"
+        android:background="@drawable/zu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
+        android:id="@+id/zu_2"
+        app:check_pointID="2"
+        app:view_id="7"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="206dp"
+        android:layout_marginTop="420dp"
+        android:background="@drawable/zu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
+        android:id="@+id/zu_3"
+        app:check_pointID="2"
+        app:view_id="8"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="520dp"
+        android:background="@drawable/zu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <com.TerminalWork.gametreasurebox.customComponents.kingdom_hrdView
+        android:id="@+id/zu_4"
+        app:check_pointID="2"
+        app:view_id="9"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="306dp"
+        android:layout_marginTop="520dp"
+        android:background="@drawable/zu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

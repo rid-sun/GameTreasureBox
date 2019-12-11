@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -155,6 +156,9 @@ public class HuaRongDao extends Fragment {
                     break;
                 case flags.action_changStepsKingdomHrd:
                     kingdomSteps.setText(String.valueOf(kingdom_steps));
+                    break;
+                case flags.action_KingdomHrd_success:
+                    Toast.makeText(context, "成功通过本关", Toast.LENGTH_SHORT).show();
                     break;
             }
             Log.i("receiver", "收到");

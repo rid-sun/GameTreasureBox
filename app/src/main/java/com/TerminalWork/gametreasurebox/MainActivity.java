@@ -100,8 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         mediaPlayer = MediaPlayer.create(this, R.raw.i_want_my_tears_back);
         mediaPlayer.setLooping(true);
-
-        loadFragment(flags._2048Fragment);
+        
         loadFragment(flags.gameSelectFragment);
         Log.i("onCreateMain","yes");
 

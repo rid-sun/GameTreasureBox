@@ -78,6 +78,7 @@ public class select_hrd_sort extends Fragment {
                                 flags.last_sort_hrd = flags.current_sort_hrd;
                                 flags.current_sort_hrd = R.layout.game_three_kingdoms_hrd;
                             }
+                            flags.gapHeight = flags.gapWidth = 10000000;
                             break;
                     }
                     mainActivity.loadFragment(flags.hrdFragment);

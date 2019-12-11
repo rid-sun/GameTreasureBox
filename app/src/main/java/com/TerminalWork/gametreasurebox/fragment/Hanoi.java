@@ -3,6 +3,7 @@ package com.TerminalWork.gametreasurebox.fragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,17 +27,21 @@ public class Hanoi extends Fragment {
     private AlertDialog dialog;
 
     private TextView tv[]=new TextView[10];
-    public int dx[]={0,26,36,46,56,66,76,86,96,106};
-    public int dy[]={0,295,275,255,235,215,195,175,155,135};
-    public int dc[][]=new int[10][2];
-    public int size[]=new int[3];
-    public int store[][]=new int[3][9];
-    public int step[][]=new int[512][2];
-    public int state1,state2;
-    public int direction=1;
-    public int floor;
-    public Timer timer;
-    public TimerTask task;
+    private int[] dx;
+    private int[] dy;
+    private int dc[][]=new int[10][2];
+    private int size[]=new int[3];
+    private int store[][]=new int[3][9];
+    private int step[][]=new int[512][2];
+    private int state1,state2;
+    private int direction=1;
+    private int floor;
+    private Timer timer;
+    private TimerTask task;
+    private View view;
+    private int unitHeight;
+    private int unitWidth;
+    private int maxHeight;
 
     public Hanoi() {
     }
@@ -44,7 +49,7 @@ public class Hanoi extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.game_hanoi,container,false);
+        view = inflater.inflate(R.layout.game_hanoi,container,false);
         return view;
     }
 
@@ -53,13 +58,14 @@ public class Hanoi extends Fragment {
         super.onStart();
         confirm = (Button)getActivity().findViewById(R.id.hanoi_confirm);
         confirm.setOnClickListener(mButtonOclickListener);
-        prepare();
     }
+
 
     private View.OnClickListener mButtonOclickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             String source = confirm.getText().toString();
+            prepare();
             if("确认".equals(source))
             {
                 try {
@@ -98,8 +104,8 @@ public class Hanoi extends Fragment {
             {
                 if(task==null||timer==null){
                     for (int i=1;i<=floor;i++){
-                        int ox=(int)(-(dc[i][0]-dx[i])*3.5);
-                        int oy=(int)(-(dc[i][1]-dy[i])*3.5);
+                        int ox= -(dc[i][0]-dx[i]);
+                        int oy= -(dc[i][1]-dy[i]);
                         dc[i][0]=dx[i];
                         dc[i][1]=dy[i];
                         tv[i].offsetLeftAndRight(ox);
@@ -119,19 +125,33 @@ public class Hanoi extends Fragment {
         }
     } ;
 
-    public void prepare(){
+    private void prepare(){
 
-        tv[9]=(TextView)getActivity().findViewById(R.id.textView17);
-        tv[8]=(TextView)getActivity().findViewById(R.id.textView16);
-        tv[7]=(TextView)getActivity().findViewById(R.id.textView15);
-        tv[6]=(TextView)getActivity().findViewById(R.id.textView14);
-        tv[5]=(TextView)getActivity().findViewById(R.id.textView13);
-        tv[4]=(TextView)getActivity().findViewById(R.id.textView12);
-        tv[3]=(TextView)getActivity().findViewById(R.id.textView11);
-        tv[2]=(TextView)getActivity().findViewById(R.id.textView10);
-        tv[1]=(TextView)getActivity().findViewById(R.id.textView9);
+        tv[9]= view.findViewById(R.id.textView17);
+        tv[8]= view.findViewById(R.id.textView16);
+        tv[7]= view.findViewById(R.id.textView15);
+        tv[6]= view.findViewById(R.id.textView14);
+        tv[5]= view.findViewById(R.id.textView13);
+        tv[4]= view.findViewById(R.id.textView12);
+        tv[3]= view.findViewById(R.id.textView11);
+        tv[2]= view.findViewById(R.id.textView10);
+        tv[1]= view.findViewById(R.id.textView9);
 
-        for(int i=1;i<=9;i++)
+        TextView tv7 = view.findViewById(R.id.textView7);
+        TextView tv6 = view.findViewById(R.id.textView6);
+        TextView tv8 = view.findViewById(R.id.textView8);
+        unitWidth = tv7.getLeft() - tv6.getLeft();
+        unitHeight = tv[1].getHeight();
+        maxHeight = tv[9].getTop() - 2 * unitHeight;
+
+        dx = new int[10];
+        dy = new int[10];
+        for(int i = 1; i < 10; i++){
+            dx[i] = tv[i].getLeft();
+            dy[i] = tv[i].getTop();
+        }
+
+        for(int i = 1;i <= 9;i++)
         {
             dc[i][0]=dx[i];
             dc[i][1]=dy[i];
@@ -140,7 +160,7 @@ public class Hanoi extends Fragment {
         showDialog();
     }
 
-    public void getStep(int size,int i,int j,int k) {
+    private void getStep(int size,int i,int j,int k) {
         if(size==1)
             move(i,j);
         else
@@ -150,13 +170,13 @@ public class Hanoi extends Fragment {
             getStep(size-1,k,j,i);
         }
     }
-    public void move(int i,int j)
+    private void move(int i,int j)
     {
         state1++;
         step[state1][0]=i;
         step[state1][1]=j;
     }
-    public void start_timer()
+    private void start_timer()
     {
         if(timer==null){
             timer=new Timer();
@@ -172,34 +192,50 @@ public class Hanoi extends Fragment {
                             int id = store[step[state2][0] - 1][size[step[state2][0] - 1] - 1];
                             switch (direction) {
                                 case 1://up
-                                    dc[id][1] = dc[id][1] - 20;
-                                    if (dc[id][1] <= 95)
+                                    dc[id][1] = dc[id][1] - unitHeight;
+                                    if (dc[id][1] <= maxHeight)
                                         direction = (step[state2][1] - step[state2][0] > 0 ? 3 : 2);
-                                    tv[id].offsetTopAndBottom(-70);
+                                    tv[id].offsetTopAndBottom(-unitHeight);
                                     break;
                                 case 2://left
-                                    dc[id][0] = dc[id][0] - 20;
-                                    if (dc[id][0] <= dx[id]+(step[state2][1]-1) * 220)
+                                    int tempWidthLeft = 0;
+                                    dc[id][0] = dc[id][0] - unitWidth / 5;
+                                    if (dc[id][0] <= dx[id] + (step[state2][1] - 1) * unitWidth)
+                                    {
                                         direction = 4;
-                                    tv[id].offsetLeftAndRight(-70);
+                                        tempWidthLeft = dx[id] + (step[state2][1] - 1) * unitWidth - dc[id][0];
+                                        dc[id][0] += tempWidthLeft;
+                                        tempWidthLeft = unitWidth / 5 - tempWidthLeft;
+                                    }else{
+                                        tempWidthLeft = unitWidth / 5;
+                                    }
+                                    tv[id].offsetLeftAndRight(- tempWidthLeft);
                                     break;
                                 case 3://right
-                                    dc[id][0] = dc[id][0] + 20;
-                                    if (dc[id][0] >= dx[id] + (step[state2][1]-1) * 220)
+                                    int tempWidthRight = 0;
+                                    dc[id][0] = dc[id][0] + unitWidth / 5;
+                                    if (dc[id][0] >= dx[id] + (step[state2][1] - 1) * unitWidth)
+                                    {
                                         direction = 4;
-                                    tv[id].offsetLeftAndRight(70);
+                                        tempWidthRight = dc[id][0] - dx[id] - (step[state2][1] - 1) * unitWidth;
+                                        dc[id][0] -= tempWidthRight;
+                                        tempWidthRight = unitWidth / 5 - tempWidthRight;
+                                    }else{
+                                        tempWidthRight = unitWidth / 5;
+                                    }
+                                    tv[id].offsetLeftAndRight(tempWidthRight);
                                     break;
                                 case 4://down
                                     int temp=size[step[state2][1]-1];
-                                    dc[id][1] = dc[id][1] + 20;
-                                    if (dc[id][1] >= 295 - temp * 20) {
+                                    dc[id][1] = dc[id][1] + unitHeight;
+                                    if (dc[id][1] >= dy[1] - temp * unitHeight) {
                                         direction = 1;
                                         store[step[state2][1]-1][temp]=id;
                                         size[step[state2][1]-1]++;
                                         size[step[state2][0]-1]--;
                                         state2++;
                                     }
-                                    tv[id].offsetTopAndBottom(70);
+                                    tv[id].offsetTopAndBottom(unitHeight);
                                     break;
                             }
                         }
@@ -229,8 +265,8 @@ public class Hanoi extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 for (int i=1;i<=floor;i++){
-                    int ox=(int)(-(dc[i][0]-dx[i])*3.5);
-                    int oy=(int)(-(dc[i][1]-dy[i])*3.5);
+                    int ox= -(dc[i][0]-dx[i]);
+                    int oy= -(dc[i][1]-dy[i]);
                     dc[i][0]=dx[i];
                     dc[i][1]=dy[i];
                     tv[i].offsetLeftAndRight(ox);

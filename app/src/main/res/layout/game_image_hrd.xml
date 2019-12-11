@@ -12,18 +12,25 @@
         android:layout_marginStart="304dp"
         android:layout_marginTop="40dp"
         android:text="@string/resetOrder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.TerminalWork.gametreasurebox.customComponents.image_moveView
         android:id="@+id/DView"
         android:layout_width="410dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="124dp"
         app:bit_num="16"
         app:bitmapID="pretty_girl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/image_hrd_steps"
         android:layout_width="67dp"

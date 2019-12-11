@@ -25,12 +25,17 @@ public class flags {
     public final static int activityRequestCode_cameraUpLoad = 17;
 
     public static int card_width;
+    public static int gapHeight;
+    public static int gapWidth;
+    public static int unitWidth;
+    public static int unitHeight;
 
     public final static String action_changeScore2048 = "com.TerminalWork.gametreasurebox.action.changeScore2048";
     public final static String action_changStepsKingdomHrd = "com.TerminalWork.gametreasurebox.action.changeStepsKingdomHrd";
     public final static String action_changStepsImageHrd = "com.TerminalWork.gametreasurebox.action.changeStepsImageHrd";
     public final static String action_changStepsNumberHrd = "com.TerminalWork.gametreasurebox.action.changeStepsNumberHrd";
     public final static String action_updateAccountImage = "com.TerminalWork.gametreasurebox.action.updateAccountImage";
+    public final static String action_KingdomHrd_success = "com.TerminalWork.gametreasurebox.action.kingdomHrdSuccess";
 
     public static Rect[][] myView = new Rect[6][10];
 

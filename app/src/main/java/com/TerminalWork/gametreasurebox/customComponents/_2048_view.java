@@ -30,11 +30,13 @@ public class _2048_view extends GridLayout {
     private Context context;
     private Intent intent;
     private View toastView;
+    private boolean flag;
 
     public _2048_view(Context context) {
         super(context);
         this.context = context;
         toastView = inflate(context, R.layout.toast, null);
+        flag = false;
         initView();
     }
 
@@ -42,16 +44,23 @@ public class _2048_view extends GridLayout {
         super(context, attrs);
         this.context = context;
         toastView = inflate(context, R.layout.toast, null);
+        flag = false;
         initView();
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        flags.card_width = (Math.min(w,h) - 30) / 4;
-        Log.i("car_width",flags.card_width + "");
-        addCard(flags.card_width);
-        startGame();
+    protected void onMeasure(int widthSpec, int heightSpec) {
+        super.onMeasure(widthSpec, heightSpec);
+        int w = MeasureSpec.getSize(widthSpec);
+        int h = MeasureSpec.getSize(heightSpec);
+        int temp = Math.min(w, h);
+        if(!flag) {
+            flags.card_width = (temp - 30) / 4;
+            setMeasuredDimension(temp, temp);
+            addCard(flags.card_width);
+            startGame();
+            flag = true;
+        }
     }
 
     private void judgeNumber(int num){
