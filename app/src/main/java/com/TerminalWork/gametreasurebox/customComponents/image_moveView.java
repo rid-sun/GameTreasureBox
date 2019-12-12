@@ -71,6 +71,12 @@ public class image_moveView extends View {
         init();
     }
 
+    @Override
+    protected void onFinishInflate() {
+        //这个方法在view及其子控件填充好后才会执行，所以这样可以直接在xml文件中设置matchparent了
+        super.onFinishInflate();
+    }
+
     private void init(){
         this.xCount = (int)Math.sqrt(bit_num);
         this.yCount = (int)Math.sqrt(bit_num);

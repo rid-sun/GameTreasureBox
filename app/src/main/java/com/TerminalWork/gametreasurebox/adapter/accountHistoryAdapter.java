@@ -1,5 +1,7 @@
 package com.TerminalWork.gametreasurebox.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,8 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
     private CircleImageView headImage;
     private EditText accountText;
     private PopupWindow popupWindow;
+    BitmapFactory.Options options = new BitmapFactory.Options();
+    Bitmap bitmap;
 
     public accountHistoryAdapter(List<accountMessage> accountMessagesList, EditText accountText,
                                  CircleImageView headImage, PopupWindow popupWindow) {
@@ -47,7 +51,9 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
                 int position = holder.getAdapterPosition();
                 accountMessage msg = accountMessagesList.get(position);
                 accountText.setText(msg.getAccount());
-                headImage.setImageDrawable(Drawable.createFromPath(msg.getAccountImagePath()));
+                options.inSampleSize = 4;
+                bitmap = BitmapFactory.decodeFile(msg.getAccountImagePath(), options);
+                headImage.setImageBitmap(bitmap);
                 popupWindow.dismiss();
             }
         });
@@ -70,7 +76,9 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         accountMessage msg = accountMessagesList.get(position);
-        holder.accountImage.setImageDrawable(Drawable.createFromPath(msg.getAccountImagePath()));
+        options.inSampleSize = 4;
+        bitmap = BitmapFactory.decodeFile(msg.getAccountImagePath(), options);
+        holder.accountImage.setImageBitmap(bitmap);
         holder.account.setText(msg.getAccount());
     }
 

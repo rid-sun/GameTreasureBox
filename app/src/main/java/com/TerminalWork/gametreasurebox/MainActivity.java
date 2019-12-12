@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         signature = drawerView.findViewById(R.id.signature);
         username = drawerView.findViewById(R.id.username);
 
-        dialog = new showPhoto_Dialog(MainActivity.this,R.style.dialog, R.drawable.pretty_girl);
+        dialog = new showPhoto_Dialog(MainActivity.this,R.style.dialog);
         account.setOnLongClickListener(accountLongOnclick);
         account.setOnClickListener(accountOnclick);
 
@@ -291,6 +291,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             drawerLayout.closeDrawers();
+            List<userMsg> msg = LitePal.select("headSculptureLocalPath").where("name = ?", username.getText().toString()).find(userMsg.class);
+            if(msg.isEmpty()){
+                dialog.setImageView(R.drawable.logo, null);
+            }else{
+                dialog.setImageView(R.drawable.logo, msg.get(0).getHeadSculptureLocalPath());
+            }
             dialog.show();
         }
     };
@@ -456,7 +462,6 @@ public class MainActivity extends AppCompatActivity {
                             .setWhen(System.currentTimeMillis())
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo))
-                            .setAutoCancel(true)
                             .build();
                     manager.notify(1, notification);
                     break;

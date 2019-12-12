@@ -44,5 +44,8 @@ dependencies {
 
     implementation 'com.romainpiel.shimmer:library:1.4.0@aar'
     implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
 
+    implementation 'me.jessyan:autosize:1.1.2'
+    api 'me.jessyan:autosize:1.1.2'
 }
