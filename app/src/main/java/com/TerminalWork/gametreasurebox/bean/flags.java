@@ -2,6 +2,8 @@ package com.TerminalWork.gametreasurebox.bean;
 
 import android.graphics.Rect;
 
+import com.TerminalWork.gametreasurebox.R;
+
 public class flags {
     public final static int direction_UP = 1;
     public final static int direction_LEFT = 2;
@@ -38,6 +40,29 @@ public class flags {
     public final static String action_KingdomHrd_success = "com.TerminalWork.gametreasurebox.action.kingdomHrdSuccess";
 
     public static Rect[][] myView = new Rect[6][10];
+
+
+    public static int[][] check_point_image = new int[][]{
+            {
+
+            },
+            {
+                    R.drawable.zhao_yun, R.drawable.cao_cao, R.drawable.guan_yu, R.drawable.huang_zhong, R.drawable.ma_chao,
+                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu
+            },
+            {
+                    R.drawable.zhao_yun, R.drawable.cao_cao, R.drawable.guan_yu, R.drawable.huang_zhong, R.drawable.ma_chao,
+                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu
+            },
+            {
+                    R.drawable.zhao_yun, R.drawable.cao_cao, R.drawable.guan_yu, R.drawable.huang_zhong, R.drawable.ma_chao,
+                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu
+            },
+            {
+                    R.drawable.zhao_yun_y, R.drawable.cao_cao, R.drawable.guan_yu, R.drawable.huang_zhong, R.drawable.ma_chao_y,
+                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu
+            }
+    };
 
     public static int[][][] check_point = new int[][][]{
             {

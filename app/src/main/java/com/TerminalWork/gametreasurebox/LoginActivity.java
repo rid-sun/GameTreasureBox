@@ -253,7 +253,7 @@ public class LoginActivity extends Activity {
         if(grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
             Toast.makeText(this, "拒绝权限会使得默认头像信息丢失", Toast.LENGTH_SHORT).show();
         }else{
-            startService(new Intent(LoginActivity.this, loadImageToLocal.class));
+            startService(new Intent(LoginActivity.this, loadLogoToLocal.class));
         }
     }
 
