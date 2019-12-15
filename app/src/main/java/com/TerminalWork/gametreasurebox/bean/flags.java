@@ -39,7 +39,7 @@ public class flags {
     public final static String action_updateAccountImage = "com.TerminalWork.gametreasurebox.action.updateAccountImage";
     public final static String action_KingdomHrd_success = "com.TerminalWork.gametreasurebox.action.kingdomHrdSuccess";
 
-    public static Rect[][] myView = new Rect[6][10];
+    public static Rect[][] myView = new Rect[7][10];
 
 
     public static int[][] check_point_image = new int[][]{
@@ -48,19 +48,28 @@ public class flags {
             },
             {
                     R.drawable.zhao_yun, R.drawable.cao_cao, R.drawable.guan_yu, R.drawable.huang_zhong, R.drawable.ma_chao,
-                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu
+                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.entry, R.drawable.stop,
+                    R.drawable.stop
             },
             {
                     R.drawable.zhao_yun, R.drawable.cao_cao, R.drawable.guan_yu, R.drawable.huang_zhong, R.drawable.ma_chao,
-                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu
+                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.entry, R.drawable.stop,
+                    R.drawable.stop
             },
             {
                     R.drawable.zhao_yun, R.drawable.cao_cao, R.drawable.guan_yu, R.drawable.huang_zhong, R.drawable.ma_chao,
-                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu
+                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.entry, R.drawable.stop,
+                    R.drawable.stop
             },
             {
                     R.drawable.zhao_yun_y, R.drawable.cao_cao, R.drawable.guan_yu, R.drawable.huang_zhong, R.drawable.ma_chao_y,
-                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu
+                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.entry, R.drawable.stop,
+                    R.drawable.stop
+            },
+            {
+                    R.drawable.zhao_yun, R.drawable.cao_cao, R.drawable.guan_yu, R.drawable.huang_zhong, R.drawable.ma_chao,
+                    R.drawable.zhang_fei, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.zu, R.drawable.entry, R.drawable.stop,
+                    R.drawable.stop
             }
     };
 
@@ -69,20 +78,29 @@ public class flags {
 
             },//将标志位0空出去，舍弃掉
             {
-                    {1, 2}, {2, 2}, {2, 1}, {1, 2}, {1, 2}
-                        , {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1}
+                    {1, 2}, {2, 2}, {2, 1}, {1, 2}, {1, 2},
+                    {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
+                    {2, 2}, {1, 2}, {1, 2}
             },
             {
-                    {1, 2}, {2, 2}, {2, 1}, {1, 2}, {1, 2}
-                        , {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1}
+                    {1, 2}, {2, 2}, {2, 1}, {1, 2}, {1, 2},
+                    {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
+                    {2, 2}, {1, 2}, {1, 2}
             },
             {
-                    {1, 2}, {2, 2}, {2, 1}, {1, 2}, {1, 2}
-                        , {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1}
+                    {1, 2}, {2, 2}, {2, 1}, {1, 2}, {1, 2},
+                    {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
+                    {2, 2}, {1, 2}, {1, 2}
             },
             {
-                    {2, 1}, {2, 2}, {2, 1}, {1, 2}, {2, 1}
-                        , {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1}
+                    {2, 1}, {2, 2}, {2, 1}, {1, 2}, {2, 1},
+                    {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
+                    {2, 2}, {1, 2}, {1, 2}
+            },
+            {
+                    {1, 2}, {2, 2}, {2, 1}, {1, 2}, {1, 2},
+                    {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
+                    {2, 2}, {1, 2}, {1, 2}
             }
     };
     public static int[][][] check_point_location = new int[][][]{
@@ -92,18 +110,27 @@ public class flags {
             {
                     {3, 2}, {1, 0}, {1, 2}, {1, 3}, {2, 3}
                     , {0, 3}, {0, 0}, {0, 2}, {3, 0}, {3, 1}
+                    , {1, 5}, {0, 5}, {3, 5}
             },
             {
-                    {1, 2}, {2, 2}, {2, 1}, {1, 2}, {1, 2}
-                    , {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1}
+                    {3, 2}, {1, 0}, {1, 2}, {0, 2}, {3, 0}
+                    , {0, 0}, {1, 3}, {2, 3}, {0, 4}, {3, 4}
+                    , {1, 5}, {0, 5}, {3, 5}
             },
             {
-                    {1, 2}, {2, 2}, {2, 1}, {1, 2}, {1, 2}
-                    , {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1}
+                    {0, 0}, {1, 0}, {1, 2}, {0, 3}, {1, 3}
+                    , {2, 3}, {3, 0}, {3, 1}, {3, 2}, {3, 3}
+                    , {1, 5}, {0, 5}, {3, 5}
             },
             {
-                    {2, 1}, {2, 2}, {2, 1}, {1, 2}, {2, 1}
-                    , {1, 2}, {1, 1}, {1, 1}, {1, 1}, {1, 1}
+                    {0, 1}, {2, 3}, {0, 0}, {0, 3}, {2, 1}
+                    , {1, 3}, {2, 0}, {3, 0}, {1, 2}, {2, 2}
+                    , {1, 5}, {0, 5}, {3, 5}
+            },
+            {
+                    {3, 2}, {1, 2}, {1, 0}, {0, 2}, {3, 0}
+                    , {0, 0}, {1, 1}, {2, 1}, {0, 4}, {3, 4}
+                    , {1, 5}, {0, 5}, {3, 5}
             }
     };
 

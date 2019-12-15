@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -82,10 +81,11 @@ public class HuaRongDao extends Fragment {
             kingdomSteps = mainActivity.findViewById(R.id.kingdoms_hrd_steps);
             kingdomTimes = mainActivity.findViewById(R.id.kingdoms_hrd_times);
             kingdomCheckPoint = mainActivity.findViewById(R.id.kingdom_hrd_checkPoints);
-            checkPointsList.add(mainActivity.findViewById(R.id.check_point1));
-            checkPointsList.add(mainActivity.findViewById(R.id.check_point2));
-            checkPointsList.add(mainActivity.findViewById(R.id.check_point3));
-            checkPointsList.add(mainActivity.findViewById(R.id.check_point4));
+            checkPointsList.add(mainActivity.findViewById(R.id.new_check_point1));
+            checkPointsList.add(mainActivity.findViewById(R.id.new_check_point2));
+            checkPointsList.add(mainActivity.findViewById(R.id.new_check_point3));
+            checkPointsList.add(mainActivity.findViewById(R.id.new_check_point4));
+            checkPointsList.add(mainActivity.findViewById(R.id.new_check_point5));
             TextView nextCheckPoint = mainActivity.findViewById(R.id.threeKingdom_hrd_next_checkPoint);
             TextView lastCheckPoint = mainActivity.findViewById(R.id.threeKingdom_hrd_last_checkPoint);
             nextCheckPoint.setOnClickListener(checkPointSelect);
@@ -134,6 +134,7 @@ public class HuaRongDao extends Fragment {
         intentFilter.addAction(flags.action_changStepsKingdomHrd);
         intentFilter.addAction(flags.action_changStepsImageHrd);
         intentFilter.addAction(flags.action_changStepsNumberHrd);
+        intentFilter.addAction(flags.action_KingdomHrd_success);
         steps = new stepsReceiver();
         mainActivity.registerReceiver(steps, intentFilter);
 

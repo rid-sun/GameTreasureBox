@@ -23,7 +23,12 @@ public class loadLogoToLocal extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String logoPath = Environment.getExternalStorageDirectory() + "/" + "logo.PNG";
+        String dirPath = Environment.getExternalStorageDirectory() + "/treasureBoxImages";
+        File dir = new File(dirPath);
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+        String logoPath = dirPath + "/" + "logo.PNG";
         Log.i("logoPath", logoPath);
         File imageLogo = new File(logoPath);
         FileOutputStream outputStream = null;

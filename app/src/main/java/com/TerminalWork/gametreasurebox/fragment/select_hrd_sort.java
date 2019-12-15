@@ -2,10 +2,13 @@ package com.TerminalWork.gametreasurebox.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -78,7 +81,15 @@ public class select_hrd_sort extends Fragment {
                                 flags.last_sort_hrd = flags.current_sort_hrd;
                                 flags.current_sort_hrd = R.layout.game_three_kingdoms_hrd;
                             }
-                            flags.gapHeight = flags.gapWidth = 10000000;
+//                            flags.gapHeight = flags.gapWidth = 10000000;
+                            WindowManager manager = getActivity().getWindowManager();
+                            DisplayMetrics outMetrics = new DisplayMetrics();
+                            manager.getDefaultDisplay().getMetrics(outMetrics);
+                            int width = outMetrics.widthPixels;
+                            int height = outMetrics.heightPixels;
+                            flags.gapWidth = 21;
+                            flags.unitHeight = flags.unitWidth = (width - 21) / 4;
+                            flags.gapHeight = height - (int)5.5 * flags.unitWidth - 200;
                             break;
                     }
                     mainActivity.loadFragment(flags.hrdFragment);

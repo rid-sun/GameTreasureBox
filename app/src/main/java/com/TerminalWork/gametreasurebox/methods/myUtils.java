@@ -94,17 +94,19 @@ public class myUtils {
         for(int i = 0; i <= 9; i++)
         {
             Rect temp2 = flags.myView[check_PointID][i];
-            if(id == 1){
-                if(temp.left == flags.gapWidth + flags.unitWidth && temp.bottom <= flags.gapHeight + 4 * flags.unitHeight  + flags.unitHeight / 2
-                        && temp.top >= flags.gapHeight + flags.unitHeight * 3 && temp.right <= flags.gapWidth + flags.unitWidth * 3){
-                    return true;
-                }
-            }
             if(temp.intersects(temp2.left, temp2.top, temp2.right, temp2.bottom) && id != i || temp.top < flags.gapHeight
-                    || temp.bottom > flags.gapHeight + 5 * flags.unitHeight || temp.left < flags.gapWidth || temp.right > flags.gapWidth + 4 * flags.unitWidth)
+                    || temp.bottom > flags.gapHeight + 5 * flags.unitHeight + flags.unitHeight / 2|| temp.left < flags.gapWidth || temp.right > flags.gapWidth + 4 * flags.unitWidth)
             {
                 temp.offset(-dx, -dy);
                 return false;
+            }
+        }
+        if(temp.bottom > flags.gapHeight + 5 * flags.unitHeight){
+            if(id != 1 || temp.left != flags.gapWidth + flags.unitWidth){
+                temp.offset(-dx, -dy);
+                return false;
+            }else{
+                return true;
             }
         }
         return true;

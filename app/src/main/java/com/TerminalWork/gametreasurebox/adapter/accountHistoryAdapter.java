@@ -28,8 +28,8 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
     private CircleImageView headImage;
     private EditText accountText;
     private PopupWindow popupWindow;
-    BitmapFactory.Options options = new BitmapFactory.Options();
-    Bitmap bitmap;
+//    BitmapFactory.Options options = new BitmapFactory.Options();
+//    Bitmap bitmap;
 
     public accountHistoryAdapter(List<accountMessage> accountMessagesList, EditText accountText,
                                  CircleImageView headImage, PopupWindow popupWindow) {
@@ -51,9 +51,10 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
                 int position = holder.getAdapterPosition();
                 accountMessage msg = accountMessagesList.get(position);
                 accountText.setText(msg.getAccount());
-                options.inSampleSize = 4;
-                bitmap = BitmapFactory.decodeFile(msg.getAccountImagePath(), options);
-                headImage.setImageBitmap(bitmap);
+//                options.inSampleSize = 4;
+//                bitmap = BitmapFactory.decodeFile(msg.getAccountImagePath(), options);
+//                headImage.setImageBitmap(bitmap);
+                headImage.setImageDrawable(Drawable.createFromPath(msg.getAccountImagePath()));
                 popupWindow.dismiss();
             }
         });
@@ -76,9 +77,10 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         accountMessage msg = accountMessagesList.get(position);
-        options.inSampleSize = 4;
-        bitmap = BitmapFactory.decodeFile(msg.getAccountImagePath(), options);
-        holder.accountImage.setImageBitmap(bitmap);
+//        options.inSampleSize = 4;
+//        bitmap = BitmapFactory.decodeFile(msg.getAccountImagePath(), options);
+//        holder.accountImage.setImageBitmap(bitmap);
+        holder.accountImage.setImageDrawable(Drawable.createFromPath(msg.getAccountImagePath()));
         holder.account.setText(msg.getAccount());
     }
 

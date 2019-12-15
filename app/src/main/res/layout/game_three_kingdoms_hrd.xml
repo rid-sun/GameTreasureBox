@@ -110,21 +110,24 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <include
-        android:id="@+id/check_point1"
-        layout="@layout/hrd_check_point1"
+        android:id="@+id/new_check_point1"
+        layout="@layout/new_hrd_check_point1"
         android:visibility="visible"/>
-
     <include
-        android:id="@+id/check_point2"
-        layout="@layout/hrd_check_point2"
+        android:id="@+id/new_check_point2"
+        layout="@layout/new_hrd_check_point2"
         android:visibility="gone"/>
     <include
-        android:id="@+id/check_point3"
-        layout="@layout/hrd_check_point3"
+        android:id="@+id/new_check_point3"
+        layout="@layout/new_hrd_check_point3"
         android:visibility="gone"/>
     <include
-        android:id="@+id/check_point4"
-        layout="@layout/hrd_check_point4"
+        android:id="@+id/new_check_point4"
+        layout="@layout/new_hrd_check_point4"
+        android:visibility="gone"/>
+    <include
+        android:id="@+id/new_check_point5"
+        layout="@layout/new_hrd_check_point5"
         android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

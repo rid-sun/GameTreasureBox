@@ -12,4 +12,8 @@
         <attr name="view_id" format="integer"/>
         <attr name="check_pointID" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="kingdom_hrdView2">
+        <attr name="viewID" format="integer"/>
+        <attr name="checkPointID" format="integer"/>
+    </declare-styleable>
 </resources>

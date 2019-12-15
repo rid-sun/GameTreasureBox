@@ -42,6 +42,7 @@ public class Hanoi extends Fragment {
     private int unitHeight;
     private int unitWidth;
     private int maxHeight;
+    private boolean flag;
 
     public Hanoi() {
     }
@@ -50,6 +51,8 @@ public class Hanoi extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.game_hanoi,container,false);
+        view.addOnLayoutChangeListener(changeListener);
+        flag = true;
         return view;
     }
 
@@ -59,13 +62,20 @@ public class Hanoi extends Fragment {
         confirm = (Button)getActivity().findViewById(R.id.hanoi_confirm);
         confirm.setOnClickListener(mButtonOclickListener);
     }
-
+    View.OnLayoutChangeListener changeListener = new View.OnLayoutChangeListener() {
+        @Override
+        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+            if(flag){
+                prepare();
+                flag = false;
+            }
+        }
+    };
 
     private View.OnClickListener mButtonOclickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             String source = confirm.getText().toString();
-            prepare();
             if("确认".equals(source))
             {
                 try {
