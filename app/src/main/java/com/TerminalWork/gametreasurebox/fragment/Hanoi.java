@@ -1,6 +1,7 @@
 package com.TerminalWork.gametreasurebox.fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.TerminalWork.gametreasurebox.MainActivity;
 import com.TerminalWork.gametreasurebox.R;
 
 import java.util.Timer;
@@ -25,16 +28,17 @@ public class Hanoi extends Fragment {
     private Button confirm;
     private EditText input;
     private AlertDialog dialog;
+    private int onFontCounter;
 
-    private TextView tv[]=new TextView[10];
+    private TextView[] tv = new TextView[10];
     private int[] dx;
     private int[] dy;
-    private int dc[][]=new int[10][2];
-    private int size[]=new int[3];
-    private int store[][]=new int[3][9];
-    private int step[][]=new int[512][2];
-    private int state1,state2;
-    private int direction=1;
+    private int[][] dc = new int[10][2];
+    private int[] size = new int[3];
+    private int[][] store = new int[3][9];
+    private int[][] step = new int[512][2];
+    private int state1, state2;
+    private int direction;
     private int floor;
     private Timer timer;
     private TimerTask task;
@@ -43,8 +47,14 @@ public class Hanoi extends Fragment {
     private int unitWidth;
     private int maxHeight;
     private boolean flag;
+    private boolean isRunning;
 
     public Hanoi() {
+        onFontCounter = 0;
+        state1 = 0;
+        state2 = 0;
+        direction = 1;
+        isRunning = false;
     }
 
     @Nullable
@@ -59,27 +69,35 @@ public class Hanoi extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        confirm = (Button)getActivity().findViewById(R.id.hanoi_confirm);
-        confirm.setOnClickListener(mButtonOclickListener);
+        confirm = view.findViewById(R.id.hanoi_confirm);
+        confirm.setOnClickListener(mButtonOnClickListener);
+        if(onFontCounter != 0 && isRunning){
+            Log.i("hanoiMessage", "state1: " + state1 + "state2: " + state2 + "direction: " + direction);
+            //start_timer();
+            view.invalidate();
+        }
+        onFontCounter++;
+        Log.i("HanoiFragment","onStart");
     }
-    View.OnLayoutChangeListener changeListener = new View.OnLayoutChangeListener() {
+
+    private View.OnLayoutChangeListener changeListener = new View.OnLayoutChangeListener() {
         @Override
         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
             if(flag){
-                prepare();
+                originPrepare();
                 flag = false;
             }
         }
     };
 
-    private View.OnClickListener mButtonOclickListener = new View.OnClickListener() {
+    private View.OnClickListener mButtonOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             String source = confirm.getText().toString();
             if("确认".equals(source))
             {
                 try {
-                    input = (EditText) getActivity().findViewById(R.id.hanoi_input);
+                    input = view.findViewById(R.id.hanoi_input);
                     floor = Integer.parseInt(input.getText().toString());
                     if (floor <= 0 || floor > 9) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -87,13 +105,13 @@ public class Hanoi extends Fragment {
                         builder.show();
                     } else {
                         confirm.setText("复位");
-                        for(int i=1;i<=floor;i++)
-                        {
+                        for(int i = 1; i <= floor; i++) {
                             store[0][i-1]=i;
                             tv[i].setVisibility(View.VISIBLE);
                         }
-                        for(int i=floor+1;i<=9;i++)
+                        for(int i = floor + 1; i <= 9; i++) {
                             tv[i].setVisibility(View.GONE);
+                        }
                         size[0] = floor;
                         size[1] = size[2] = 0;
                         state1 = 0;
@@ -105,6 +123,7 @@ public class Hanoi extends Fragment {
                         input.setFocusable(false);
 
                         start_timer();
+                        isRunning = true;
                     }
                 }catch(Exception e){
                     e.printStackTrace();
@@ -112,20 +131,20 @@ public class Hanoi extends Fragment {
             }
             else
             {
-                if(task==null||timer==null){
-                    for (int i=1;i<=floor;i++){
-                        int ox= -(dc[i][0]-dx[i]);
-                        int oy= -(dc[i][1]-dy[i]);
-                        dc[i][0]=dx[i];
-                        dc[i][1]=dy[i];
-                        tv[i].offsetLeftAndRight(ox);
-                        tv[i].offsetTopAndBottom(oy);
+                if(task == null || timer == null){
+                    for(int i = 1; i <= floor; i++){
+                        int offsetX= -(dc[i][0] - dx[i]);
+                        int offsetY= -(dc[i][1] - dy[i]);
+                        dc[i][0] = dx[i];
+                        dc[i][1] = dy[i];
+                        tv[i].offsetLeftAndRight(offsetX);
+                        tv[i].offsetTopAndBottom(offsetY);
                     }
                     confirm.setText("确认");
                     input.setFocusable(true);
                     input.setFocusableInTouchMode(true);
                     input.requestFocus();
-                    direction=1;
+                    direction = 1;
                 }
                 else{
                     stop_timer();
@@ -135,7 +154,7 @@ public class Hanoi extends Fragment {
         }
     } ;
 
-    private void prepare(){
+    private void originPrepare(){
 
         tv[9]= view.findViewById(R.id.textView17);
         tv[8]= view.findViewById(R.id.textView16);
@@ -170,7 +189,32 @@ public class Hanoi extends Fragment {
         showDialog();
     }
 
-    private void getStep(int size,int i,int j,int k) {
+    private void confirmPosition(){
+//        int width, height;
+//        ConstraintLayout.LayoutParams layoutParams;
+//        for(int i = 1; i < 9; i++){
+//            width = tv[i].getWidth();
+//            height = tv[i].getHeight();
+//            layoutParams = new ConstraintLayout.LayoutParams(width, height);
+//            //layoutParams.setMargins(dx[i], dy[i], tv[i].getRight(), tv[i].getBottom());
+//            Log.i("position","l:"+tv[i].getLeft()+"   t:"+tv[i].getTop()+"    r:"+tv[i].getRight()+"     b:"+tv[i].getBottom());
+//            layoutParams.setMarginStart(dx[i]);
+//            layoutParams.setMarginEnd(dy[i]);
+//            tv[i].setLayoutParams(layoutParams);
+//            tv[i].getLayoutParams().;
+//        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(timer != null){
+            stop_timer();
+        }
+
+    }
+
+    private void getStep(int size, int i, int j, int k) {
         if(size==1)
             move(i,j);
         else
@@ -259,7 +303,7 @@ public class Hanoi extends Fragment {
         timer.schedule(task,2000,80);
     }
 
-    public void stop_timer()
+    private void stop_timer()
     {
         timer.cancel();
         task.cancel();
@@ -267,7 +311,7 @@ public class Hanoi extends Fragment {
         task = null;
     }
 
-    public void showDialog(){
+    private void showDialog(){
         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
         builder.setTitle("警告");
         builder.setMessage("确定要复位吗？");
@@ -293,10 +337,20 @@ public class Hanoi extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 start_timer();
-                return ;
             }
         });
-        dialog=builder.create();
+        dialog = builder.create();
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            stop_timer();
+            Log.i("hidden","hidden");
+        }else{
+            start_timer();
+            Log.i("hidden","visible");
+        }
+    }
 }

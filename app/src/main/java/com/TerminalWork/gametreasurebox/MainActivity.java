@@ -21,6 +21,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +51,7 @@ import com.TerminalWork.gametreasurebox.fragment.HuaRongDao;
 import com.TerminalWork.gametreasurebox.customComponents.showPhoto_Dialog;
 import com.TerminalWork.gametreasurebox.fragment._2048;
 import com.TerminalWork.gametreasurebox.fragment.select_hrd_sort;
+import com.TerminalWork.gametreasurebox.methods.fragmentController;
 import com.google.android.material.navigation.NavigationView;
 
 import org.litepal.LitePal;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private PopupWindow bottomPop;
     private String imagePath;
     private myReceiver receiver;
+    private fragmentController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,16 +102,16 @@ public class MainActivity extends AppCompatActivity {
 
         mediaPlayer = MediaPlayer.create(this, R.raw.i_want_my_tears_back);
         mediaPlayer.setLooping(true);
-        
-        loadFragment(flags.gameSelectFragment);
-        Log.i("onCreateMain","yes");
 
+        controller = fragmentController.getInstance(this, R.id.fragment_view);
+        Log.i("onCreateMain","yes");
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        //controller.onStartShowFragments();
 
         String nowUser;
         SharedPreferences spf = getSharedPreferences("loginState", MODE_PRIVATE);
@@ -117,24 +119,9 @@ public class MainActivity extends AppCompatActivity {
         //Log.i("nowUser", nowUser);
         List<userMsg> user = LitePal.select("headSculptureLocalPath", "name", "signature").
                 where("name = ?", nowUser).find(userMsg.class);
-        if(user.isEmpty()){
-            account.setImageDrawable(getDrawable(R.drawable.logo));
-            username.setText(getString(R.string.defaultUsername));
-            signature.setText(getString(R.string.defaultSignature));
-        }else{
-            if(user.get(0).getHeadSculptureLocalPath() == null){
-                account.setImageDrawable(getDrawable(R.drawable.logo));
-            }else{
-                account.setImageDrawable(Drawable.createFromPath(user.get(0).getHeadSculptureLocalPath()));
-            }
-            username.setText(user.get(0).getName());
-            if(user.get(0).getSignature() == null){
-                signature.setText(getString(R.string.defaultSignature));
-            }else{
-                signature.setText(user.get(0).getSignature());
-            }
-
-        }
+        account.setImageDrawable(Drawable.createFromPath(user.get(0).getHeadSculptureLocalPath()));
+        username.setText(user.get(0).getName());
+        signature.setText(user.get(0).getSignature());
 
         closeFlag = 0;
         lastClickTime = 0;
@@ -142,92 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void loadFragment(int fragmentID){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment_2048 = fragmentManager.findFragmentByTag("_2048");
-        Fragment fragment_hrd = fragmentManager.findFragmentByTag("hrd");
-        Fragment fragment_hanoi = fragmentManager.findFragmentByTag("hanoi");
-        Fragment fragment_gameSelect = fragmentManager.findFragmentByTag("gameSelect");
-        Fragment fragment_select_hrd = fragmentManager.findFragmentByTag("select_hrd");
-        if(fragment_2048 != null){
-            fragmentTransaction.hide(fragment_2048);
-        }
-        if(fragment_gameSelect != null){
-            fragmentTransaction.hide(fragment_gameSelect);
-        }
-        if(fragment_hanoi != null){
-            fragmentTransaction.hide(fragment_hanoi);
-        }
-        if(fragment_hrd != null){
-            fragmentTransaction.hide(fragment_hrd);
-        }
-        if(fragment_select_hrd != null){
-            fragmentTransaction.hide(fragment_select_hrd);
-        }
-        switch (fragmentID){
-            case flags.hanoiFragment:
-                if(fragment_hanoi == null){
-                    fragment_hanoi = new Hanoi();
-                    fragmentTransaction.add(R.id.fragment_view, fragment_hanoi,"hanoi");
-                }else{
-                    fragmentTransaction.show(fragment_hanoi);
-                }
-                Log.i("Hanoi", "Start");
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                break;
-            case flags.hrdFragment:
-                if(fragment_hrd == null || flags.current_sort_hrd != flags.last_sort_hrd){
-                    if(fragment_hrd != null)
-                        fragmentTransaction.remove(fragment_hrd);
-                    fragment_hrd = new HuaRongDao(flags.current_sort_hrd);
-                    fragmentTransaction.add(R.id.fragment_view, fragment_hrd, "hrd");
-                }else{
-                    fragmentTransaction.show(fragment_hrd);
-                }
-                Log.i("hrd", "Start");
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                break;
-            case flags._2048Fragment:
-                if(fragment_2048 == null){
-                    fragment_2048 = new _2048();
-                    fragmentTransaction.add(R.id.fragment_view, fragment_2048, "_2048");
-                }else{
-                    fragmentTransaction.show(fragment_2048);
-                }
-                Log.i("_2048", "Start");
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                break;
-            case flags.gameSelectFragment:
-                if(fragment_gameSelect == null){
-                    fragment_gameSelect = new GameSelect();
-                    fragmentTransaction.add(R.id.fragment_view, fragment_gameSelect, "gameSelect");
-                }else{
-                    fragmentTransaction.show(fragment_gameSelect);
-                }
-                Log.i("GameSelect", "Start");
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                break;
-            case flags.selectHrdFragment:
-                if(fragment_select_hrd == null){
-                    fragment_select_hrd = new select_hrd_sort();
-                    fragmentTransaction.add(R.id.fragment_view, fragment_select_hrd, "select_hrd");
-                }else{
-                    fragmentTransaction.show(fragment_select_hrd);
-                }
-                Log.i("select_hrd", "Start");
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-        fragmentTransaction.commit();
-        Log.i("message", "事务已提交");
-    }
-
     private NavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.nav_home:
-                    loadFragment(flags.gameSelectFragment);
+                    controller.showFragment(flags.gameSelectFragment);
                     drawerLayout.closeDrawers();
                     break;
                 case R.id.nav_cancelAction:
@@ -292,11 +199,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             drawerLayout.closeDrawers();
             List<userMsg> msg = LitePal.select("headSculptureLocalPath").where("name = ?", username.getText().toString()).find(userMsg.class);
-            if(msg.isEmpty()){
-                dialog.setImageView(R.drawable.logo, null);
-            }else{
-                dialog.setImageView(R.drawable.logo, msg.get(0).getHeadSculptureLocalPath());
-            }
+            dialog.setImageView(R.drawable.logo, msg.get(0).getHeadSculptureLocalPath());
             dialog.show();
         }
     };
@@ -341,17 +244,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        closeFlag++;
-        currentClickTime = System.currentTimeMillis();
-        if(closeFlag == 1){
-            lastClickTime = currentClickTime;
-            Toast.makeText(this, "再按一次退出游戏", Toast.LENGTH_SHORT).show();
-        }else if(currentClickTime - lastClickTime <= 2000){//使得中间点击间隔为2s
-            super.onBackPressed();
-        }else{
-            closeFlag = 0;
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            if(fragmentController.getController().gameSelectFragmentIsShow()){
+                controller.backFragment();
+            }else{
+                closeFlag++;
+                currentClickTime = System.currentTimeMillis();
+                if(closeFlag == 1){
+                    lastClickTime = currentClickTime;
+                    Toast.makeText(this, "再按一次退出游戏", Toast.LENGTH_SHORT).show();
+                }else if(currentClickTime - lastClickTime <= flags.BACK_PRESSED_INTERVAL){//使得中间点击间隔为2s
+                    super.onBackPressed();
+                }else{
+                    closeFlag = 0;
+                }
+            }
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -359,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         mediaPlayer.release();
         unregisterReceiver(receiver);
+        fragmentController.destroyController();
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -149,8 +150,9 @@ public class kingdom_hrdView2 extends View {
                     flags.myView[checkPointID][viewID].offset(present_viewX - previous_viewX, present_viewY - previous_viewY);
                     this.offsetLeftAndRight(present_viewX - previous_viewX);
                     if(viewID == 1 && flags.myView[checkPointID][viewID].bottom > flags.unitHeight * 5 + flags.gapHeight){
-                        this.offsetTopAndBottom(present_viewY - previous_viewY - flags.unitHeight / 2);
-                        flags.myView[checkPointID][viewID].offset(0, - flags.unitHeight / 2);
+                        this.offsetTopAndBottom(present_viewY - previous_viewY - flags.unitHeight + flags.unitHeight / 2);
+                        flags.myView[checkPointID][viewID].offset(0, - flags.unitHeight);
+                        flags.myView[checkPointID][viewID].offset(0, flags.unitHeight / 2);
                     }else{
                         this.offsetTopAndBottom(present_viewY - previous_viewY);
                     }
@@ -162,13 +164,14 @@ public class kingdom_hrdView2 extends View {
                     }
                     if(viewID == 1 && flags.myView[checkPointID][viewID].left == flags.gapWidth + flags.unitWidth
                             && flags.myView[checkPointID][viewID].bottom == flags.gapHeight + 5 * flags.unitHeight + flags.unitHeight / 2){
+                        intent.putExtra("kingdom_steps", 0);
                         intent.setAction(flags.action_KingdomHrd_success);
                         context.sendBroadcast(intent);
+                        Log.i("dasdasdasda","Dasdasdasdasd");
                     }
                     break;
             }
         }
         return true;
     }
-
 }

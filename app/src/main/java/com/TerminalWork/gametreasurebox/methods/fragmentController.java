@@ -3,6 +3,7 @@ package com.TerminalWork.gametreasurebox.methods;
 import android.content.pm.ActivityInfo;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,10 +24,8 @@ public class fragmentController {
     private int containerId;
     private FragmentManager fm;
     private ArrayList<Fragment> fragments;
-    private static String[] fragmentsTag = new String[]{"_2048", "hanoi", "gameSelect", "select_hrd", "hrd"};
     private static fragmentController controller;
     private MainActivity activity;
-    private HashMap<Integer, Integer> hashMap = new HashMap<Integer, Integer>();
 
     public static fragmentController getInstance(MainActivity activity, int containerId) {
         if (controller == null) {
@@ -44,48 +43,64 @@ public class fragmentController {
 
     private void initFragment() {
         fragments = new ArrayList<Fragment>();
-        fragments.add(new _2048());
-        hashMap.put(flags._2048Fragment, 0);
-        fragments.add(new Hanoi());
-        hashMap.put(flags.hanoiFragment, 1);
         fragments.add(new GameSelect());
-        hashMap.put(flags.gameSelectFragment, 2);
-        fragments.add(new select_hrd_sort());
-        hashMap.put(flags.selectHrdFragment, 3);
-
         FragmentTransaction ft = fm.beginTransaction();
-        for(int i = 0; i < fragments.size(); i++) {
-            ft.add(containerId, fragments.get(i), fragmentsTag[i]);
-        }
+        ft.add(containerId, fragments.get(0), "gameSelect");
         ft.commit();
     }
 
     public void showFragment(int fragmentID) {
         hideFragments();
         FragmentTransaction ft = fm.beginTransaction();
-        if(fragmentID == flags.hrdFragment){
-            if(fm.findFragmentByTag("hrd") == null){
-                fragments.add(new HuaRongDao(flags.current_sort_hrd));
-                hashMap.put(flags.hrdFragment, 4);
-                ft.add(containerId, fragments.get(4), fragmentsTag[4]);
-            }else{
-                if(flags.last_sort_hrd != flags.current_sort_hrd){
-                    reloadFragment(flags.current_sort_hrd);
-                }
-            }
+        Fragment fragment1;
+        switch (fragmentID){
+            case flags.hrdFragment:
+                fragment1 = new HuaRongDao(flags.current_sort_hrd);
+                fragments.add(fragment1);
+                ft.add(containerId, fragment1, "hrd");
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                break;
+            case flags._2048Fragment:
+                fragment1 = new _2048();
+                fragments.add(fragment1);
+                ft.add(containerId, fragment1, "_2048");
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                break;
+            case flags.gameSelectFragment:
+                fragment1 = new GameSelect();
+                fragments.add(fragment1);
+                ft.add(containerId, fragment1, "gameSelect");
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                break;
+            case flags.selectHrdFragment:
+                fragment1 = new select_hrd_sort();
+                fragments.add(fragment1);
+                ft.add(containerId, fragment1, "select_hrd");
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                break;
+            case flags.hanoiFragment:
+                fragment1 = new Hanoi();
+                fragments.add(fragment1);
+                ft.add(containerId, fragment1, "hanoi");
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                break;
         }
-        Fragment fragment = fragments.get(hashMap.get(fragmentID));
-        ft.show(fragment);
+        ft.commit();
+    }
 
-        if(fragment == fm.findFragmentByTag("hanoi")){
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else{
+    public void backFragment(){
+        int index = fragments.size() - 1;
+        FragmentTransaction ft = fm.beginTransaction();
+        if(index > 0){
+            ft.remove(fragments.get(index));
+            fragments.remove(index);
+            ft.show(fragments.get(index - 1));
             activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         ft.commit();
     }
 
-    private void hideFragments() {
+    public void hideFragments() {
         FragmentTransaction ft = fm.beginTransaction();
         for(Fragment fragment : fragments) {
             if(fragment != null) {
@@ -95,19 +110,25 @@ public class fragmentController {
         ft.commit();
     }
 
-    private void reloadFragment(int fragmentID){
+    public void onStartShowFragments(){
         FragmentTransaction ft = fm.beginTransaction();
-        ft.remove(fragments.get(4));
-        Fragment newHrdFragment = new HuaRongDao(fragmentID);
-        ft.add(containerId, newHrdFragment, fragmentsTag[4]);
+        for(Fragment fragment : fragments) {
+            if(fragment != null) {
+                ft.show(fragment);
+            }
+        }
         ft.commit();
     }
 
-    public Fragment getFragment(int position) {
-        return fragments.get(position);
+    public Boolean gameSelectFragmentIsShow() {
+        return fm.findFragmentByTag("gameSelect").isHidden();
     }
 
     public static void destroyController(){
         controller = null;
+    }
+
+    public static fragmentController getController() {
+        return controller;
     }
 }

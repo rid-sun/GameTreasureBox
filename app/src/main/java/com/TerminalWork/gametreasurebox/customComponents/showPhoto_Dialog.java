@@ -29,9 +29,9 @@ public class showPhoto_Dialog extends Dialog {
         this.getWindow().setAttributes(lp);
     }
 
-    public void setImageView(int id, String path) {
-        if(path == null){
-            imageView.setImageResource(id);
+    public void setImageView(int defaultID, String path) {
+        if(path.isEmpty()){
+            imageView.setImageResource(defaultID);
         }else{
             imageView.setImageDrawable(Drawable.createFromPath(path));
         }

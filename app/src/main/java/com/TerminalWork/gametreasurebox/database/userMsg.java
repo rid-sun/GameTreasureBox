@@ -15,6 +15,8 @@ public class userMsg extends LitePalSupport {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(defaultValue = "技术永无止境，勇攀高峰方显年轻本色")
     private String signature;
     private String game_record;
 

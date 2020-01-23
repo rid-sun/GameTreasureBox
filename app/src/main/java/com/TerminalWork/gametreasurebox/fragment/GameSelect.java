@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.TerminalWork.gametreasurebox.MainActivity;
 import com.TerminalWork.gametreasurebox.R;
 import com.TerminalWork.gametreasurebox.bean.flags;
+import com.TerminalWork.gametreasurebox.methods.fragmentController;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 
@@ -26,6 +27,7 @@ public class GameSelect extends Fragment {
     private RoundedImageView _2048;
     private CircularImageView hanoi;
     private MainActivity mainActivity;
+    private fragmentController controller;
 
     public GameSelect() {
     }
@@ -34,6 +36,7 @@ public class GameSelect extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mainActivity = (MainActivity)getActivity();
+        controller = fragmentController.getController();
         View view = inflater.inflate(R.layout.game_select_fragment, container,false);
         VideoView videoView = view.findViewById(R.id.select_videoView);
         videoView.setVideoURI(Uri.parse("android.resource://"+ mainActivity.getPackageName() + "/" + R.raw.forest));
@@ -45,9 +48,9 @@ public class GameSelect extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        hrd = getActivity().findViewById(R.id.game_select_hrd);
-        _2048 = getActivity().findViewById(R.id.game_select_2048);
-        hanoi = getActivity().findViewById(R.id.game_select_hanoi);
+        hrd = mainActivity.findViewById(R.id.game_select_hrd);
+        _2048 = mainActivity.findViewById(R.id.game_select_2048);
+        hanoi = mainActivity.findViewById(R.id.game_select_hanoi);
         hrd.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -59,7 +62,7 @@ public class GameSelect extends Fragment {
                     case MotionEvent.ACTION_UP:
                         hrd.setScaleX(1f);
                         hrd.setScaleY(1f);
-                        mainActivity.loadFragment(flags.selectHrdFragment);
+                        controller.showFragment(flags.selectHrdFragment);
                         break;
                 }
                 return true;
@@ -77,12 +80,13 @@ public class GameSelect extends Fragment {
                     case MotionEvent.ACTION_UP:
                         _2048.setScaleX(1f);
                         _2048.setScaleY(1f);
-                        mainActivity.loadFragment(flags._2048Fragment);
+                        controller.showFragment(flags._2048Fragment);
                         break;
                 }
                 return true;
             }
         });
+
         hanoi.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -94,7 +98,7 @@ public class GameSelect extends Fragment {
                     case MotionEvent.ACTION_UP:
                         hanoi.setScaleX(1f);
                         hanoi.setScaleY(1f);
-                        mainActivity.loadFragment(flags.hanoiFragment);
+                        controller.showFragment(flags.hanoiFragment);
                         break;
                 }
                 return true;

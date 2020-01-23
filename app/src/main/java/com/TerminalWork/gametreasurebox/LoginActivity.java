@@ -170,9 +170,16 @@ public class LoginActivity extends Activity {
                     break;
                 case MotionEvent.ACTION_UP:
                     visitor.setTextColor(Color.parseColor("#FF3D3A33"));
+                    List<userMsg> msg = LitePal.select("name").where("name = ?", "游客").find(userMsg.class);
+                    if(msg.isEmpty()){
+                        userMsg user = new userMsg();
+                        user.setName("游客");
+                        user.setPassword("visitor");
+                        user.save();
+                    }
                     SharedPreferences sharedPreferences = getSharedPreferences("loginState", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("nowUser", "visitor");
+                    editor.putString("nowUser", "游客");
                     editor.apply();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();

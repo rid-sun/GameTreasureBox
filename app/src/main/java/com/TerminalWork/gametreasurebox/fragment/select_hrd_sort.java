@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.TerminalWork.gametreasurebox.MainActivity;
 import com.TerminalWork.gametreasurebox.R;
 import com.TerminalWork.gametreasurebox.bean.flags;
+import com.TerminalWork.gametreasurebox.methods.fragmentController;
 
 public class select_hrd_sort extends Fragment {
 
@@ -82,17 +83,18 @@ public class select_hrd_sort extends Fragment {
                                 flags.current_sort_hrd = R.layout.game_three_kingdoms_hrd;
                             }
 //                            flags.gapHeight = flags.gapWidth = 10000000;
-                            WindowManager manager = getActivity().getWindowManager();
+                            WindowManager manager = mainActivity.getWindowManager();
                             DisplayMetrics outMetrics = new DisplayMetrics();
                             manager.getDefaultDisplay().getMetrics(outMetrics);
                             int width = outMetrics.widthPixels;
                             int height = outMetrics.heightPixels;
                             flags.gapWidth = 21;
-                            flags.unitHeight = flags.unitWidth = (width - 21) / 4;
-                            flags.gapHeight = height - (int)5.5 * flags.unitWidth - 200;
+                            flags.unitHeight = flags.unitWidth = (width - flags.gapWidth * 2) / 4;
+                            flags.gapHeight = 0;
                             break;
                     }
-                    mainActivity.loadFragment(flags.hrdFragment);
+//                    mainActivity.loadFragment(flags.hrdFragment);
+                    fragmentController.getController().showFragment(flags.hrdFragment);
                     break;
             }
             return true;

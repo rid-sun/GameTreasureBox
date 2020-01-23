@@ -112,22 +112,48 @@
     <include
         android:id="@+id/new_check_point1"
         layout="@layout/new_hrd_check_point1"
-        android:visibility="visible"/>
+        android:layout_width="match_parent"
+        android:layout_height="620dp"
+        android:visibility="visible"
+        android:layout_marginTop="108dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <include
         android:id="@+id/new_check_point2"
         layout="@layout/new_hrd_check_point2"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="620dp"
+        android:layout_marginTop="108dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
     <include
         android:id="@+id/new_check_point3"
         layout="@layout/new_hrd_check_point3"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="620dp"
+        android:layout_marginTop="108dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
     <include
         android:id="@+id/new_check_point4"
         layout="@layout/new_hrd_check_point4"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="620dp"
+        android:layout_marginTop="108dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
     <include
         android:id="@+id/new_check_point5"
         layout="@layout/new_hrd_check_point5"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="620dp"
+        android:layout_marginTop="108dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -168,6 +168,6 @@ public class flags {
                     4, 5, 6, 9, 16, 0, 2, 13, 14, 17}
     };
 
-
+    public static final int BACK_PRESSED_INTERVAL = 2000;
 
 }
