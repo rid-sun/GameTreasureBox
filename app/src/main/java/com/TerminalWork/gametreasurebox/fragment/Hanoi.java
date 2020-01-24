@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Constraints;
 import androidx.fragment.app.Fragment;
 
 import com.TerminalWork.gametreasurebox.MainActivity;
@@ -55,6 +56,7 @@ public class Hanoi extends Fragment {
         state2 = 0;
         direction = 1;
         isRunning = false;
+        floor = 9;
     }
 
     @Nullable
@@ -73,11 +75,24 @@ public class Hanoi extends Fragment {
         confirm.setOnClickListener(mButtonOnClickListener);
         if(onFontCounter != 0 && isRunning){
             Log.i("hanoiMessage", "state1: " + state1 + "state2: " + state2 + "direction: " + direction);
-            //start_timer();
-            view.invalidate();
+            direction = 1;
+            state2 = 1;
+            size[0] = floor;
+            size[1] = size[2] = 0;
+            for(int i = 1;i <= 9;i++) {
+                dc[i][0]=dx[i];
+                dc[i][1]=dy[i];
+            }
+            start_timer();
         }
         onFontCounter++;
         Log.i("HanoiFragment","onStart");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stop_timer();
     }
 
     private View.OnLayoutChangeListener changeListener = new View.OnLayoutChangeListener() {
@@ -132,19 +147,7 @@ public class Hanoi extends Fragment {
             else
             {
                 if(task == null || timer == null){
-                    for(int i = 1; i <= floor; i++){
-                        int offsetX= -(dc[i][0] - dx[i]);
-                        int offsetY= -(dc[i][1] - dy[i]);
-                        dc[i][0] = dx[i];
-                        dc[i][1] = dy[i];
-                        tv[i].offsetLeftAndRight(offsetX);
-                        tv[i].offsetTopAndBottom(offsetY);
-                    }
-                    confirm.setText("确认");
-                    input.setFocusable(true);
-                    input.setFocusableInTouchMode(true);
-                    input.requestFocus();
-                    direction = 1;
+                    resetPosition();
                 }
                 else{
                     stop_timer();
@@ -153,6 +156,23 @@ public class Hanoi extends Fragment {
             }
         }
     } ;
+
+    private void resetPosition(){
+        for(int i = 1; i <= floor; i++){
+            int offsetX= -(dc[i][0] - dx[i]);
+            int offsetY= -(dc[i][1] - dy[i]);
+            dc[i][0] = dx[i];
+            dc[i][1] = dy[i];
+            tv[i].offsetLeftAndRight(offsetX);
+            tv[i].offsetTopAndBottom(offsetY);
+        }
+        confirm.setText("确认");
+        input.setFocusable(true);
+        input.setFocusableInTouchMode(true);
+        input.requestFocus();
+        direction = 1;
+        state2 = 1;
+    }
 
     private void originPrepare(){
 
@@ -168,7 +188,6 @@ public class Hanoi extends Fragment {
 
         TextView tv7 = view.findViewById(R.id.textView7);
         TextView tv6 = view.findViewById(R.id.textView6);
-        TextView tv8 = view.findViewById(R.id.textView8);
         unitWidth = tv7.getLeft() - tv6.getLeft();
         unitHeight = tv[1].getHeight();
         maxHeight = tv[9].getTop() - 2 * unitHeight;
@@ -186,52 +205,10 @@ public class Hanoi extends Fragment {
             dc[i][1]=dy[i];
         }
 
-        showDialog();
+        originDialog();
     }
 
-    private void confirmPosition(){
-//        int width, height;
-//        ConstraintLayout.LayoutParams layoutParams;
-//        for(int i = 1; i < 9; i++){
-//            width = tv[i].getWidth();
-//            height = tv[i].getHeight();
-//            layoutParams = new ConstraintLayout.LayoutParams(width, height);
-//            //layoutParams.setMargins(dx[i], dy[i], tv[i].getRight(), tv[i].getBottom());
-//            Log.i("position","l:"+tv[i].getLeft()+"   t:"+tv[i].getTop()+"    r:"+tv[i].getRight()+"     b:"+tv[i].getBottom());
-//            layoutParams.setMarginStart(dx[i]);
-//            layoutParams.setMarginEnd(dy[i]);
-//            tv[i].setLayoutParams(layoutParams);
-//            tv[i].getLayoutParams().;
-//        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if(timer != null){
-            stop_timer();
-        }
-
-    }
-
-    private void getStep(int size, int i, int j, int k) {
-        if(size==1)
-            move(i,j);
-        else
-        {
-            getStep(size-1,i,k,j);
-            move(i,j);
-            getStep(size-1,k,j,i);
-        }
-    }
-    private void move(int i,int j)
-    {
-        state1++;
-        step[state1][0]=i;
-        step[state1][1]=j;
-    }
-    private void start_timer()
-    {
+    private void start_timer() {
         if(timer==null){
             timer=new Timer();
         }
@@ -303,15 +280,14 @@ public class Hanoi extends Fragment {
         timer.schedule(task,2000,80);
     }
 
-    private void stop_timer()
-    {
-        timer.cancel();
-        task.cancel();
+    private void stop_timer() {
+        if(timer != null){ timer.cancel(); }
+        if(task != null){ task.cancel(); }
         timer = null;
         task = null;
     }
 
-    private void showDialog(){
+    private void originDialog(){
         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
         builder.setTitle("警告");
         builder.setMessage("确定要复位吗？");
@@ -342,15 +318,20 @@ public class Hanoi extends Fragment {
         dialog = builder.create();
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if(hidden){
-            stop_timer();
-            Log.i("hidden","hidden");
-        }else{
-            start_timer();
-            Log.i("hidden","visible");
+    private void getStep(int size, int i, int j, int k) {
+        if(size==1)
+            move(i,j);
+        else
+        {
+            getStep(size-1,i,k,j);
+            move(i,j);
+            getStep(size-1,k,j,i);
         }
+    }
+
+    private void move(int i,int j) {
+        state1++;
+        step[state1][0]=i;
+        step[state1][1]=j;
     }
 }

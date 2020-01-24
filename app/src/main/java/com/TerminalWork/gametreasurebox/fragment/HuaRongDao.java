@@ -1,7 +1,9 @@
 package com.TerminalWork.gametreasurebox.fragment;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -141,6 +143,12 @@ public class HuaRongDao extends Fragment {
         startTimer();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopTimer();
+    }
+
     class stepsReceiver extends BroadcastReceiver {
 
         @Override
@@ -160,7 +168,34 @@ public class HuaRongDao extends Fragment {
                     kingdomSteps.setText(String.valueOf(kingdom_steps));
                     break;
                 case flags.action_KingdomHrd_success:
-                    Toast.makeText(context, "成功通过本关", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                    builder.setTitle("恭喜成功通过本关");
+                    builder.setMessage("要进行下一关吗？取消则重玩！");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int index = Integer.parseInt(kingdomCheckPoint.getText().toString());
+                            checkPointsList.get(index).setVisibility(View.GONE);
+                            kingdomCheckPoint.setText(String.valueOf((index + 1) % checkPointsList.size()));
+                            checkPointsList.get((index + 1) % checkPointsList.size()).setVisibility(View.VISIBLE);
+                            kingdomSteps.setText(String.valueOf(0));
+                            kingdom_steps = 0;
+                            restartTimer();
+                        }
+                    });
+                    builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int index = Integer.parseInt(kingdomCheckPoint.getText().toString());
+                            checkPointsList.get(index).setVisibility(View.GONE);
+                            checkPointsList.get(index).setVisibility(View.VISIBLE);
+                            kingdomSteps.setText(String.valueOf(0));
+                            kingdom_steps = 0;
+                            restartTimer();
+                        }
+                    });
+                    stopTimer();
+                    builder.create().show();
                     break;
             }
             Log.i("receiver", "收到");
@@ -222,6 +257,8 @@ public class HuaRongDao extends Fragment {
     }
 
     private void stopTimer(){
+        if(timer != null){ timer.cancel(); }
+        if(timerTask != null){ timerTask.cancel(); }
         timer = null;
         timerTask = null;
     }
@@ -268,15 +305,5 @@ public class HuaRongDao extends Fragment {
 
     private TextView getNumberHrdTimes() {
         return numberHrdTimes;
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if(hidden){
-            stopTimer();
-        }else{
-            startTimer();
-        }
     }
 }

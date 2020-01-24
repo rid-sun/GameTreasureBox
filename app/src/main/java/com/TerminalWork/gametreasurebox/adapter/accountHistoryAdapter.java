@@ -1,7 +1,5 @@
 package com.TerminalWork.gametreasurebox.adapter;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +19,13 @@ import com.TerminalWork.gametreasurebox.database.userMsg;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+/*
+ * 作者：rid-sun
+ * 时间：20-1-24 下午3:27
+ * 类名：accountHistoryAdapter
+ * 功能：为登录界面的用户历史列表添加适配器
+ */
 
 public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAdapter.ViewHolder> {
 
@@ -51,9 +56,6 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
                 int position = holder.getAdapterPosition();
                 accountMessage msg = accountMessagesList.get(position);
                 accountText.setText(msg.getAccount());
-//                options.inSampleSize = 4;
-//                bitmap = BitmapFactory.decodeFile(msg.getAccountImagePath(), options);
-//                headImage.setImageBitmap(bitmap);
                 headImage.setImageDrawable(Drawable.createFromPath(msg.getAccountImagePath()));
                 popupWindow.dismiss();
             }
@@ -67,7 +69,6 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
                 msg.setLastLoginTime("0");
                 msg.updateAll("name = ?", name);
                 accountMessagesList.remove(position);
-                //应该弹出一个自定义的dialog来确认是否删除
                 accountHistoryAdapter.this.notifyDataSetChanged();
             }
         });
@@ -77,9 +78,6 @@ public class accountHistoryAdapter extends RecyclerView.Adapter<accountHistoryAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         accountMessage msg = accountMessagesList.get(position);
-//        options.inSampleSize = 4;
-//        bitmap = BitmapFactory.decodeFile(msg.getAccountImagePath(), options);
-//        holder.accountImage.setImageBitmap(bitmap);
         holder.accountImage.setImageDrawable(Drawable.createFromPath(msg.getAccountImagePath()));
         holder.account.setText(msg.getAccount());
     }

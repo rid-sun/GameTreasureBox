@@ -4,34 +4,48 @@ import android.graphics.Rect;
 
 import com.TerminalWork.gametreasurebox.R;
 
+/*
+ * 作者：rid-sun
+ * 时间：20-1-24 下午3:30
+ * 类名：flag
+ * 功能：定义一些用于app过程的常量
+ */
+
 public class flags {
+    //汉诺塔演示过程中盘子的移动方向
     public final static int direction_UP = 1;
     public final static int direction_LEFT = 2;
     public final static int direction_DOWN = 3;
     public final static int direction_RIGHT = 4;
     public static int direction = direction_UP;
 
+    //2048游戏中的方块的缩放模式
     public final static int scaleScheme_composite = 5;
     public final static int scaleScheme_production = 7;
 
+    //标志当前和之前华容道的类型
     public static int current_sort_hrd = 0;
     public static int last_sort_hrd = 0;
 
+    //标志各个fragment
     public final static int _2048Fragment = 11;
     public final static int gameSelectFragment = 12;
     public final static int hanoiFragment = 13;
     public final static int hrdFragment = 14;
     public final static int selectHrdFragment = 15;
 
+    //“请求”常量
     public final static int activityRequestCode_upLoadImage = 16;
     public final static int activityRequestCode_cameraUpLoad = 17;
 
+    //单位化常量用于刻画大小
     public static int card_width;
     public static int gapHeight;
     public static int gapWidth;
     public static int unitWidth;
     public static int unitHeight;
 
+    //标志用到的intentAction名称
     public final static String action_changeScore2048 = "com.TerminalWork.gametreasurebox.action.changeScore2048";
     public final static String action_changStepsKingdomHrd = "com.TerminalWork.gametreasurebox.action.changeStepsKingdomHrd";
     public final static String action_changStepsImageHrd = "com.TerminalWork.gametreasurebox.action.changeStepsImageHrd";
@@ -39,9 +53,10 @@ public class flags {
     public final static String action_updateAccountImage = "com.TerminalWork.gametreasurebox.action.updateAccountImage";
     public final static String action_KingdomHrd_success = "com.TerminalWork.gametreasurebox.action.kingdomHrdSuccess";
 
+    //用于记录三国华容道中的每个滑块的位置
     public static Rect[][] myView = new Rect[7][10];
 
-
+    //三国华容道中的每个关卡各个位置的图片
     public static int[][] check_point_image = new int[][]{
             {
 
@@ -73,6 +88,7 @@ public class flags {
             }
     };
 
+    //记录三国华容道中各个滑块的长宽倍数
     public static int[][][] check_point = new int[][][]{
             {
 
@@ -103,6 +119,8 @@ public class flags {
                     {2, 2}, {1, 2}, {1, 2}
             }
     };
+
+    //记录三国华容道中各个滑块的左上角位置
     public static int[][][] check_point_location = new int[][][]{
             {
 
@@ -145,6 +163,7 @@ public class flags {
             {2, 13, 0, 11, 4, 14, 1, 8, 5, 6, 9, 10, 3, 7, 12}
     };
 
+    //当在图片与数字华容道为3*3时的各个合法序列
     public static int[][] Order9 = new int[][]{
             {6, 4, 7, 0, 5, 3, 1, 2},
             {0, 1, 2, 3, 4, 5, 6, 7},
@@ -157,6 +176,7 @@ public class flags {
             {3, 7, 1, 4, 5, 6, 0, 2}
     };
 
+    //当在图片与数字华容道为5*5时的各个合法序列
     public static int[][] Order25 = new int[][]{
             {19, 15, 6, 2, 14, 16, 17, 20, 11, 12, 7, 13, 0, 1,
                     9, 4, 18, 3, 21, 5, 8, 10, 22, 23},
@@ -168,6 +188,7 @@ public class flags {
                     4, 5, 6, 9, 16, 0, 2, 13, 14, 17}
     };
 
+    //按键间隔
     public static final int BACK_PRESSED_INTERVAL = 2000;
 
 }

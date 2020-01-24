@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
@@ -39,18 +38,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.TerminalWork.gametreasurebox.bean.flags;
 import com.TerminalWork.gametreasurebox.database.userMsg;
-import com.TerminalWork.gametreasurebox.fragment.GameSelect;
-import com.TerminalWork.gametreasurebox.fragment.Hanoi;
-import com.TerminalWork.gametreasurebox.fragment.HuaRongDao;
 import com.TerminalWork.gametreasurebox.customComponents.showPhoto_Dialog;
-import com.TerminalWork.gametreasurebox.fragment._2048;
-import com.TerminalWork.gametreasurebox.fragment.select_hrd_sort;
 import com.TerminalWork.gametreasurebox.methods.fragmentController;
 import com.google.android.material.navigation.NavigationView;
 
@@ -74,13 +65,14 @@ public class MainActivity extends AppCompatActivity {
     private String imagePath;
     private myReceiver receiver;
     private fragmentController controller;
+    private NavigationView navigationView;
+    private Boolean isLastPlaying;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NavigationView navigationView;
         View drawerView;
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -100,8 +92,10 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.i_want_my_tears_back);
+        mediaPlayer = MediaPlayer.create(this, R.raw.shooting_star);
         mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+        isLastPlaying = true;
 
         controller = fragmentController.getInstance(this, R.id.fragment_view);
         Log.i("onCreateMain","yes");
@@ -111,7 +105,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //controller.onStartShowFragments();
+
+        if(isLastPlaying){
+            mediaPlayer.start();
+        }
 
         String nowUser;
         SharedPreferences spf = getSharedPreferences("loginState", MODE_PRIVATE);
@@ -127,6 +124,16 @@ public class MainActivity extends AppCompatActivity {
         lastClickTime = 0;
         currentClickTime = 0;
 
+        Log.i("mainActivity","onStart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.pause();
+            isLastPlaying = true;
+        }
     }
 
     private NavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
@@ -156,9 +163,11 @@ public class MainActivity extends AppCompatActivity {
                     if(mediaPlayer.isPlaying()){
                         mediaPlayer.pause();
                         menuItem.setIcon(getDrawable(R.drawable.music_off));
+                        isLastPlaying = false;
                     }else{
                         mediaPlayer.start();
                         menuItem.setIcon(getDrawable(R.drawable.music_on));
+                        isLastPlaying = true;
                     }
                     break;
                 case R.id.nav_logout:
@@ -332,10 +341,6 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("imagePath", imagePath);
             startService(intent);
         }
-    }
-
-    public MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
     }
 
     private String getImagePath(Uri uri, String selection){

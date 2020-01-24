@@ -28,6 +28,7 @@ public class GameSelect extends Fragment {
     private CircularImageView hanoi;
     private MainActivity mainActivity;
     private fragmentController controller;
+    private View view;
 
     public GameSelect() {
     }
@@ -37,17 +38,17 @@ public class GameSelect extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mainActivity = (MainActivity)getActivity();
         controller = fragmentController.getController();
-        View view = inflater.inflate(R.layout.game_select_fragment, container,false);
-        VideoView videoView = view.findViewById(R.id.select_videoView);
-        videoView.setVideoURI(Uri.parse("android.resource://"+ mainActivity.getPackageName() + "/" + R.raw.forest));
-        videoView.start();
-        videoView.setOnCompletionListener(completion);
+        view = inflater.inflate(R.layout.game_select_fragment, container,false);
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        VideoView videoView = view.findViewById(R.id.select_videoView);
+        videoView.setVideoURI(Uri.parse("android.resource://"+ mainActivity.getPackageName() + "/" + R.raw.forest));
+        videoView.start();
+        videoView.setOnCompletionListener(completion);
         hrd = mainActivity.findViewById(R.id.game_select_hrd);
         _2048 = mainActivity.findViewById(R.id.game_select_2048);
         hanoi = mainActivity.findViewById(R.id.game_select_hanoi);
@@ -105,9 +106,6 @@ public class GameSelect extends Fragment {
             }
         });
 
-        //这里的话得提前打开，因为onHiddenChanged方法只会在改变状态时调用，它刚创建的时候不会被调用
-        mainActivity.getMediaPlayer().start();
-
     }
 
     private MediaPlayer.OnCompletionListener completion = new MediaPlayer.OnCompletionListener() {
@@ -116,16 +114,6 @@ public class GameSelect extends Fragment {
             mp.start();
         }
     };
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if(hidden){
-            mainActivity.getMediaPlayer().pause();
-        }else{
-            mainActivity.getMediaPlayer().start();
-        }
-    }
 
     @Override
     public void onDestroy() {

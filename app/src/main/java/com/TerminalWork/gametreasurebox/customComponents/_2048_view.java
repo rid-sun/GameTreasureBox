@@ -20,16 +20,23 @@ import com.TerminalWork.gametreasurebox.methods.myUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * 作者：rid-sun
+ * 时间：20-1-24 下午3:45
+ * 类名：_2048_view
+ * 功能：2048游戏面板
+ */
+
 public class _2048_view extends GridLayout {
 
     private int previousX, previousY;
-    private int presentX, presentY;
-    private card[][] cd;
-    private List<Point> numberIsZero;
-    private int score;
+    private int presentX, presentY;//判断手势需要的坐标
+    private card[][] cd;//滑块实体
+    private List<Point> numberIsZero;//记录滑块数字为零的数组
+    private int score;//分数
     private Context context;
     private Intent intent;
-    private View toastView;
+    private View toastView;//自定义提示view
     private boolean flag;
 
     public _2048_view(Context context) {
