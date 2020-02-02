@@ -15,7 +15,6 @@ public class card extends FrameLayout {
 
     private TextView card;
     private int number;
-    private boolean is2048;
     GradientDrawable myGrad;
 
 
@@ -37,7 +36,7 @@ public class card extends FrameLayout {
         if(num == 0)
             card.setText("");
         else
-            card.setText("" + num);
+            card.setText(String.valueOf(num));
         switch (num){
             case 0:
                 myGrad.setColor(ContextCompat.getColor(getContext(),R.color.backGround_color_0));
@@ -132,15 +131,7 @@ public class card extends FrameLayout {
 //        }
 //    }
 
-    public boolean equal(card another){
-        return this.number == another.getNumber();
-    }
-
     public int getNumber(){
         return number;
-    }
-
-    public TextView getCard() {
-        return card;
     }
 }

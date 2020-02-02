@@ -18,23 +18,23 @@ import com.TerminalWork.gametreasurebox.bean.img_puzzle;
 
 public class image_moveView extends View {
 
-    int order = -1;
-    int view_width;
-    int view_height;
+    private int order = -1;
+    private int view_width;
+    private int view_height;
     public int bit_num;
     public String bitmapID;
-    int xCount;
-    int yCount;
-    Bitmap ori_bitmap;
-    img_puzzle puzzles[];
-    int bitmap_width;
-    int bitmap_height;
-    int map[];
+    private int xCount;
+    private int yCount;
+    private Bitmap ori_bitmap;
+    private img_puzzle[] puzzles;
+    private int bitmap_width;
+    private int bitmap_height;
+    private int[] map;
     public boolean isComplete;
 
     //与界面的左右边距
-    int offset_x = 100;
-    int offset_y = 100;
+    private int offset_x = 100;
+    private int offset_y = 100;
 
     private Paint paint;
     private Intent intent;

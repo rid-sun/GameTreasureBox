@@ -52,8 +52,12 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="260dp"
         android:src="@drawable/game_select_hanoi"
+        app:layout_constraintBottom_toBottomOf="@+id/select_videoView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.011"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.021"
         app:siBorderColor="@color/holo_gray_light"
         app:siBorderWidth="15dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
