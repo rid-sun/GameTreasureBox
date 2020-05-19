@@ -24,7 +24,7 @@ import java.util.List;
  * 作者：rid-sun
  * 时间：20-1-24 下午3:45
  * 类名：_2048_view
- * 功能：2048游戏面板
+ * 功能：2048游戏面板，负责加载游戏、分数显示
  */
 
 public class _2048_view extends GridLayout {
@@ -37,12 +37,12 @@ public class _2048_view extends GridLayout {
     private Context context;
     private Intent intent;
     private View toastView;//自定义提示view
-    private boolean flag;
+    private boolean flag;//标志，用于规避掉当面板重新测量大小时，重复计算卡片大小和加载卡片
 
     public _2048_view(Context context) {
         super(context);
         this.context = context;
-        toastView = inflate(context, R.layout.toast, null);
+        toastView = inflate(context, R.layout.toast, null);//实例化自定义view
         flag = false;
         initView();
     }
@@ -62,14 +62,16 @@ public class _2048_view extends GridLayout {
         int h = MeasureSpec.getSize(heightSpec);
         int temp = Math.min(w, h);
         if(!flag) {
-            flags.card_width = (temp - 30) / 4;
-            setMeasuredDimension(temp, temp);
-            addCard(flags.card_width);
-            startGame();
-            flag = true;
+            flags.card_width = (temp - 30) / 4;//计算正方形卡片的大小
+            setMeasuredDimension(temp, temp);//设定面板的大小
+            addCard(flags.card_width);//添加卡片到面板
+            startGame();//开始游戏
+            flag = true;//将标志置为true，规避重复添加问题
         }
+        Log.i("_2048_view","onMeasure");
     }
 
+    //判断得出的数字，加以给出相应的提示
     private void judgeNumber(int num){
         Toast toast = new Toast(context);
         switch(num){
@@ -97,22 +99,27 @@ public class _2048_view extends GridLayout {
         }
     }
 
+    //初始化面板
     private void initView(){
-        setBackgroundColor(ContextCompat.getColor(getContext(), R.color.backGround_color_panel));
-        setColumnCount(4);
-        intent = new Intent(flags.action_changeScore2048);
-        score = 0;
+        setBackgroundColor(ContextCompat.getColor(context, R.color.backGround_color_panel));//设置面板的背景色
+        setColumnCount(4);//设置面板的列数
+        intent = new Intent(flags.action_changeScore2048);//定义intent用于后面的广播传送
+        score = 0;//初始化得分
+
+        //设置接触事件
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_DOWN://接触屏幕时记下坐标
                         previousX = (int)event.getX();
                         previousY = (int)event.getY();
                         break;
                     case MotionEvent.ACTION_UP:
+                        //离开屏幕时记下坐标
                         presentX = (int)event.getX();
                         presentY = (int)event.getY();
+                        //根据这两组坐标计算手势，然后决定分别执行哪些函数
                         switch (myUtils.judgeDirection(previousX, previousY, presentX, presentY)){
                             case flags.direction_UP:
                                 slideToUp();
@@ -129,13 +136,14 @@ public class _2048_view extends GridLayout {
                         }
                         break;
                 }
-                return true;
+                return true;//返回true，表示不再需要其它接口来继续执行
             }
         });
         cd = new card[4][4];
         numberIsZero = new ArrayList<>();
     }
 
+    //添加边长为card_width的正方形卡片到面板
     private void addCard(int card_width){
         card temp;
         for(int i = 0; i < 4; i++){
@@ -148,16 +156,18 @@ public class _2048_view extends GridLayout {
         }
     }
 
+    //开始游戏的初始化工作
     private void startGame(){
         for (int i = 0; i < 4; i++){
             for (int j = 0; j < 4; j++){
                 cd[i][j].setNumber(0);
             }
         }
-        addRandomCard(2);
+        addRandomCard(2);//生成两个随机数字的方块
         Log.i("random","生成随机数字");
     }
 
+    //生成指定数目的随机数字的方块
     private void addRandomCard(int count){
         numberIsZero.clear();
         for (int i = 0; i < 4; i++){
@@ -176,51 +186,52 @@ public class _2048_view extends GridLayout {
         }
     }
 
+    //向上滑动函数
     private void slideToUp(){
-        boolean canMove = false;
-        Point tp = new Point(0,0);
-        for(int j = 0; j < 4; j++){
-            int index = 0;
-            int previousNum = 0;
-            for(int i = 0; i < 4; i++){
-                int temp = cd[i][j].getNumber();
-                if(temp == 0)
+        boolean canMove = false;//先将是否有滑块移动标志置为false
+        Point tp = new Point(0,0);//用于存储滑块坐标的变量
+        for(int j = 0; j < 4; j++){//列循环
+            int index = 0;//执行手势移动后，该列当前非空非重复数字个数为0
+            int previousNum = 0;//上个非空滑块的数字
+            for(int i = 0; i < 4; i++){//行循环
+                int temp = cd[i][j].getNumber();//获取当前坐标滑块的数字
+                if(temp == 0)//如果该数字为0
                     continue;
-                if(previousNum == 0) {
-                    previousNum = temp;
-                    tp.x = i;
+                if(previousNum == 0) {//如果该数字不为0，且上个非空滑块的数字为0
+                    previousNum = temp;//将该数字记录，放入“等待区”
+                    tp.x = i;//并且记录它的坐标
                     tp.y = j;
                 }
-                else{
-                    if(temp == previousNum){
-                        previousNum = 0;
-                        cd[i][j].setNumber(0);
-                        cd[tp.x][tp.y].setNumber(0);
-                        cd[index][j].setNumber(temp * 2);
-                        myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, j, index);
-                        myUtils.cardMove(cd[i][j], j, i, j, index);
-                        myUtils.cardScale(cd[index][j], flags.scaleScheme_composite);
-                        intent.putExtra("score", score += temp * 2);
-                        context.sendBroadcast(intent);
-                        judgeNumber(temp * 2);
-                        canMove = true;
-                        index++;
+                else{//如果该数字不为0，且上个非空滑块的数字不为0
+                    if(temp == previousNum){//如果该数字与“等待区”的数字是相等的
+                        previousNum = 0;//更新“等待区”数字为0
+                        cd[i][j].setNumber(0);//更新该滑块的数字
+                        cd[tp.x][tp.y].setNumber(0);//更新“等待区”滑块的数字
+                        cd[index][j].setNumber(temp * 2);//将合并后的数字依次放在滑块上
+                        myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, j, index);//移动动画
+                        myUtils.cardMove(cd[i][j], j, i, j, index);//移动动画
+                        myUtils.cardScale(cd[index][j], flags.scaleScheme_composite);//合成动画
+                        intent.putExtra("score", score += temp * 2);//设置分数
+                        context.sendBroadcast(intent);//发送广播
+                        judgeNumber(temp * 2);//判断合成的数字
+                        canMove = true;//移动标志置为true
+                        index++;//当前列累计非空数字个数加1
                     }
-                    else{
-                        cd[tp.x][tp.y].setNumber(0);
-                        cd[index][j].setNumber(previousNum);
-                        if(index != tp.x) {
+                    else{//如果该数字与“等待区”的数字不相等
+                        cd[tp.x][tp.y].setNumber(0);//更新该滑块数字
+                        cd[index][j].setNumber(previousNum);//该滑块数字移动后对应位置的数字更新
+                        if(index != tp.x) {//如果该滑块数字移动了
                             myUtils.cardMove(cd[tp.x][tp.y], tp.y, tp.x, j, index);
                             canMove = true;
                         }
-                        previousNum = temp;
+                        previousNum = temp;//更新“等待区”数字
                         tp.y = j;
                         tp.x = i;
-                        index++;
+                        index++;//当前列累计非空数字个数加1
                     }
                 }
             }
-            if(previousNum != 0){
+            if(previousNum != 0){//列行循环结束，等待区是否仍有数字
                 cd[tp.x][tp.y].setNumber(0);
                 cd[index][j].setNumber(previousNum);
                 if(index != tp.x)
@@ -230,10 +241,10 @@ public class _2048_view extends GridLayout {
                 }
             }
         }
-        if(canMove){
+        if(canMove){//如果移动了，那么生成1个新数字
             addRandomCard(1);
         }
-        else{
+        else{//如果没有移动，手势不对或者游戏失败
             if(checkComplete()){
                 Toast.makeText(context, "游戏结束，重来一次吧", Toast.LENGTH_SHORT).show();
                 intent.putExtra("score", 0);
@@ -453,4 +464,5 @@ public class _2048_view extends GridLayout {
         }
         return numberIsZero.isEmpty();
     }
+
 }

@@ -67,14 +67,9 @@ public class fragmentController {
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
             case flags.gameSelectFragment:
-                fragment1 = fm.findFragmentByTag("gameSelect");
-                if(fragment1 != null){
-                    ft.show(fragment1);
-                }else{
-                    fragment1 = new GameSelect();
-                    fragments.add(fragment1);
-                    ft.add(containerId, fragment1, "gameSelect");
-                }
+                fragment1 = new GameSelect();
+                fragments.add(fragment1);
+                ft.add(containerId, fragment1, "gameSelect");
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
             case flags.selectHrdFragment:
