@@ -4,156 +4,183 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:clickable="true">
+    android:clickable="true"
+    android:focusable="true">
 
     <TextView
         android:id="@+id/kingdoms_hrd_timesTitle"
         android:layout_width="67dp"
         android:layout_height="29dp"
-        android:layout_marginEnd="32dp"
         android:gravity="center"
         android:text="@string/hrd_Times"
         android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/kingdoms_hrd_stepsTitle"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.912"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051" />
 
     <TextView
         android:id="@+id/kingdoms_hrd_stepsTitle"
         android:layout_width="67dp"
         android:layout_height="29dp"
-        android:layout_marginStart="172dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="@string/hrd_Steps"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/kingdoms_hrd_timesTitle"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/kingdoms_hrd_nameTitle" />
 
     <TextView
         android:id="@+id/kingdoms_hrd_nameTitle"
         android:layout_width="103dp"
         android:layout_height="22dp"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/kingdoms_hrd_nameTitle"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.019" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="67dp"
         android:layout_height="29dp"
-        android:layout_marginStart="32dp"
         android:gravity="center"
         android:text="@string/kingdoms_hrd_checkPoints"
         android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/kingdoms_hrd_stepsTitle"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051" />
 
     <TextView
         android:id="@+id/kingdom_hrd_checkPoints"
         android:layout_width="67dp"
         android:layout_height="22dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginBottom="768dp"
         android:gravity="center"
         android:text="@string/default_number"
         android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/kingdoms_hrd_steps"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/kingdoms_hrd_steps"
         android:layout_width="67dp"
         android:layout_height="22dp"
-        android:layout_marginStart="172dp"
         android:gravity="center"
         android:text="@string/default_number"
         android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/kingdoms_hrd_times"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/kingdoms_hrd_times"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toEndOf="@+id/kingdom_hrd_checkPoints"
+        app:layout_constraintTop_toBottomOf="@+id/kingdoms_hrd_stepsTitle"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/kingdoms_hrd_times"
         android:layout_width="67dp"
         android:layout_height="22dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="32dp"
         android:gravity="center"
         android:text="@string/default_number"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.912"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kingdoms_hrd_timesTitle"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/threeKingdom_hrd_next_checkPoint"
         android:layout_width="67dp"
         android:layout_height="22dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="104dp"
         android:gravity="center"
         android:text="@string/next_checkPoint"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintStart_toEndOf="@+id/threeKingdom_hrd_last_checkPoint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.102" />
 
     <TextView
         android:id="@+id/threeKingdom_hrd_last_checkPoint"
         android:layout_width="67dp"
         android:layout_height="22dp"
-        android:layout_marginEnd="244dp"
         android:gravity="center"
         android:text="@string/last_checkPoint"
         android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/threeKingdom_hrd_next_checkPoint"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.102" />
 
     <include
         android:id="@+id/new_check_point1"
         layout="@layout/new_hrd_check_point1"
         android:layout_width="match_parent"
-        android:layout_height="620dp"
-        android:visibility="visible"
+        android:layout_height="match_parent"
         android:layout_marginTop="108dp"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/new_check_point2"
         layout="@layout/new_hrd_check_point2"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="620dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="108dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <include
         android:id="@+id/new_check_point3"
         layout="@layout/new_hrd_check_point3"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="620dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="108dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <include
         android:id="@+id/new_check_point4"
         layout="@layout/new_hrd_check_point4"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="620dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="108dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <include
         android:id="@+id/new_check_point5"
         layout="@layout/new_hrd_check_point5"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="620dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="108dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

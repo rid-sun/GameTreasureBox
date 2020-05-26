@@ -10,7 +10,7 @@
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="128dp"
         android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +20,8 @@
         android:id="@+id/accountLoginRelativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="268dp"
+        android:layout_marginTop="280dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -63,8 +63,8 @@
         android:id="@+id/passwrdLoginRelativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="350dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -73,8 +73,8 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:background="@drawable/corner_shape"
-            android:hint="@string/hint_passwordEditText"
             android:gravity="center_vertical"
+            android:hint="@string/hint_passwordEditText"
             android:inputType="textPassword"
             android:paddingStart="75dp"
             android:paddingTop="10dp"
@@ -86,10 +86,10 @@
         android:id="@+id/login"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginStart="168dp"
         android:layout_marginTop="420dp"
         android:background="@drawable/oval_image_shape"
         android:src="@drawable/right_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -103,6 +103,8 @@
         android:text="@string/setup"
         android:textColor="@color/backGround_color_4096"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.177"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -116,6 +118,8 @@
         android:textColor="@color/backGround_color_4096"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.007"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

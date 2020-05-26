@@ -40,6 +40,7 @@ public class image_moveView extends View {
     private int bitmap_height;
     private int[] map;
     public boolean isComplete;
+    Boolean flag;
 
     //与界面的左右边距
     private int offset_x = 100;
@@ -61,28 +62,42 @@ public class image_moveView extends View {
     public image_moveView(Context context, AttributeSet attributeSet){
         super(context,attributeSet);
         TypedArray ta = context.obtainStyledAttributes(attributeSet,R.styleable.image_moveView);
-        view_width = ta.getDimensionPixelSize(R.styleable.image_moveView_android_layout_width,410) - 200;
-        view_height = view_width;
         bit_num = ta.getInteger(R.styleable.image_moveView_bit_num,0);
         bitmapID = ta.getString (R.styleable.image_moveView_bitmapID);
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.outWidth = view_width;
-        options.outHeight = view_height;
-        ori_bitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(bitmapID,"drawable","com.TerminalWork.gametreasurebox"), options);
-        System.out.println(R.drawable.pretty_girl);
-
         ta.recycle();
 
         this.setWillNotDraw(false);
         paint = new Paint();
         this.context = context;
-        init();
+        flag = false;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if(!flag){
+            view_width = MeasureSpec.getSize(widthMeasureSpec) - 200;
+            view_height = view_width;
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.outWidth = view_width;
+            options.outHeight = view_height;
+            ori_bitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(bitmapID,"drawable","com.TerminalWork.gametreasurebox"), options);
+            //System.out.println(R.drawable.pretty_girl);
+            init();
+        }
     }
 
     @Override
     protected void onFinishInflate() {
         //这个方法在view及其子控件填充好后才会执行，所以这样可以直接在xml文件中设置matchparent了
+//        view_width = getMeasuredWidth();
+//        view_height = view_width;
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.outWidth = view_width;
+//        options.outHeight = view_height;
+//        ori_bitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(bitmapID,"drawable","com.TerminalWork.gametreasurebox"), options);
+//        //System.out.println(R.drawable.pretty_girl);
+//        init();
         super.onFinishInflate();
     }
 
