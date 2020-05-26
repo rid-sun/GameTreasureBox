@@ -16,21 +16,29 @@ import com.TerminalWork.gametreasurebox.R;
 import com.TerminalWork.gametreasurebox.bean.flags;
 import com.TerminalWork.gametreasurebox.methods.myUtils;
 
+/*
+ * 作者：JiaTai Sun
+ * 时间：20-5-26 下午5:20
+ * 类名：kingdom_hrdView2
+ * 功能：华容道游戏的面板
+ */
+
 public class kingdom_hrdView2 extends View {
 
-
+    //这里的intent同样用来通信，传送移动步数
     private Intent intent;
     private boolean isHasMoved;
 
+    //判断手势用到的坐标
     int previousX, presentX, previous_viewX, present_viewX;
     int previousY, presentY, previous_viewY, present_viewY;
 
-    private int checkPointID;
-    private int viewID;
+    private int checkPointID;//标志第几关卡
+    private int viewID;//标记该图片id
     int view_width;
     int view_height;
     private Context context;
-    private boolean firstFlag;
+    private boolean firstFlag;//标记是否是初次加载
 
     public kingdom_hrdView2(Context context) {
         super(context);
@@ -38,10 +46,12 @@ public class kingdom_hrdView2 extends View {
 
     public kingdom_hrdView2(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        //获取关卡编号和图片编号
         TypedArray ta = context.obtainStyledAttributes(attrs, new int[]{R.attr.checkPointID, R.attr.viewID});
         checkPointID = ta.getInt(0,0);
         viewID = ta.getInt(1,0);
         ta.recycle();
+        //设置滑块背景图片
         setBackground(context.getDrawable(flags.check_point_image[checkPointID][viewID]));
         this.context = context;
         intent = new Intent();
@@ -52,9 +62,9 @@ public class kingdom_hrdView2 extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         view_width = flags.unitWidth * flags.check_point[checkPointID][viewID][0];
-        if(viewID > 9){
+        if(viewID > 9){//加载移动的滑块
             view_height = flags.unitHeight / flags.check_point[checkPointID][viewID][1];
-        }else{
+        }else{//加载底部不动的滑块
             view_height = flags.unitHeight * flags.check_point[checkPointID][viewID][1];
         }
         setMeasuredDimension(view_width, view_height);
@@ -123,6 +133,7 @@ public class kingdom_hrdView2 extends View {
                 case MotionEvent.ACTION_UP:
                     previous_viewX = this.getLeft();
                     previous_viewY = this.getTop();
+                    //用户手指抬起时有个自动吸附的动作
                     switch (flags.direction){
                         case flags.direction_UP:
                             present_viewY = (previous_viewY - flags.gapHeight) / flags.unitHeight * flags.unitHeight + flags.gapHeight;

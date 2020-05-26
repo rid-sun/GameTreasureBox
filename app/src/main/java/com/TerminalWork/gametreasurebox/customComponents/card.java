@@ -11,11 +11,19 @@ import androidx.core.content.ContextCompat;
 
 import com.TerminalWork.gametreasurebox.R;
 
+
+/*
+ * 作者：JiaTai Sun
+ * 时间：20-5-26 下午5:06
+ * 类名：card
+ * 功能：用于2048游戏部分的滑块实体
+ */
+
 public class card extends FrameLayout {
 
     private TextView card;
     private int number;
-    GradientDrawable myGrad;
+    GradientDrawable myGrad;//用于代码动态创建控件形状的对象
 
 
     public card(@NonNull Context context) {
@@ -115,21 +123,6 @@ public class card extends FrameLayout {
                 break;
         }
     }
-
-//    private void judgeNumber(int num){
-//        switch(num){
-//            case 32:
-//                Toast.makeText(getContext(),getResources().getString(R.string.noticeFor_512),Toast.LENGTH_SHORT);
-//            case 512:
-//                Toast.makeText(getContext(),getResources().getString(R.string.noticeFor_512),Toast.LENGTH_SHORT);
-//            case 1024:
-//                Toast.makeText(getContext(),getResources().getString(R.string.noticeFor_1024),Toast.LENGTH_SHORT);
-//                break;
-//            case 4096:
-//                Toast.makeText(getContext(),getResources().getString(R.string.noticeFor_4096),Toast.LENGTH_SHORT);
-//                break;
-//        }
-//    }
 
     public int getNumber(){
         return number;

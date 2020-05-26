@@ -3,7 +3,12 @@ package com.TerminalWork.gametreasurebox.database;
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
-import java.sql.Timestamp;
+/*
+ * 作者：JiaTai Sun
+ * 时间：20-5-26 下午5:29
+ * 类名：userMsg
+ * 功能：存储用户信息
+ */
 
 public class userMsg extends LitePalSupport {
 

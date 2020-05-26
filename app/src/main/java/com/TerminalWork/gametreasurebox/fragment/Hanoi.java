@@ -24,6 +24,13 @@ import com.TerminalWork.gametreasurebox.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/*
+ * 作者：JiaTai Sun
+ * 时间：20-5-26 下午5:33
+ * 类名：Hanoi
+ * 功能：汉诺塔演示游戏主体
+ */
+
 public class Hanoi extends Fragment {
 
     private Button confirm;

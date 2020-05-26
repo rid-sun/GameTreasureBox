@@ -21,6 +21,13 @@ import com.TerminalWork.gametreasurebox.methods.fragmentController;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 
+/*
+ * 作者：JiaTai Sun
+ * 时间：20-5-26 下午5:33
+ * 类名：GameSelect
+ * 功能：游戏选择界面主体
+ */
+
 public class GameSelect extends Fragment {
 
     private RoundedImageView hrd;

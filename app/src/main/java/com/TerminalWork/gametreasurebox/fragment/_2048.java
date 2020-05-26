@@ -1,9 +1,5 @@
 package com.TerminalWork.gametreasurebox.fragment;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.TerminalWork.gametreasurebox.R;
+
+/*
+ * 作者：JiaTai Sun
+ * 时间：20-5-26 下午5:32
+ * 类名：_2048
+ * 功能：2048游戏主体
+ */
 
 public class _2048 extends Fragment {
 

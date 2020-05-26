@@ -5,7 +5,7 @@ import android.graphics.Rect;
 import com.TerminalWork.gametreasurebox.R;
 
 /*
- * 作者：rid-sun
+ * 作者：JiaTai Sun
  * 时间：20-1-24 下午3:30
  * 类名：flag
  * 功能：定义一些用于app过程的常量
@@ -152,6 +152,7 @@ public class flags {
             }
     };
 
+    //在数字华容道和图像华容道中用到的内置顺序
     public static int[][] Order16 = new int [][]{
             {0, 12, 14, 13, 4, 8, 9, 11, 5, 1, 2, 6, 3, 7, 10},
             {5, 11, 6, 10, 14, 2, 3, 12, 13, 4, 7, 1, 0, 9, 8},

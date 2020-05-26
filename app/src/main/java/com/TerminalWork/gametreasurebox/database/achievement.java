@@ -2,6 +2,14 @@ package com.TerminalWork.gametreasurebox.database;
 
 import org.litepal.crud.LitePalSupport;
 
+/*
+ * 作者：JiaTai Sun
+ * 时间：20-5-26 下午5:27
+ * 类名：achievement
+ * 功能：用来存储游戏成就
+ * 补充：这部分限于时间本人并没有被实现
+ */
+
 public class achievement extends LitePalSupport {
     private long ID;
     private String name;

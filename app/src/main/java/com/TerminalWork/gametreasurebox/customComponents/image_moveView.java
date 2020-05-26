@@ -16,6 +16,15 @@ import com.TerminalWork.gametreasurebox.R;
 import com.TerminalWork.gametreasurebox.bean.flags;
 import com.TerminalWork.gametreasurebox.bean.img_puzzle;
 
+/*
+ * 作者：JiaTai Sun
+ * 时间：20-5-26 下午5:11
+ * 类名：image_moveView
+ * 功能：图像华容道中需要的游戏面板
+ * 补充：在图像华容道中有些功能本人并未实现，所以这里会有一些本人
+ *       预留的变量以及于主活动交互的过程，使得这个类的实现看起来臃肿复杂。
+ */
+
 public class image_moveView extends View {
 
     private int order = -1;
@@ -102,8 +111,8 @@ public class image_moveView extends View {
                 } else {
                     puzzles[pos].bitmap = Bitmap.createBitmap(ori_bitmap, bitmap_width * j, bitmap_height * i, bitmap_width, bitmap_height);
                 }
-                puzzles[pos].x = puzzles[pos].orignX = x;
-                puzzles[pos].y = puzzles[pos].orignY = y;
+                puzzles[pos].x = puzzles[pos].originX = x;
+                puzzles[pos].y = puzzles[pos].originY = y;
                 map[pos] = pos;
             }
         }
@@ -213,8 +222,8 @@ public class image_moveView extends View {
     public void init_Pos() {
         order++;
         for(int i = 0; i < bit_num - 1; i++){
-            puzzles[flags.Order16[order % 8][i]].x = puzzles[i].orignX;
-            puzzles[flags.Order16[order % 8][i]].y = puzzles[i].orignY;
+            puzzles[flags.Order16[order % 8][i]].x = puzzles[i].originX;
+            puzzles[flags.Order16[order % 8][i]].y = puzzles[i].originY;
             map[i] = flags.Order16[order % 8][i];
         }
         invalidate();
