@@ -234,6 +234,7 @@ public class image_moveView extends View {
         return true;
     }
 
+    //重置游戏按钮点击事件，在xml布局文件中绑定
     public void init_Pos() {
         order++;
         for(int i = 0; i < bit_num - 1; i++){
@@ -241,6 +242,12 @@ public class image_moveView extends View {
             puzzles[flags.Order16[order % 8][i]].y = puzzles[i].originY;
             map[i] = flags.Order16[order % 8][i];
         }
+        map[bit_num - 1] = bit_num - 1;
+        puzzles[bit_num - 1].x = puzzles[bit_num - 1].originX;
+        puzzles[bit_num - 1].y = puzzles[bit_num - 1].originY;
+        steps = 0;
+        intent.putExtra("image_steps", steps);
+        context.sendBroadcast(intent);
         invalidate();
         isComplete = false;
         System.out.println("执行");
