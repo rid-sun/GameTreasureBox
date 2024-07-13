@@ -7,6 +7,6 @@
 ## 手机分辨率
 开发设计图使用1080 * 2160，dpi（400）。但引入了头条推出的屏幕适配解决方案，目前检测是可以运行在小米8，华为v20，vivoX9上的。
 ## demo演示
-[Bilibili演示视频地址](https://b23.tv/YdXRmY)
+[Bilibili演示视频地址](https://www.bilibili.com/video/BV1Ye411W7oP/?share_source=copy_web&vd_source=09d52225096ae5cb2831ab752204609e)
 ## 安装包位置
 [app-release.apk](https://github.com/rid-sun/GameTreasureBox/blob/master/app/release/app-release.apk)
